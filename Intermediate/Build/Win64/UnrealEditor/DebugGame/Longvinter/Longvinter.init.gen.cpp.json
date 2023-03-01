@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\longvinter.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\longvintereditor\\debuggame\\engine\\sharedpch.engine.nonoptimized.shadowerrors.h.pch",
+        "Includes": [
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\debuggame\\longvinter\\definitions.longvinter.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

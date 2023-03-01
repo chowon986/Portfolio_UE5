@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Longvinter.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Longvinter.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\LongvinterEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Config\HoloLens">
+      <UniqueIdentifier>{4C8DD267-CDE7-336F-8602-F5F485D22BAB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\HoloLens\HoloLensEngine.ini">
+      <Filter>Config\HoloLens</Filter>
+    </None>
+    <Filter Include="Source\Longvinter">
+      <UniqueIdentifier>{F990B7FC-7A74-3BA2-8633-A4006C631E5E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\GameInfo.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\GameInfo.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\Longvinter\Longvinter.Build.cs">
+      <Filter>Source\Longvinter</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Longvinter\Longvinter.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Longvinter.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\LongvinterGameModeBase.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\LongvinterGameModeBase.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
+    <Filter Include="Source\Longvinter\Character">
+      <UniqueIdentifier>{1B499398-2DBB-3FDC-9EE9-ECD59D8567C9}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\Character\CharacterBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\CharacterBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\LvPlayer.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayer.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\LvPlayerController.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayerController.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\NonPlayerCharacterBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\NonPlayerCharacterBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\PlayerCharacterBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\PlayerCharacterBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

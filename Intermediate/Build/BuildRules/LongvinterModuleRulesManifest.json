@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\UnrealPortfolio\\Longvinter\\Source\\Longvinter\\Longvinter.Build.cs",
+		"C:\\UnrealPortfolio\\Longvinter\\Source\\Longvinter.Target.cs",
+		"C:\\UnrealPortfolio\\Longvinter\\Source\\LongvinterEditor.Target.cs"
+	],
+	"EngineVersion": "5.0.3"
+}

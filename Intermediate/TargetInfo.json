@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Longvinter",
+			"Path": "C:\\UnrealPortfolio\\Longvinter\\Source\\Longvinter.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "LongvinterEditor",
+			"Path": "C:\\UnrealPortfolio\\Longvinter\\Source\\LongvinterEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
