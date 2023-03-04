@@ -3,6 +3,9 @@
 #pragma once
 
 #include "EngineMinimal.h"
+#include "DrawDebugHelpers.h"	// 디버깅용 도형 출력기능.
+#include "EngineGlobals.h"
+#include "Engine.h"
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
@@ -16,9 +19,109 @@ DECLARE_LOG_CATEGORY_EXTERN(LONGVINTER, Log, All);
 
 void PrintViewport(float Time, const FColor& Color, const FString& Text);
 
+UENUM(BlueprintType)
+enum class EItemType : uint8
+{
+	Normal,
+	Food,
+	Equipment,
+	Decorative,
+	MK,
+};
+
+UENUM(BlueprintType)
+enum class EBuffType : uint8
+{
+	HP,
+	Speed,
+	Offence, // 공격력
+	Defence, // 방어력
+	GunAccuracy,
+	ColdResistance,
+	FishingSpeed,
+	AcquisitionRate,
+	AttackSpeed,
+};
+
+UENUM(BlueprintType)
+enum class EQuestType : uint8
+{
+	Test
+};
+
+USTRUCT(BlueprintType)
+struct FItemTable : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	FName ItemName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	EItemType ItemType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	TArray<int32> BuffList;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float CoolingDownDuration;
+};
+
+USTRUCT(BlueprintType)
+struct FBuffTable : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		EBuffType BuffType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		float Amount;
+};
+
+USTRUCT(BlueprintType)
+struct FCraftTable : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	TArray<int32> RequiredItemList;
+};
+
+USTRUCT(BlueprintType)
+struct FEncyclopediaTable : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		TArray<int32> EncyclopediaList;
+};
+
+USTRUCT(BlueprintType)
+struct FQuestTable : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		int32 TotalCount;
+};
+
 UCLASS()
 class LONGVINTER_API UGameInfo : public UObject
 {
 	GENERATED_BODY()
-	
 };
