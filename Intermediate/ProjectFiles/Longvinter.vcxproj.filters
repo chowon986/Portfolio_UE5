@@ -11,6 +11,8 @@
     <None Include="..\..\Source\LongvinterEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -56,13 +58,43 @@
     <ClInclude Include="..\..\Source\Longvinter\LongvinterGameModeBase.h">
       <Filter>Source\Longvinter</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\ObjectSpawnPoint.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\ObjectSpawnPoint.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\TestGameModeBase.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\TestGameModeBase.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
     <Filter Include="Source\Longvinter\Character">
       <UniqueIdentifier>{1B499398-2DBB-3FDC-9EE9-ECD59D8567C9}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\Character\ActorBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\ActorBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\BasicVendor.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\BasicVendor.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\CharacterBase.cpp">
       <Filter>Source\Longvinter\Character</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\Character\CharacterBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\FishingSpot.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\FishingSpot.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\LvPlayer.cpp">
@@ -71,10 +103,22 @@
     <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayer.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\LvPlayerAnimInstance.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayerAnimInstance.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\LvPlayerController.cpp">
       <Filter>Source\Longvinter\Character</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayerController.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\NonPlayerActorBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\NonPlayerActorBase.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\NonPlayerCharacterBase.cpp">
@@ -88,6 +132,27 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\Character\PlayerCharacterBase.h">
       <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\VendorBase.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\VendorBase.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
+    <Filter Include="Source\Longvinter\UMG">
+      <UniqueIdentifier>{5D17B0FB-8A6B-3969-8787-4940A4D126E3}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\MainHUDBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\MainHUDBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\PlayerInfoBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\PlayerInfoBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

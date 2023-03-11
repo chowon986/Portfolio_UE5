@@ -7,7 +7,6 @@
         "Includes": [
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\development\\longvinter\\definitions.longvinter.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\nonplayercharacterbase.h",
-            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\gameinfo.h",
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\engine\\public\\engineminimal.h",
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\core\\public\\misc\\monolithicheaderboilerplate.h",
@@ -697,6 +696,7 @@
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\core\\public\\internationalization\\polyglottextdata.h",
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\gameinfo.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\nonplayercharacterbase.generated.h"
         ],

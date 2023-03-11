@@ -1,0 +1,9 @@
+Diffuse=WeightMapPlaceholderTexture
+Normal=T_Grass01_n
+Other[0]=WhiteSquareTexture
+Other[1]=TilingNoise05
+Other[2]=T_Grass01
+Other[3]=T_GrassAutumn
+Other[4]=T_GrassLongThick
+Other[5]=T_SharpNoise
+Other[6]=T_SimpleNoise1024

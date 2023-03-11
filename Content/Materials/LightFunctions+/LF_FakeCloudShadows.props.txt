@@ -1,0 +1,96 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[3] =
+{
+    ReferencedTextures[0] = Texture2D'/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase'
+    ReferencedTextures[1] = Texture2D'/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend'
+    ReferencedTextures[2] = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[9] =
+                {
+                    ParameterInfos[0] = { Name=Cloud2Scale_X }
+                    ParameterInfos[1] = { Name=Cloud1Speed_Y }
+                    ParameterInfos[2] = { Name=Cloud1Speed_X }
+                    ParameterInfos[3] = { Name=Cloud2Speed_Y }
+                    ParameterInfos[4] = { Name=CloudTickness }
+                    ParameterInfos[5] = { Name=Cloud1Scale_Y }
+                    ParameterInfos[6] = { Name=Cloud2Speed_X }
+                    ParameterInfos[7] = { Name=Cloud1Scale_X }
+                    ParameterInfos[8] = { Name=Cloud2Scale_Y }
+                }
+            }
+            Entries[1] = { ParameterInfos[0]={} }
+            Entries[2] =
+            {
+                ParameterInfos[2] =
+                {
+                    ParameterInfos[0] = { Name=CloudTexture1 }
+                    ParameterInfos[1] = { Name=CloudTexture2 }
+                }
+            }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[9] = { 1, 0.01, 0.01, 0.001, 1, 1, 0.02, 1, 1 }
+        VectorValues[0] = {}
+        TextureValues[2] =
+        {
+            TextureValues[0] = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+            TextureValues[1] = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+        }
+    }
+    ReferencedTextures[3] =
+    {
+        ReferencedTextures[0] = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+        ReferencedTextures[1] = Texture2D'/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend'
+        ReferencedTextures[2] = Texture2D'/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase'
+    }
+}
+BlendMode = BLEND_Opaque (0)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[2] =
+{
+    CollectedTextureParameters[0] =
+    {
+        Texture = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+        Name = CloudTexture1
+        Group = None
+    }
+    CollectedTextureParameters[1] =
+    {
+        Texture = Texture2D'/Game/Materials/LightFunctions+/cloudspackedv3.cloudspackedv3'
+        Name = CloudTexture2
+        Group = None
+    }
+}
+CollectedScalarParameters[9] =
+{
+    CollectedScalarParameters[0] = { Value=1, Name=Cloud2Scale_X, Group=None }
+    CollectedScalarParameters[1] = { Value=0.01, Name=Cloud1Speed_Y, Group=None }
+    CollectedScalarParameters[2] = { Value=0.01, Name=Cloud1Speed_X, Group=None }
+    CollectedScalarParameters[3] = { Value=0.001, Name=Cloud2Speed_Y, Group=None }
+    CollectedScalarParameters[4] = { Value=1, Name=CloudTickness, Group=None }
+    CollectedScalarParameters[5] = { Value=1, Name=Cloud1Scale_Y, Group=None }
+    CollectedScalarParameters[6] = { Value=0.02, Name=Cloud2Speed_X, Group=None }
+    CollectedScalarParameters[7] = { Value=1, Name=Cloud1Scale_X, Group=None }
+    CollectedScalarParameters[8] = { Value=1, Name=Cloud2Scale_Y, Group=None }
+}
+CollectedVectorParameters[0] = {}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[0] = {}

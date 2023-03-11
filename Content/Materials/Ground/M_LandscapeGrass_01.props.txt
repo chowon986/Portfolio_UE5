@@ -1,0 +1,488 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[9] =
+{
+    ReferencedTextures[0] = Texture2D'/Engine/EngineMaterials/WeightMapPlaceholderTexture.WeightMapPlaceholderTexture'
+    ReferencedTextures[1] = Texture2D'/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture'
+    ReferencedTextures[2] = Texture2D'/Engine/MapTemplates/TilingNoise05.TilingNoise05'
+    ReferencedTextures[3] = Texture2D'/Game/Materials/Ground/T_Grass01.T_Grass01'
+    ReferencedTextures[4] = Texture2D'/Game/Materials/Ground/T_Grass01_n.T_Grass01_n'
+    ReferencedTextures[5] = Texture2D'/Game/Materials/Ground/T_GrassAutumn.T_GrassAutumn'
+    ReferencedTextures[6] = Texture2D'/Game/Materials/Ground/T_GrassLongThick.T_GrassLongThick'
+    ReferencedTextures[7] = Texture2D'/Game/Materials/Textures/T_SharpNoise.T_SharpNoise'
+    ReferencedTextures[8] = Texture2D'/Game/Materials/Textures/T_SimpleNoise1024.T_SimpleNoise1024'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[36] =
+                {
+                    ParameterInfos[0] = { Name=SandLongPower02 }
+                    ParameterInfos[1] = { Name=SnowLongPower02 }
+                    ParameterInfos[2] = { Name=AutumnSecondColorPower }
+                    ParameterInfos[3] = { Name=SandBasecolorLerpAlpha }
+                    ParameterInfos[4] = { Name=AutumnPower }
+                    ParameterInfos[5] = { Name=SandNormalStr }
+                    ParameterInfos[6] = { Name=GrassMeadowLongGrassPower01 }
+                    ParameterInfos[7] = { Name=GrassMeadowNormalStr }
+                    ParameterInfos[8] = { Name=GrassMeadowLongGrassPower02 }
+                    ParameterInfos[9] = { Name=SnowRoughnessPower }
+                    ParameterInfos[10] = { Name=AutumnLongPower02 }
+                    ParameterInfos[11] = { Name=SnowLongPower01 }
+                    ParameterInfos[12] = { Name=SnowNoisePower }
+                    ParameterInfos[13] = { Name=AutumnRoughnessPower }
+                    ParameterInfos[14] = { Name=SandRoughnessMultiplier }
+                    ParameterInfos[15] = { Name=GrassAutumnNoisePower }
+                    ParameterInfos[16] = { Name=SandLongPower01 }
+                    ParameterInfos[17] = { Name=SnowNormalStr }
+                    ParameterInfos[18] = { Name=SnowBasecolorLerpAlpha }
+                    ParameterInfos[19] = { Name=GrassMeadowPower }
+                    ParameterInfos[20] = { Name=SandRoughnessPower }
+                    ParameterInfos[21] = { Name=GrassMeadowNoisePower }
+                    ParameterInfos[22] = { Name=AutumnBasecolorLerpAlpha }
+                    ParameterInfos[23] = { Name=SandSpecular }
+                    ParameterInfos[24] = { Name=SnowSpecular }
+                    ParameterInfos[25] = { Name=GrassMeadowRoughnessMultiplier }
+                    ParameterInfos[26] = { Name=GrassMeadowSecondColorPower }
+                    ParameterInfos[27] = { Name=AutumnRoughnessMultiplier }
+                    ParameterInfos[28] = { Name=SnowSecondColorPower }
+                    ParameterInfos[29] = { Name=SnowRoughnessMultiplier }
+                    ParameterInfos[30] = { Name=SandSecondColorPower }
+                    ParameterInfos[31] = { Name=SandPower }
+                    ParameterInfos[32] = { Name=GrassMeadowRoughnessPower }
+                    ParameterInfos[33] = { Name=GrassMeadowBasecolorLerpAlpha }
+                    ParameterInfos[34] = { Name=AutumnLongPower01 }
+                    ParameterInfos[35] = { Name=SnowPower }
+                }
+            }
+            Entries[1] =
+            {
+                ParameterInfos[28] =
+                {
+                    ParameterInfos[0] = { Name=GrassBlueColor01 }
+                    ParameterInfos[1] = { Name=GrassMeadowLongGrassColor01 }
+                    ParameterInfos[2] = { Name=SandLongColor02 }
+                    ParameterInfos[3] = { Name=SandColor02 }
+                    ParameterInfos[4] = { Name=SnowNoiseLerpColor }
+                    ParameterInfos[5] = { Name=AutumnLongColor01 }
+                    ParameterInfos[6] = { Name=GrassBlueLongGrassColor01 }
+                    ParameterInfos[7] = { Name=SandLongColor01 }
+                    ParameterInfos[8] = { Name=AutumnColor01 }
+                    ParameterInfos[9] = { Name=GrassForestColor02 }
+                    ParameterInfos[10] = { Name=NoiseLerpColor }
+                    ParameterInfos[11] = { Name=AutumnLongColor02 }
+                    ParameterInfos[12] = { Name=SandColor01 }
+                    ParameterInfos[13] = { Name=GrassBlueLongGrassColor02 }
+                    ParameterInfos[14] = { Name=AutumnColor02 }
+                    ParameterInfos[15] = { Name=GrassMeadowColor02 }
+                    ParameterInfos[16] = { Name=GrassMeadowLongGrassColor02 }
+                    ParameterInfos[17] = { Name=SnowColor01 }
+                    ParameterInfos[18] = { Name=Param }
+                    ParameterInfos[19] = { Name=GrassForestLongGrassColor02 }
+                    ParameterInfos[20] = { Name=GrassForestColor01 }
+                    ParameterInfos[21] = { Name=AutumnNoiseLerpColor }
+                    ParameterInfos[22] = { Name=SnowLongColor02 }
+                    ParameterInfos[23] = { Name=SnowColor02 }
+                    ParameterInfos[24] = { Name=GrassMeadowColor01 }
+                    ParameterInfos[25] = { Name=SnowLongColor01 }
+                    ParameterInfos[26] = { Name=GrassBlueColor02 }
+                    ParameterInfos[27] = { Name=GrassForestLongGrassColor01 }
+                }
+            }
+            Entries[2] = { ParameterInfos[0]={} }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[36] =
+        {
+            ScalarValues[0] = 0
+            ScalarValues[1] = 0
+            ScalarValues[2] = 0
+            ScalarValues[3] = 0
+            ScalarValues[4] = 0.25
+            ScalarValues[5] = 0
+            ScalarValues[6] = 0
+            ScalarValues[7] = 0
+            ScalarValues[8] = 0
+            ScalarValues[9] = 0
+            ScalarValues[10] = 0
+            ScalarValues[11] = 0
+            ScalarValues[12] = 0.4
+            ScalarValues[13] = 0
+            ScalarValues[14] = 2
+            ScalarValues[15] = 0.4
+            ScalarValues[16] = 0
+            ScalarValues[17] = 0
+            ScalarValues[18] = 0
+            ScalarValues[19] = 0.25
+            ScalarValues[20] = 0
+            ScalarValues[21] = 0.4
+            ScalarValues[22] = 0
+            ScalarValues[23] = 0
+            ScalarValues[24] = 0
+            ScalarValues[25] = 2
+            ScalarValues[26] = 0
+            ScalarValues[27] = 2
+            ScalarValues[28] = 0
+            ScalarValues[29] = 2
+            ScalarValues[30] = 0
+            ScalarValues[31] = 0.25
+            ScalarValues[32] = 0
+            ScalarValues[33] = 0
+            ScalarValues[34] = 0
+            ScalarValues[35] = 0.25
+        }
+        VectorValues[28] =
+        {
+            VectorValues[0] = { R=1, G=1, B=1, A=0 }
+            VectorValues[1] = { R=0, G=0, B=0, A=0 }
+            VectorValues[2] = { R=0, G=0, B=0, A=0 }
+            VectorValues[3] = { R=1, G=1, B=1, A=0 }
+            VectorValues[4] = { R=1, G=1, B=1, A=0 }
+            VectorValues[5] = { R=0, G=0, B=0, A=0 }
+            VectorValues[6] = { R=0, G=0, B=0, A=0 }
+            VectorValues[7] = { R=0, G=0, B=0, A=0 }
+            VectorValues[8] = { R=1, G=1, B=1, A=0 }
+            VectorValues[9] = { R=1, G=1, B=1, A=0 }
+            VectorValues[10] = { R=1, G=1, B=1, A=0 }
+            VectorValues[11] = { R=0, G=0, B=0, A=0 }
+            VectorValues[12] = { R=1, G=1, B=1, A=0 }
+            VectorValues[13] = { R=0, G=0, B=0, A=0 }
+            VectorValues[14] = { R=1, G=1, B=1, A=0 }
+            VectorValues[15] = { R=1, G=1, B=1, A=0 }
+            VectorValues[16] = { R=0, G=0, B=0, A=0 }
+            VectorValues[17] = { R=1, G=1, B=1, A=0 }
+            VectorValues[18] = { R=0.5, G=0.5, B=0.5, A=0 }
+            VectorValues[19] = { R=0, G=0, B=0, A=0 }
+            VectorValues[20] = { R=1, G=1, B=1, A=0 }
+            VectorValues[21] = { R=1, G=1, B=1, A=0 }
+            VectorValues[22] = { R=0, G=0, B=0, A=0 }
+            VectorValues[23] = { R=1, G=1, B=1, A=0 }
+            VectorValues[24] = { R=1, G=1, B=1, A=0 }
+            VectorValues[25] = { R=0, G=0, B=0, A=0 }
+            VectorValues[26] = { R=1, G=1, B=1, A=0 }
+            VectorValues[27] = { R=0, G=0, B=0, A=0 }
+        }
+        TextureValues[0] = {}
+    }
+    ReferencedTextures[9] =
+    {
+        ReferencedTextures[0] = Texture2D'/Engine/EngineMaterials/WeightMapPlaceholderTexture.WeightMapPlaceholderTexture'
+        ReferencedTextures[1] = Texture2D'/Game/Materials/Ground/T_Grass01.T_Grass01'
+        ReferencedTextures[2] = Texture2D'/Engine/MapTemplates/TilingNoise05.TilingNoise05'
+        ReferencedTextures[3] = Texture2D'/Game/Materials/Ground/T_Grass01_n.T_Grass01_n'
+        ReferencedTextures[4] = Texture2D'/Game/Materials/Textures/T_SimpleNoise1024.T_SimpleNoise1024'
+        ReferencedTextures[5] = Texture2D'/Game/Materials/Ground/T_GrassLongThick.T_GrassLongThick'
+        ReferencedTextures[6] = Texture2D'/Game/Materials/Textures/T_SharpNoise.T_SharpNoise'
+        ReferencedTextures[7] = Texture2D'/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture'
+        ReferencedTextures[8] = Texture2D'/Game/Materials/Ground/T_GrassAutumn.T_GrassAutumn'
+    }
+}
+BlendMode = BLEND_Opaque (0)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[0] = {}
+CollectedScalarParameters[36] =
+{
+    CollectedScalarParameters[0] = { Value=0, Name=SandLongPower02, Group=None }
+    CollectedScalarParameters[1] = { Value=0, Name=SnowLongPower02, Group=None }
+    CollectedScalarParameters[2] = { Value=0, Name=AutumnSecondColorPower, Group=None }
+    CollectedScalarParameters[3] = { Value=0, Name=SandBasecolorLerpAlpha, Group=None }
+    CollectedScalarParameters[4] = { Value=0.25, Name=AutumnPower, Group=None }
+    CollectedScalarParameters[5] = { Value=0, Name=SandNormalStr, Group=None }
+    CollectedScalarParameters[6] =
+    {
+        Value = 0
+        Name = GrassMeadowLongGrassPower01
+        Group = None
+    }
+    CollectedScalarParameters[7] = { Value=0, Name=GrassMeadowNormalStr, Group=None }
+    CollectedScalarParameters[8] =
+    {
+        Value = 0
+        Name = GrassMeadowLongGrassPower02
+        Group = None
+    }
+    CollectedScalarParameters[9] = { Value=0, Name=SnowRoughnessPower, Group=None }
+    CollectedScalarParameters[10] = { Value=0, Name=AutumnLongPower02, Group=None }
+    CollectedScalarParameters[11] = { Value=0, Name=SnowLongPower01, Group=None }
+    CollectedScalarParameters[12] = { Value=0.4, Name=SnowNoisePower, Group=None }
+    CollectedScalarParameters[13] = { Value=0, Name=AutumnRoughnessPower, Group=None }
+    CollectedScalarParameters[14] =
+    {
+        Value = 2
+        Name = SandRoughnessMultiplier
+        Group = None
+    }
+    CollectedScalarParameters[15] =
+    {
+        Value = 0.4
+        Name = GrassAutumnNoisePower
+        Group = None
+    }
+    CollectedScalarParameters[16] = { Value=0, Name=SandLongPower01, Group=None }
+    CollectedScalarParameters[17] = { Value=0, Name=SnowNormalStr, Group=None }
+    CollectedScalarParameters[18] = { Value=0, Name=SnowBasecolorLerpAlpha, Group=None }
+    CollectedScalarParameters[19] = { Value=0.25, Name=GrassMeadowPower, Group=None }
+    CollectedScalarParameters[20] = { Value=0, Name=SandRoughnessPower, Group=None }
+    CollectedScalarParameters[21] =
+    {
+        Value = 0.4
+        Name = GrassMeadowNoisePower
+        Group = None
+    }
+    CollectedScalarParameters[22] =
+    {
+        Value = 0
+        Name = AutumnBasecolorLerpAlpha
+        Group = None
+    }
+    CollectedScalarParameters[23] = { Value=0, Name=SandSpecular, Group=None }
+    CollectedScalarParameters[24] = { Value=0, Name=SnowSpecular, Group=None }
+    CollectedScalarParameters[25] =
+    {
+        Value = 2
+        Name = GrassMeadowRoughnessMultiplier
+        Group = None
+    }
+    CollectedScalarParameters[26] =
+    {
+        Value = 0
+        Name = GrassMeadowSecondColorPower
+        Group = None
+    }
+    CollectedScalarParameters[27] =
+    {
+        Value = 2
+        Name = AutumnRoughnessMultiplier
+        Group = None
+    }
+    CollectedScalarParameters[28] = { Value=0, Name=SnowSecondColorPower, Group=None }
+    CollectedScalarParameters[29] =
+    {
+        Value = 2
+        Name = SnowRoughnessMultiplier
+        Group = None
+    }
+    CollectedScalarParameters[30] = { Value=0, Name=SandSecondColorPower, Group=None }
+    CollectedScalarParameters[31] = { Value=0.25, Name=SandPower, Group=None }
+    CollectedScalarParameters[32] =
+    {
+        Value = 0
+        Name = GrassMeadowRoughnessPower
+        Group = None
+    }
+    CollectedScalarParameters[33] =
+    {
+        Value = 0
+        Name = GrassMeadowBasecolorLerpAlpha
+        Group = None
+    }
+    CollectedScalarParameters[34] = { Value=0, Name=AutumnLongPower01, Group=None }
+    CollectedScalarParameters[35] = { Value=0.25, Name=SnowPower, Group=None }
+}
+CollectedVectorParameters[28] =
+{
+    CollectedVectorParameters[0] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassBlueColor01
+        Group = None
+    }
+    CollectedVectorParameters[1] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassMeadowLongGrassColor01
+        Group = None
+    }
+    CollectedVectorParameters[2] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = SandLongColor02
+        Group = None
+    }
+    CollectedVectorParameters[3] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = SandColor02
+        Group = None
+    }
+    CollectedVectorParameters[4] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = SnowNoiseLerpColor
+        Group = None
+    }
+    CollectedVectorParameters[5] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = AutumnLongColor01
+        Group = None
+    }
+    CollectedVectorParameters[6] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassBlueLongGrassColor01
+        Group = None
+    }
+    CollectedVectorParameters[7] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = SandLongColor01
+        Group = None
+    }
+    CollectedVectorParameters[8] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = AutumnColor01
+        Group = None
+    }
+    CollectedVectorParameters[9] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassForestColor02
+        Group = None
+    }
+    CollectedVectorParameters[10] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = NoiseLerpColor
+        Group = None
+    }
+    CollectedVectorParameters[11] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = AutumnLongColor02
+        Group = None
+    }
+    CollectedVectorParameters[12] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = SandColor01
+        Group = None
+    }
+    CollectedVectorParameters[13] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassBlueLongGrassColor02
+        Group = None
+    }
+    CollectedVectorParameters[14] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = AutumnColor02
+        Group = None
+    }
+    CollectedVectorParameters[15] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassMeadowColor02
+        Group = None
+    }
+    CollectedVectorParameters[16] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassMeadowLongGrassColor02
+        Group = None
+    }
+    CollectedVectorParameters[17] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = SnowColor01
+        Group = None
+    }
+    CollectedVectorParameters[18] =
+    {
+        Value = { R=0.5, G=0.5, B=0.5, A=0 }
+        Name = Param
+        Group = None
+    }
+    CollectedVectorParameters[19] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassForestLongGrassColor02
+        Group = None
+    }
+    CollectedVectorParameters[20] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassForestColor01
+        Group = None
+    }
+    CollectedVectorParameters[21] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = AutumnNoiseLerpColor
+        Group = None
+    }
+    CollectedVectorParameters[22] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = SnowLongColor02
+        Group = None
+    }
+    CollectedVectorParameters[23] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = SnowColor02
+        Group = None
+    }
+    CollectedVectorParameters[24] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassMeadowColor01
+        Group = None
+    }
+    CollectedVectorParameters[25] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = SnowLongColor01
+        Group = None
+    }
+    CollectedVectorParameters[26] =
+    {
+        Value = { R=1, G=1, B=1, A=0 }
+        Name = GrassBlueColor02
+        Group = None
+    }
+    CollectedVectorParameters[27] =
+    {
+        Value = { R=0, G=0, B=0, A=0 }
+        Name = GrassForestLongGrassColor01
+        Group = None
+    }
+}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[3] =
+{
+    TextureStreamingData[0] =
+    {
+        SamplingScale = 0.046875
+        UVChannelIndex = 0
+        TextureName = T_Grass01
+    }
+    TextureStreamingData[1] =
+    {
+        SamplingScale = 0.359375
+        UVChannelIndex = 0
+        TextureName = T_GrassLongThick
+    }
+    TextureStreamingData[2] =
+    {
+        SamplingScale = 0.03125
+        UVChannelIndex = 0
+        TextureName = T_SimpleNoise1024
+    }
+}

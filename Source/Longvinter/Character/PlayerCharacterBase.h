@@ -24,20 +24,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void MoveFront(float Scale);
-	void MoveSide(float Scale);
-
 	UFUNCTION(Server, Reliable)
 	void ServerNormalAttackTest();
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	USpringArmComponent* mSpringArm;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	UCameraComponent* mCamera;
-
-	float mMoveDir;
 	bool mDeath;
-
+	class ULvPlayerAnimInstance* mAnimInst;
 };

@@ -698,7 +698,9 @@
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\gameinfo.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\playercharacterbase.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\playercharacterbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\lvplayeraniminstance.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayeraniminstance.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

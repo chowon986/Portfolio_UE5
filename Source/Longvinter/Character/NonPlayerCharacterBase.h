@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "../GameInfo.h"
 #include "CharacterBase.h"
 #include "NonPlayerCharacterBase.generated.h"
 

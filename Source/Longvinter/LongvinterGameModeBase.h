@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <Blueprint/UserWidget.h>
 #include "GameFramework/GameModeBase.h"
 #include "LongvinterGameModeBase.generated.h"
 
@@ -22,4 +23,11 @@ public:
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 	virtual void PostLogin(APlayerController* NewPlayer);
 	virtual void Tick(float DeltaTime)	override;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
+		TSubclassOf<UUserWidget>	m_StartHUDClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
+	UUserWidget* m_StartHUD;
 };

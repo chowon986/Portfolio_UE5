@@ -27,4 +27,7 @@ public:
 protected:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
+
+public:
+	void Click();
 };

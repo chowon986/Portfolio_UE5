@@ -696,7 +696,21 @@
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\core\\public\\internationalization\\polyglottextdata.h",
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\gameinfo.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayercontroller.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayercontroller.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\fishingspot.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\nonplayeractorbase.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\actorbase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\actorbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\nonplayeractorbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\fishingspot.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\vendorbase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\vendorbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\lvplayer.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\playercharacterbase.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\playercharacterbase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayer.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

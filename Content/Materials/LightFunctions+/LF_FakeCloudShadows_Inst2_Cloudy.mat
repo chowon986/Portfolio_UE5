@@ -1,0 +1,4 @@
+Diffuse=BlendFunc_DefBase
+Other[0]=T_Sky_cloudy
+Other[1]=BlendFunc_DefBlend
+Other[2]=cloudspackedv3

@@ -1,0 +1,4 @@
+Diffuse=T_Caustics_E
+Normal=T_Water_Var1_nrm
+Emissive=T_Caustics_E
+Other[0]=T_Water_Var2_nrm

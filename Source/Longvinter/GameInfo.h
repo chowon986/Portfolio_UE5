@@ -75,10 +75,10 @@ struct FBuffTable : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		EBuffType BuffType;
+	EBuffType BuffType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		float Amount;
+	float Amount;
 };
 
 USTRUCT(BlueprintType)
@@ -101,10 +101,10 @@ struct FEncyclopediaTable : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		FName Name;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		TArray<int32> EncyclopediaList;
+	TArray<int32> EncyclopediaList;
 };
 
 USTRUCT(BlueprintType)
@@ -114,10 +114,10 @@ struct FQuestTable : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		FName Name;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		int32 TotalCount;
+	int32 TotalCount;
 };
 
 UCLASS()

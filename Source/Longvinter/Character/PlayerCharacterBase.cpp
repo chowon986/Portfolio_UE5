@@ -2,56 +2,33 @@
 
 
 #include "PlayerCharacterBase.h"
+#include "LvPlayerAnimInstance.h"
 
 APlayerCharacterBase::APlayerCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	mSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-
-	mSpringArm->SetupAttachment(GetMesh());
-	mCamera->SetupAttachment(mSpringArm);
-
-	mSpringArm->TargetArmLength = 500.f;
-
-	mSpringArm->SetRelativeLocation(FVector(0.0, 0.0, 160.0));
-	mSpringArm->SetRelativeRotation(FRotator(-15.0, 90.0, 0.0));
+	mMoveDir = 0.f;
 }
 
 void APlayerCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	mAnimInst = Cast<ULvPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
 }
 
 void APlayerCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 void APlayerCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	PlayerInputComponent->BindAxis<APlayerCharacterBase>(TEXT("MoveFront"), this, &APlayerCharacterBase::MoveFront);
-	PlayerInputComponent->BindAxis<APlayerCharacterBase>(TEXT("MoveSide"), this, &APlayerCharacterBase::MoveSide);
 	PlayerInputComponent->BindAction<APlayerCharacterBase>(TEXT("NormalAttackTest"), EInputEvent::IE_Pressed, this, &APlayerCharacterBase::ServerNormalAttackTest);
-}
-
-void APlayerCharacterBase::MoveFront(float Scale)
-{
-	if (Scale == 0.f)
-		return;
-
-	AddMovementInput(GetActorForwardVector(), Scale);
-}
-
-void APlayerCharacterBase::MoveSide(float Scale)
-{
-	if (Scale == 0.f)
-		return;
-
-	AddMovementInput(GetActorRightVector(), Scale);
 }
 
 void APlayerCharacterBase::ServerNormalAttackTest_Implementation()
