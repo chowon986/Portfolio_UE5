@@ -121,7 +121,9 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/*int itemID*/" },
 		{ "ModuleRelativePath", "Character/LvPlayer.h" },
+		{ "ToolTip", "int itemID" },
 	};
 #endif
 	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ALvPlayer, nullptr, "ClientOnFishingFinished", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020C40, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams)) };
@@ -204,7 +206,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ALvPlayer_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished, "ClientOnFishingFinished" }, // 3792534775
+		{ &Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished, "ClientOnFishingFinished" }, // 831204662
 		{ &Z_Construct_UFunction_ALvPlayer_ServerSetState, "ServerSetState" }, // 2613808317
 	};
 #if WITH_METADATA
@@ -310,9 +312,9 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		{ EPlayerState_StaticEnum, TEXT("EPlayerState"), &Z_Registration_Info_UEnum_EPlayerState, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 467600455U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 2970190602U) },
+		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 3909986995U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_2230549422(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_326289091(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo));

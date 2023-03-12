@@ -58,7 +58,7 @@ public:
 	bool GetFinishFishing() { return mFinishFishing; }
 
 	UFUNCTION(Client, Unreliable)
-	void ClientOnFishingFinished();
+	void ClientOnFishingFinished(/*int itemID*/);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
@@ -77,6 +77,7 @@ public:
 	float mFishingTime;
 	float mBanFishingTime;
 	FTimerHandle FishingTimerHandle;
+	FTimerHandle SetIdleStateTimerHandle;
 
 	UPROPERTY(Replicated)
 	bool mCanFishing;

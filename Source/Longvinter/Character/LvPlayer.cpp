@@ -94,12 +94,14 @@ void ALvPlayer::ServerOnFishingTimerExpired()
 	ClientOnFishingFinished(/*여기 ItemId 넘겨주기*/);
 	// GetInventoryComponent()->ServerAddItem(ItemId); 서버와 연동해서
 	FishingTimerHandle.Invalidate();
-	FTimerHandle SetIdleStateTimerHandle;
-	GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda([this]() {
-		if (IsValid(this))
+	GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
+		[this]() 
 		{
-			this->SetState(EPlayerState::Idle);
-		}
+			if (IsValid(this))
+			{
+				this->SetState(EPlayerState::Idle);
+				SetIdleStateTimerHandle.Invalidate();
+			}
 		}), 1, false);
 }
 
