@@ -78,9 +78,10 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 	}
 	DEFINE_FUNCTION(ALvPlayer::execClientOnFishingFinished)
 	{
+		P_GET_PROPERTY(FIntProperty,Z_Param_ItemID);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->ClientOnFishingFinished_Implementation();
+		P_THIS->ClientOnFishingFinished_Implementation(Z_Param_ItemID);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(ALvPlayer::execServerSetState)
@@ -92,9 +93,11 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		P_NATIVE_END;
 	}
 	static FName NAME_ALvPlayer_ClientOnFishingFinished = FName(TEXT("ClientOnFishingFinished"));
-	void ALvPlayer::ClientOnFishingFinished()
+	void ALvPlayer::ClientOnFishingFinished(int32 ItemID)
 	{
-		ProcessEvent(FindFunctionChecked(NAME_ALvPlayer_ClientOnFishingFinished),NULL);
+		LvPlayer_eventClientOnFishingFinished_Parms Parms;
+		Parms.ItemID=ItemID;
+		ProcessEvent(FindFunctionChecked(NAME_ALvPlayer_ClientOnFishingFinished),&Parms);
 	}
 	static FName NAME_ALvPlayer_ServerSetState = FName(TEXT("ServerSetState"));
 	void ALvPlayer::ServerSetState(EPlayerState State)
@@ -114,19 +117,23 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 	}
 	struct Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics
 	{
+		static const UECodeGen_Private::FUnsizedIntPropertyParams NewProp_ItemID;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
+	const UECodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::NewProp_ItemID = { "ItemID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(LvPlayer_eventClientOnFishingFinished_Parms, ItemID), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::NewProp_ItemID,
+	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "/*int itemID*/" },
 		{ "ModuleRelativePath", "Character/LvPlayer.h" },
-		{ "ToolTip", "int itemID" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ALvPlayer, nullptr, "ClientOnFishingFinished", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020C40, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ALvPlayer, nullptr, "ClientOnFishingFinished", nullptr, nullptr, sizeof(LvPlayer_eventClientOnFishingFinished_Parms), Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020C40, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished_Statics::Function_MetaDataParams)) };
 	UFunction* Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -206,7 +213,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ALvPlayer_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished, "ClientOnFishingFinished" }, // 831204662
+		{ &Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished, "ClientOnFishingFinished" }, // 685044061
 		{ &Z_Construct_UFunction_ALvPlayer_ServerSetState, "ServerSetState" }, // 2613808317
 	};
 #if WITH_METADATA
@@ -312,9 +319,9 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		{ EPlayerState_StaticEnum, TEXT("EPlayerState"), &Z_Registration_Info_UEnum_EPlayerState, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 467600455U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 3909986995U) },
+		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 3661266025U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_326289091(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_3286612680(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo));

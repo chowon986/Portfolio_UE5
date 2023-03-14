@@ -7,7 +7,8 @@ void UMainHUDBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	m_PlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
+	mPlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
+	mInventory = Cast<UInventoryBase>(GetWidgetFromName(FName(TEXT("UIInventory"))));
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

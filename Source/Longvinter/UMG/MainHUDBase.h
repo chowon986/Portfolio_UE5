@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include "PlayerInfoBase.h"
+#include "../UMG/InventoryBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -16,9 +17,12 @@ class LONGVINTER_API UMainHUDBase : public UUserWidget
 	GENERATED_BODY()
 
 private:
-		UPlayerInfoBase* m_PlayerInfo;
+	UPlayerInfoBase* mPlayerInfo;
+	UInventoryBase* mInventory;
 
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
+
+	UInventoryBase* GetInventoryWidget() { return mInventory; }
 };

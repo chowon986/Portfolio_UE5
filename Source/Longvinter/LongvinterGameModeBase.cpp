@@ -11,11 +11,11 @@ ALongvinterGameModeBase::ALongvinterGameModeBase()
 	DefaultPawnClass = ALvPlayer::StaticClass();
 	PlayerControllerClass = ALvPlayerController::StaticClass();
 
-	ConstructorHelpers::FClassFinder<UUserWidget>
+	static ConstructorHelpers::FClassFinder<UUserWidget>
 		finder(TEXT("WidgetBlueprint'/Game/UMG/UIMainHUD.UIMainHUD_C'"));
 	if (finder.Succeeded())
 	{
-		m_StartHUDClass = finder.Class;
+		m_MainHUDClass = finder.Class;
 	}
 }
 
@@ -23,13 +23,13 @@ void ALongvinterGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (IsValid(m_StartHUDClass))
+	if (IsValid(m_MainHUDClass))
 	{
 		// 생성한 객체의 주소를 m_MainHUD 에 받아둔다.
-		m_StartHUD = Cast<UUserWidget>(CreateWidget(GetWorld(), m_StartHUDClass));
-		if (IsValid(m_StartHUD))
+		m_MainHUD = Cast<UMainHUDBase>(CreateWidget(GetWorld(), m_MainHUDClass));
+		if (IsValid(m_MainHUD))
 		{
-			m_StartHUD->AddToViewport();
+			m_MainHUD->AddToViewport();
 		}
 	}
 }

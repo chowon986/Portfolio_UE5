@@ -3,10 +3,13 @@
 
 #include "LvPlayer.h"
 #include "LvPlayerController.h"
+#include "../UMG/ItemDataBase.h"
 #include "GameFramework/Actor.h"
 #include "Camera/CameraComponent.h"
 #include "LvPlayerAnimInstance.h"
-
+#include "../Inventory/Inventory.h"
+#include "../UMG/InventoryBase.h"
+#include "../Component/InventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 
 ALvPlayer::ALvPlayer()
@@ -45,11 +48,15 @@ ALvPlayer::ALvPlayer()
 
 	mCanFishing = true;
 	mFinishFishing = true;
+
+	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 }
 
 void ALvPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//UInventory::GetInst(GetWorld())->ShowInventory(false);
 }
 
 void ALvPlayer::ServerSetState_Implementation(EPlayerState State)
@@ -90,9 +97,9 @@ void ALvPlayer::ServerSetBanFishingTimer()
 void ALvPlayer::ServerOnFishingTimerExpired()
 {
 	// 낚시가 성공했을 때 캐릭터한테 아이템 주기
-	//int itemId = FMath::RandRange()
-	ClientOnFishingFinished(/*여기 ItemId 넘겨주기*/);
-	// GetInventoryComponent()->ServerAddItem(ItemId); 서버와 연동해서
+	int ItemID = 1;// FMath::RandRange(1, 17);
+	ClientOnFishingFinished(ItemID);
+	GetInventoryComponent()->ServerAddItem(ItemID);
 	FishingTimerHandle.Invalidate();
 	GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
 		[this]() 
@@ -258,6 +265,11 @@ void ALvPlayer::Fishing()
 	}
 }
 
+void ALvPlayer::InventoryOnOff()
+{
+	UInventory::GetInst(GetWorld())->ShowInventory(true);
+}
+
 void ALvPlayer::SetState(EPlayerState State)
 {
 	if (mPlayerState != State)
@@ -267,9 +279,7 @@ void ALvPlayer::SetState(EPlayerState State)
 	}
 }
 
-void ALvPlayer::ClientOnFishingFinished_Implementation(/*int itemID*/)
+void ALvPlayer::ClientOnFishingFinished_Implementation(int ItemID)
 {
 	mFinishFishing = true;
-	// GetInventoryComponent()->ClientAddItem(ItemId); 서버와 연동해서
-
 }

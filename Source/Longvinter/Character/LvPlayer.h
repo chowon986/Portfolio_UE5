@@ -51,14 +51,17 @@ public:
 	void Sit();
 	void Click();
 	void Fishing();
+	void InventoryOnOff();
 
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
 	bool GetCanFishing() { return mCanFishing; }
 	bool GetFinishFishing() { return mFinishFishing; }
+	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
 
 	UFUNCTION(Client, Unreliable)
-	void ClientOnFishingFinished(/*int itemID*/);
+	void ClientOnFishingFinished(int ItemID);
+
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
@@ -82,4 +85,7 @@ public:
 	UPROPERTY(Replicated)
 	bool mCanFishing;
 	bool mFinishFishing;
+
+	class UInventoryBase* InventoryBase;
+	class UInventoryComponent* mInventoryComponent;
 };

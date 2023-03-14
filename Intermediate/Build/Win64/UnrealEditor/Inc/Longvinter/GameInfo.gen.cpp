@@ -15,6 +15,7 @@ void EmptyLinkFunctionForGeneratedCodeGameInfo() {}
 	LONGVINTER_API UEnum* Z_Construct_UEnum_Longvinter_EQuestType();
 	LONGVINTER_API UScriptStruct* Z_Construct_UScriptStruct_FItemTable();
 	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FTableRowBase();
+	ENGINE_API UClass* Z_Construct_UClass_UTexture2D_NoRegister();
 	LONGVINTER_API UScriptStruct* Z_Construct_UScriptStruct_FBuffTable();
 	LONGVINTER_API UScriptStruct* Z_Construct_UScriptStruct_FCraftTable();
 	LONGVINTER_API UScriptStruct* Z_Construct_UScriptStruct_FEncyclopediaTable();
@@ -247,6 +248,18 @@ template<> LONGVINTER_API UScriptStruct* StaticStruct<FItemTable>()
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_CoolingDownDuration_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_CoolingDownDuration;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Texture_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_Texture;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_TexturePath_MetaData[];
+#endif
+		static const UECodeGen_Private::FStrPropertyParams NewProp_TexturePath;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Description_MetaData[];
+#endif
+		static const UECodeGen_Private::FStrPropertyParams NewProp_Description;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FStructParams ReturnStructParams;
 	};
@@ -294,6 +307,30 @@ template<> LONGVINTER_API UScriptStruct* StaticStruct<FItemTable>()
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_CoolingDownDuration = { "CoolingDownDuration", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FItemTable, CoolingDownDuration), METADATA_PARAMS(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_CoolingDownDuration_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_CoolingDownDuration_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Texture_MetaData[] = {
+		{ "AllowPrivateAccess", "TRUE" },
+		{ "Category", "ItemTable" },
+		{ "ModuleRelativePath", "GameInfo.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Texture = { "Texture", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FItemTable, Texture), Z_Construct_UClass_UTexture2D_NoRegister, METADATA_PARAMS(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Texture_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Texture_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_TexturePath_MetaData[] = {
+		{ "AllowPrivateAccess", "TRUE" },
+		{ "Category", "ItemTable" },
+		{ "ModuleRelativePath", "GameInfo.h" },
+	};
+#endif
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_TexturePath = { "TexturePath", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FItemTable, TexturePath), METADATA_PARAMS(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_TexturePath_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_TexturePath_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Description_MetaData[] = {
+		{ "AllowPrivateAccess", "TRUE" },
+		{ "Category", "ItemTable" },
+		{ "ModuleRelativePath", "GameInfo.h" },
+	};
+#endif
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Description = { "Description", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FItemTable, Description), METADATA_PARAMS(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Description_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Description_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FItemTable_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_ItemName,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_ItemType_Underlying,
@@ -301,6 +338,9 @@ template<> LONGVINTER_API UScriptStruct* StaticStruct<FItemTable>()
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_BuffList_Inner,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_BuffList,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_CoolingDownDuration,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Texture,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_TexturePath,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FItemTable_Statics::NewProp_Description,
 	};
 	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FItemTable_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
@@ -738,7 +778,7 @@ template<> LONGVINTER_API UScriptStruct* StaticStruct<FQuestTable>()
 		{ EQuestType_StaticEnum, TEXT("EQuestType"), &Z_Registration_Info_UEnum_EQuestType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 737190705U) },
 	};
 	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ScriptStructInfo[] = {
-		{ FItemTable::StaticStruct, Z_Construct_UScriptStruct_FItemTable_Statics::NewStructOps, TEXT("ItemTable"), &Z_Registration_Info_UScriptStruct_ItemTable, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FItemTable), 4141324417U) },
+		{ FItemTable::StaticStruct, Z_Construct_UScriptStruct_FItemTable_Statics::NewStructOps, TEXT("ItemTable"), &Z_Registration_Info_UScriptStruct_ItemTable, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FItemTable), 971107908U) },
 		{ FBuffTable::StaticStruct, Z_Construct_UScriptStruct_FBuffTable_Statics::NewStructOps, TEXT("BuffTable"), &Z_Registration_Info_UScriptStruct_BuffTable, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBuffTable), 103264110U) },
 		{ FCraftTable::StaticStruct, Z_Construct_UScriptStruct_FCraftTable_Statics::NewStructOps, TEXT("CraftTable"), &Z_Registration_Info_UScriptStruct_CraftTable, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCraftTable), 1849153925U) },
 		{ FEncyclopediaTable::StaticStruct, Z_Construct_UScriptStruct_FEncyclopediaTable_Statics::NewStructOps, TEXT("EncyclopediaTable"), &Z_Registration_Info_UScriptStruct_EncyclopediaTable, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FEncyclopediaTable), 3838308022U) },
@@ -747,7 +787,7 @@ template<> LONGVINTER_API UScriptStruct* StaticStruct<FQuestTable>()
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_UGameInfo, UGameInfo::StaticClass, TEXT("UGameInfo"), &Z_Registration_Info_UClass_UGameInfo, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGameInfo), 2906580411U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_555252864(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_3041258115(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_GameInfo_h_Statics::EnumInfo));

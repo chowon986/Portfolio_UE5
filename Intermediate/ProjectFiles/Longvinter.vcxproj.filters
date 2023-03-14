@@ -58,6 +58,12 @@
     <ClInclude Include="..\..\Source\Longvinter\LongvinterGameModeBase.h">
       <Filter>Source\Longvinter</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\LvGameInstance.cpp">
+      <Filter>Source\Longvinter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\LvGameInstance.h">
+      <Filter>Source\Longvinter</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\ObjectSpawnPoint.cpp">
       <Filter>Source\Longvinter</Filter>
     </ClCompile>
@@ -139,9 +145,45 @@
     <ClInclude Include="..\..\Source\Longvinter\Character\VendorBase.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
+    <Filter Include="Source\Longvinter\Component">
+      <UniqueIdentifier>{A6C72F4F-CBDA-38E4-8C66-B92E223A4C1D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\Component\InventoryComponent.cpp">
+      <Filter>Source\Longvinter\Component</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Component\InventoryComponent.h">
+      <Filter>Source\Longvinter\Component</Filter>
+    </ClInclude>
+    <Filter Include="Source\Longvinter\Inventory">
+      <UniqueIdentifier>{8A60C36B-5248-36CB-9F6E-AD030220C535}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\Inventory\Inventory.cpp">
+      <Filter>Source\Longvinter\Inventory</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Inventory\Inventory.h">
+      <Filter>Source\Longvinter\Inventory</Filter>
+    </ClInclude>
     <Filter Include="Source\Longvinter\UMG">
       <UniqueIdentifier>{5D17B0FB-8A6B-3969-8787-4940A4D126E3}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\InventoryBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\InventoryBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\InventoryItemBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\InventoryItemBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\ItemDataBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\ItemDataBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\UMG\MainHUDBase.cpp">
       <Filter>Source\Longvinter\UMG</Filter>
     </ClCompile>
@@ -152,6 +194,18 @@
       <Filter>Source\Longvinter\UMG</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\UMG\PlayerInfoBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\SgtLakeVenderBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\SgtLakeVenderBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\SgtLakeVenderItemBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\SgtLakeVenderItemBase.h">
       <Filter>Source\Longvinter\UMG</Filter>
     </ClInclude>
   </ItemGroup>
