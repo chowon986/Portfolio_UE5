@@ -710,7 +710,11 @@
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\playercharacterbase.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayer.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayer.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\inventory\\inventory.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\inventory.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\mushroom.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\mushroom.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

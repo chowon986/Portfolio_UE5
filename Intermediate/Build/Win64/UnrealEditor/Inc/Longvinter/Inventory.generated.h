@@ -8,6 +8,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UDataTable;
 class UGameInstance;
 class UInventory;
 #ifdef LONGVINTER_Inventory_generated_h
@@ -18,13 +19,13 @@ class UInventory;
 #define FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_15_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_15_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execShowInventory); \
+	DECLARE_FUNCTION(execSetItemTable); \
 	DECLARE_FUNCTION(execGetInst);
 
 
 #define FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execShowInventory); \
+	DECLARE_FUNCTION(execSetItemTable); \
 	DECLARE_FUNCTION(execGetInst);
 
 

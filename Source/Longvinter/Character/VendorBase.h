@@ -21,6 +21,12 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	void ShopOnOff(bool Value);
+
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	int32 mPrevTime;
 };

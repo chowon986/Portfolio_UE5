@@ -14,8 +14,42 @@ void EmptyLinkFunctionForGeneratedCodeMainHUDBase() {}
 	UMG_API UClass* Z_Construct_UClass_UUserWidget();
 	UPackage* Z_Construct_UPackage__Script_Longvinter();
 // End Cross Module References
+	DEFINE_FUNCTION(UMainHUDBase::execOnItemIconHovered)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->OnItemIconHovered();
+		P_NATIVE_END;
+	}
 	void UMainHUDBase::StaticRegisterNativesUMainHUDBase()
 	{
+		UClass* Class = UMainHUDBase::StaticClass();
+		static const FNameNativePtrPair Funcs[] = {
+			{ "OnItemIconHovered", &UMainHUDBase::execOnItemIconHovered },
+		};
+		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UMG/MainHUDBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UMainHUDBase, nullptr, "OnItemIconHovered", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UMainHUDBase);
 	UClass* Z_Construct_UClass_UMainHUDBase_NoRegister()
@@ -25,6 +59,7 @@ void EmptyLinkFunctionForGeneratedCodeMainHUDBase() {}
 	struct Z_Construct_UClass_UMainHUDBase_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
+		static const FClassFunctionLinkInfo FuncInfo[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
@@ -34,6 +69,9 @@ void EmptyLinkFunctionForGeneratedCodeMainHUDBase() {}
 	UObject* (*const Z_Construct_UClass_UMainHUDBase_Statics::DependentSingletons[])() = {
 		(UObject* (*)())Z_Construct_UClass_UUserWidget,
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
+	};
+	const FClassFunctionLinkInfo Z_Construct_UClass_UMainHUDBase_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_UMainHUDBase_OnItemIconHovered, "OnItemIconHovered" }, // 1652279506
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UMainHUDBase_Statics::Class_MetaDataParams[] = {
@@ -50,11 +88,11 @@ void EmptyLinkFunctionForGeneratedCodeMainHUDBase() {}
 		nullptr,
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
-		nullptr,
+		FuncInfo,
 		nullptr,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
-		0,
+		UE_ARRAY_COUNT(FuncInfo),
 		0,
 		0,
 		0x00B010A0u,
@@ -78,9 +116,9 @@ void EmptyLinkFunctionForGeneratedCodeMainHUDBase() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_MainHUDBase_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UMainHUDBase, UMainHUDBase::StaticClass, TEXT("UMainHUDBase"), &Z_Registration_Info_UClass_UMainHUDBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UMainHUDBase), 3989492795U) },
+		{ Z_Construct_UClass_UMainHUDBase, UMainHUDBase::StaticClass, TEXT("UMainHUDBase"), &Z_Registration_Info_UClass_UMainHUDBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UMainHUDBase), 655532585U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_MainHUDBase_h_2717337843(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_MainHUDBase_h_2534533131(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_MainHUDBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_MainHUDBase_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

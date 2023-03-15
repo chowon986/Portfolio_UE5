@@ -5,6 +5,8 @@
 #include "../GameInfo.h"
 #include "PlayerInfoBase.h"
 #include "../UMG/InventoryBase.h"
+#include "../UMG/SgtLakeVenderBase.h"
+#include "../UMG/InventoryItemBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -16,13 +18,22 @@ class LONGVINTER_API UMainHUDBase : public UUserWidget
 {
 	GENERATED_BODY()
 
-private:
-	UPlayerInfoBase* mPlayerInfo;
-	UInventoryBase* mInventory;
-
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
 	UInventoryBase* GetInventoryWidget() { return mInventory; }
+	USgtLakeVenderBase* GetVendorWidget() { return mSgtLakeVendor; }
+
+	UFUNCTION()
+		void OnItemIconHovered();
+
+private:
+	UPlayerInfoBase* mPlayerInfo;
+	UInventoryBase* mInventory;
+	USgtLakeVenderBase* mSgtLakeVendor;
+	UInventoryItemBase* mItemIcon;
+
+	//UPROPERTY(meta = (BindWidgetAnim), Transient)
+	//UWidgetAnimation* IConHoverAnimation;
 };

@@ -31,7 +31,5 @@ void UInventoryItemBase::InitFromData(UObject* _Data)
 		{
 			m_IconImg->SetBrushFromTexture(pTex2D);
 		}
-
-
 	}
 }

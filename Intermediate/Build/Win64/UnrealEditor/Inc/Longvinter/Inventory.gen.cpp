@@ -14,13 +14,14 @@ void EmptyLinkFunctionForGeneratedCodeInventory() {}
 	COREUOBJECT_API UClass* Z_Construct_UClass_UObject();
 	UPackage* Z_Construct_UPackage__Script_Longvinter();
 	ENGINE_API UClass* Z_Construct_UClass_UGameInstance_NoRegister();
+	ENGINE_API UClass* Z_Construct_UClass_UDataTable_NoRegister();
 // End Cross Module References
-	DEFINE_FUNCTION(UInventory::execShowInventory)
+	DEFINE_FUNCTION(UInventory::execSetItemTable)
 	{
-		P_GET_UBOOL(Z_Param_Show);
+		P_GET_OBJECT(UDataTable,Z_Param_Table);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->ShowInventory(Z_Param_Show);
+		P_THIS->SetItemTable(Z_Param_Table);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UInventory::execGetInst)
@@ -36,7 +37,7 @@ void EmptyLinkFunctionForGeneratedCodeInventory() {}
 		UClass* Class = UInventory::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "GetInst", &UInventory::execGetInst },
-			{ "ShowInventory", &UInventory::execShowInventory },
+			{ "SetItemTable", &UInventory::execSetItemTable },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -76,40 +77,35 @@ void EmptyLinkFunctionForGeneratedCodeInventory() {}
 		}
 		return ReturnFunction;
 	}
-	struct Z_Construct_UFunction_UInventory_ShowInventory_Statics
+	struct Z_Construct_UFunction_UInventory_SetItemTable_Statics
 	{
-		struct Inventory_eventShowInventory_Parms
+		struct Inventory_eventSetItemTable_Parms
 		{
-			bool Show;
+			UDataTable* Table;
 		};
-		static void NewProp_Show_SetBit(void* Obj);
-		static const UECodeGen_Private::FBoolPropertyParams NewProp_Show;
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_Table;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	void Z_Construct_UFunction_UInventory_ShowInventory_Statics::NewProp_Show_SetBit(void* Obj)
-	{
-		((Inventory_eventShowInventory_Parms*)Obj)->Show = 1;
-	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UInventory_ShowInventory_Statics::NewProp_Show = { "Show", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(Inventory_eventShowInventory_Parms), &Z_Construct_UFunction_UInventory_ShowInventory_Statics::NewProp_Show_SetBit, METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UInventory_ShowInventory_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UInventory_ShowInventory_Statics::NewProp_Show,
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UInventory_SetItemTable_Statics::NewProp_Table = { "Table", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(Inventory_eventSetItemTable_Parms, Table), Z_Construct_UClass_UDataTable_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UInventory_SetItemTable_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UInventory_SetItemTable_Statics::NewProp_Table,
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UInventory_ShowInventory_Statics::Function_MetaDataParams[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UInventory_SetItemTable_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "Inventory/Inventory.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UInventory_ShowInventory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UInventory, nullptr, "ShowInventory", nullptr, nullptr, sizeof(Z_Construct_UFunction_UInventory_ShowInventory_Statics::Inventory_eventShowInventory_Parms), Z_Construct_UFunction_UInventory_ShowInventory_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventory_ShowInventory_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UInventory_ShowInventory_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventory_ShowInventory_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UInventory_ShowInventory()
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UInventory_SetItemTable_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UInventory, nullptr, "SetItemTable", nullptr, nullptr, sizeof(Z_Construct_UFunction_UInventory_SetItemTable_Statics::Inventory_eventSetItemTable_Parms), Z_Construct_UFunction_UInventory_SetItemTable_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventory_SetItemTable_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UInventory_SetItemTable_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventory_SetItemTable_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UInventory_SetItemTable()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UInventory_ShowInventory_Statics::FuncParams);
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UInventory_SetItemTable_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -134,7 +130,7 @@ void EmptyLinkFunctionForGeneratedCodeInventory() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UInventory_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UInventory_GetInst, "GetInst" }, // 1276735056
-		{ &Z_Construct_UFunction_UInventory_ShowInventory, "ShowInventory" }, // 1719458714
+		{ &Z_Construct_UFunction_UInventory_SetItemTable, "SetItemTable" }, // 3154105765
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UInventory_Statics::Class_MetaDataParams[] = {
@@ -179,9 +175,9 @@ void EmptyLinkFunctionForGeneratedCodeInventory() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UInventory, UInventory::StaticClass, TEXT("UInventory"), &Z_Registration_Info_UClass_UInventory, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventory), 4124065864U) },
+		{ Z_Construct_UClass_UInventory, UInventory::StaticClass, TEXT("UInventory"), &Z_Registration_Info_UClass_UInventory, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventory), 3728604621U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_2819393817(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_730148768(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Inventory_Inventory_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

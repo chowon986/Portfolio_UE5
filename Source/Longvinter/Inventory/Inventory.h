@@ -25,7 +25,6 @@ public:
 	static UInventory* GetInst(UGameInstance* _GameInst);
 
 	UFUNCTION(BlueprintCallable)
-	void ShowInventory(bool Show);
 	void SetItemTable(UDataTable* Table);
 	void UpdateItems(TArray<int32> Items);
 
@@ -33,10 +32,11 @@ public:
 
 	bool IsInventoryOpen();
 
+	static UWorld* GetWorld() { return mCurWorld; }
+
 private:
 	static UWorld* mCurWorld;
 
 public:
 	UDataTable* mItemTable;
-	int32 mPrevTime;
 };

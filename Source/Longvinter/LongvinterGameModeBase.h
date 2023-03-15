@@ -27,6 +27,7 @@ public:
 
 	UMainHUDBase* GetMainHUD() { return m_MainHUD; }
 
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
 		TSubclassOf<UUserWidget>	m_StartHUDClass;

@@ -121,6 +121,12 @@
     <ClInclude Include="..\..\Source\Longvinter\Character\LvPlayerController.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\Mushroom.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\Mushroom.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\NonPlayerActorBase.cpp">
       <Filter>Source\Longvinter\Character</Filter>
     </ClCompile>

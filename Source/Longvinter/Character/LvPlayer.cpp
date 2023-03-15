@@ -9,7 +9,9 @@
 #include "LvPlayerAnimInstance.h"
 #include "../Inventory/Inventory.h"
 #include "../UMG/InventoryBase.h"
+#include "../UMG/MainHUDBase.h"
 #include "../Component/InventoryComponent.h"
+#include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
 
 ALvPlayer::ALvPlayer()
@@ -50,6 +52,8 @@ ALvPlayer::ALvPlayer()
 	mFinishFishing = true;
 
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+
+	mPrevTime = 0;
 }
 
 void ALvPlayer::BeginPlay()
@@ -97,7 +101,7 @@ void ALvPlayer::ServerSetBanFishingTimer()
 void ALvPlayer::ServerOnFishingTimerExpired()
 {
 	// 낚시가 성공했을 때 캐릭터한테 아이템 주기
-	int ItemID = 1;// FMath::RandRange(1, 17);
+	int ItemID = FMath::RandRange(1, 17);
 	ClientOnFishingFinished(ItemID);
 	GetInventoryComponent()->ServerAddItem(ItemID);
 	FishingTimerHandle.Invalidate();
@@ -146,6 +150,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Wave"), EInputEvent::IE_Pressed, this, &ALvPlayer::Wave);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Click"), EInputEvent::IE_Pressed, this, &ALvPlayer::Click);
+	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Inventory"), EInputEvent::IE_Pressed, this, &ALvPlayer::InventoryOnOff);
 }
 
 void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -267,7 +272,36 @@ void ALvPlayer::Fishing()
 
 void ALvPlayer::InventoryOnOff()
 {
-	UInventory::GetInst(GetWorld())->ShowInventory(true);
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		bool IsOpened = IsInventoryOpen();
+
+		int CurTime = 0;
+		float CurPartical = 0.f;
+		UGameplayStatics::GetAccurateRealTime(CurTime, CurPartical);
+
+		if (CurTime - mPrevTime < 1)
+			return;
+
+		mPrevTime = CurTime;
+			
+		ALongvinterGameModeBase* GameMode = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
+
+		if (nullptr == GameMode)
+			return;
+
+		UMainHUDBase* MainHUDBase = GameMode->GetMainHUD();
+		UInventoryBase* InventoryWidet = MainHUDBase->GetInventoryWidget();
+
+		if (!IsOpened)
+		{
+			InventoryWidet->SetVisibility(ESlateVisibility::Visible);
+		}
+		else
+		{
+			InventoryWidet->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
 }
 
 void ALvPlayer::SetState(EPlayerState State)
@@ -279,7 +313,26 @@ void ALvPlayer::SetState(EPlayerState State)
 	}
 }
 
+void ALvPlayer::ServerAddInventoryItem_Implementation(int ItemID)
+{
+	GetInventoryComponent()->ServerAddItem(ItemID);
+}
+
+
 void ALvPlayer::ClientOnFishingFinished_Implementation(int ItemID)
 {
 	mFinishFishing = true;
+}
+
+bool ALvPlayer::IsInventoryOpen()
+{
+	AGameModeBase* Gameee = GetWorld()->GetAuthGameMode();
+	ALongvinterGameModeBase* GameMode = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (nullptr == GameMode)
+		return false;
+
+	UMainHUDBase* MainHUDBase = GameMode->GetMainHUD();
+	UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
+
+	return InventoryWidget->IsVisible();
 }

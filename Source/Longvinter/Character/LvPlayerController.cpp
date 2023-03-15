@@ -5,12 +5,14 @@
 #include "FishingSpot.h"
 #include "VendorBase.h"
 #include "LvPlayer.h"
+#include "../Inventory/Inventory.h"
+#include "Mushroom.h"
 
 ALvPlayerController::ALvPlayerController()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	bShowMouseCursor = true;
 	bEnableClickEvents = true;
+
 }
 
 void ALvPlayerController::BeginPlay()
@@ -19,6 +21,7 @@ void ALvPlayerController::BeginPlay()
 
 	FInputModeGameAndUI	Mode;
 	SetInputMode(Mode);
+	bShowMouseCursor = true;
 }
 
 void ALvPlayerController::Tick(float DeltaTime)
@@ -65,12 +68,28 @@ void ALvPlayerController::Click()
 					PlayerCharacter->Fishing();
 				}
 			}
-		}
 
+			return;
+		}
+		
 		AVendorBase* Vendor = Cast<AVendorBase>(result.GetActor());
 		if (IsValid(Vendor))
 		{
+			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
+			
+			//Vendor->ShopOnOff(true);
+
 			PrintViewport(1.f, FColor::Red, TEXT("ClickVendor"));
+
+			return;
+		}
+
+		AMushroom* Mushroom = Cast<AMushroom>(result.GetActor());
+		if (IsValid(Mushroom))
+		{
+			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
+			PlayerCharacter->ServerAddInventoryItem(149);
+			Mushroom->Destroy();
 		}
 	}
 }

@@ -4,6 +4,9 @@
 #include "InventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 #include <Longvinter/Inventory/Inventory.h>
+#include <Longvinter/LongvinterGameModeBase.h>
+#include "../UMG/MainHUDBase.h"
+#include "../UMG/InventoryBase.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()

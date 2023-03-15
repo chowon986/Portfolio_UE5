@@ -37,7 +37,6 @@ private:
 	void ServerOnFishingTimerExpired();
 	void ServerOnBanFishingTimerExpired();
 
-
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -62,6 +61,11 @@ public:
 	UFUNCTION(Client, Unreliable)
 	void ClientOnFishingFinished(int ItemID);
 
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddInventoryItem(int ItemID);
+
+	bool IsInventoryOpen();
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
@@ -88,4 +92,6 @@ public:
 
 	class UInventoryBase* InventoryBase;
 	class UInventoryComponent* mInventoryComponent;
+
+	int32 mPrevTime;
 };
