@@ -12,6 +12,9 @@ enum class EPlayerState : uint8
 	Idle,
 	SwimmingIdle,
 	Sit,
+	SitIdle,
+	SitWave,
+	Aim,
 	Fishing,
 	Death
 };
@@ -45,6 +48,7 @@ public:
 
 	void VerticalMove(float Scale);
 	void HorizontalMove(float Scale);
+	void Aim(float Scale);
 
 	void Wave();
 	void Sit();
@@ -60,7 +64,6 @@ public:
 
 	UFUNCTION(Client, Unreliable)
 	void ClientOnFishingFinished(int ItemID);
-
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddInventoryItem(int ItemID);
@@ -94,4 +97,5 @@ public:
 	class UInventoryComponent* mInventoryComponent;
 
 	int32 mPrevTime;
+
 };

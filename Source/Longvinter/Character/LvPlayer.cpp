@@ -146,6 +146,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("VerticalMove"), this, &ALvPlayer::VerticalMove);
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("HorizontalMove"), this, &ALvPlayer::HorizontalMove);
+	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
 
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Wave"), EInputEvent::IE_Pressed, this, &ALvPlayer::Wave);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
@@ -227,9 +228,31 @@ void ALvPlayer::HorizontalMove(float Scale)
 	AddMovementInput(GetActorRightVector(), Scale);
 }
 
+void ALvPlayer::Aim(float Scale)
+{
+	if (Scale == 1)
+	{
+		if (GetState() == EPlayerState::Idle)
+		{
+			SetState(EPlayerState::Aim);
+		}
+	}
+	else if (GetState() == EPlayerState::Aim && Scale == 0)
+	{
+		SetState(EPlayerState::Idle);
+	}
+}
+
 void ALvPlayer::Wave()
 {
-	mAnimInst->Wave();
+	if (GetState() == EPlayerState::SitIdle)
+	{
+		SetState(EPlayerState::SitWave);
+	}
+	else
+	{
+		mAnimInst->Wave();
+	}
 }
 
 void ALvPlayer::Sit()
@@ -240,9 +263,17 @@ void ALvPlayer::Sit()
 void ALvPlayer::Click()
 {
 	ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
-
+	
 	if (IsValid(PlayerController))
+	{
+		if (GetState() == EPlayerState::Aim)
+		{
+			PlayerController->UseTool();
+		}
+
+		else
 		PlayerController->Click();
+	}
 }
 
 void ALvPlayer::Fishing()
@@ -272,34 +303,30 @@ void ALvPlayer::Fishing()
 
 void ALvPlayer::InventoryOnOff()
 {
-	if (GetLocalRole() == ROLE_Authority)
+	bool IsOpened = IsInventoryOpen();
+
+	int CurTime = 0;
+	float CurPartical = 0.f;
+	UGameplayStatics::GetAccurateRealTime(CurTime, CurPartical);
+
+	if (CurTime - mPrevTime < 1)
+		return;
+
+	mPrevTime = CurTime;
+
+	ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(GetController());
+	if (true == LvPlayerController->IsLocalController())
 	{
-		bool IsOpened = IsInventoryOpen();
-
-		int CurTime = 0;
-		float CurPartical = 0.f;
-		UGameplayStatics::GetAccurateRealTime(CurTime, CurPartical);
-
-		if (CurTime - mPrevTime < 1)
-			return;
-
-		mPrevTime = CurTime;
-			
-		ALongvinterGameModeBase* GameMode = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
-
-		if (nullptr == GameMode)
-			return;
-
-		UMainHUDBase* MainHUDBase = GameMode->GetMainHUD();
-		UInventoryBase* InventoryWidet = MainHUDBase->GetInventoryWidget();
+		UMainHUDBase* MainHUDBase = LvPlayerController->GetMainHUD();
+		UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
 
 		if (!IsOpened)
 		{
-			InventoryWidet->SetVisibility(ESlateVisibility::Visible);
+			InventoryWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 		else
 		{
-			InventoryWidet->SetVisibility(ESlateVisibility::Hidden);
+			InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
 }
@@ -326,13 +353,15 @@ void ALvPlayer::ClientOnFishingFinished_Implementation(int ItemID)
 
 bool ALvPlayer::IsInventoryOpen()
 {
-	AGameModeBase* Gameee = GetWorld()->GetAuthGameMode();
-	ALongvinterGameModeBase* GameMode = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
-	if (nullptr == GameMode)
-		return false;
+	ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(GetController());
+	UMainHUDBase* MainHUDBase = LvPlayerController->GetMainHUD();
 
-	UMainHUDBase* MainHUDBase = GameMode->GetMainHUD();
-	UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
+	if (IsValid(MainHUDBase))
+	{
+		UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
 
-	return InventoryWidget->IsVisible();
+		return InventoryWidget->IsVisible();
+	}
+
+	return false;
 }

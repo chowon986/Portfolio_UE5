@@ -75,21 +75,38 @@ void ULvPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void ULvPlayerAnimInstance::Wave()
 {
-	if (mPlayerState == EPlayerState::Sit)
-	{
-		if (!Montage_IsPlaying(mSittingWaveMontage))
-		{
-			Montage_SetPosition(mSittingWaveMontage, 0.f);
-			Montage_Play(mSittingWaveMontage);
-		}
-	}
-	else
+	if (mPlayerState == EPlayerState::Idle)
 	{
 		if (!Montage_IsPlaying(mWaveMontage))
 		{
 			Montage_SetPosition(mWaveMontage, 0.f);
 			Montage_Play(mWaveMontage);
 		}
+	}
+}
+
+void ULvPlayerAnimInstance::Aim()
+{
+	if (!Montage_IsPlaying(mSawAimMontage))
+	{
+		Montage_SetPosition(mSawAimMontage, 0.f);
+		Montage_Play(mSawAimMontage);
+	}
+
+	if (mPlayerState == EPlayerState::Aim)
+	{
+		//if (mWeaponName == "ChainSaw")
+		{
+
+		}
+		//else if (mWeaponName == "Gun")
+		//{
+		//	if (!Montage_IsPlaying(mSittingWaveMontage))
+		//	{
+		//		Montage_SetPosition(mSittingWaveMontage, 0.f);
+		//		Montage_Play(mSittingWaveMontage);
+		//	}
+		//}
 	}
 }
 
@@ -122,4 +139,18 @@ void ULvPlayerAnimInstance::AnimNotify_FishingEnd()
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
 
 	PlayerCharacter->SetState(EPlayerState::Idle);
+}
+
+void ULvPlayerAnimInstance::AnimNotify_SittingEnd()
+{
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
+
+	PlayerCharacter->SetState(EPlayerState::SitIdle);
+}
+
+void ULvPlayerAnimInstance::AnimNotify_SitWaveEnd()
+{
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
+
+	PlayerCharacter->SetState(EPlayerState::SitIdle);
 }

@@ -22,6 +22,7 @@ public:
 
 public:
 	void Wave();
+	void Aim();
 	void Sit();
 	void Fishing();
 
@@ -32,6 +33,10 @@ public:
 		void AnimNotify_WaveEnd();
 	UFUNCTION()
 		void AnimNotify_FishingEnd();
+	UFUNCTION()
+		void AnimNotify_SittingEnd();
+	UFUNCTION()
+		void AnimNotify_SitWaveEnd();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
@@ -45,6 +50,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		UAnimMontage* mSittingWaveMontage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		UAnimMontage* mSawAimMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		EPlayerState mPlayerState;
 	
 
@@ -57,5 +64,5 @@ public:
 	bool mCanFishing;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	bool mFinishFishing;
-
+	FName mWeaponName;
 };

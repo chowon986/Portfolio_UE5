@@ -17,6 +17,20 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 	ENGINE_API UClass* Z_Construct_UClass_UAnimMontage_NoRegister();
 	LONGVINTER_API UEnum* Z_Construct_UEnum_Longvinter_EPlayerState();
 // End Cross Module References
+	DEFINE_FUNCTION(ULvPlayerAnimInstance::execAnimNotify_SitWaveEnd)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->AnimNotify_SitWaveEnd();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(ULvPlayerAnimInstance::execAnimNotify_SittingEnd)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->AnimNotify_SittingEnd();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(ULvPlayerAnimInstance::execAnimNotify_FishingEnd)
 	{
 		P_FINISH;
@@ -43,6 +57,8 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		UClass* Class = ULvPlayerAnimInstance::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "AnimNotify_FishingEnd", &ULvPlayerAnimInstance::execAnimNotify_FishingEnd },
+			{ "AnimNotify_SittingEnd", &ULvPlayerAnimInstance::execAnimNotify_SittingEnd },
+			{ "AnimNotify_SitWaveEnd", &ULvPlayerAnimInstance::execAnimNotify_SitWaveEnd },
 			{ "AnimNotify_WaveEnd", &ULvPlayerAnimInstance::execAnimNotify_WaveEnd },
 			{ "AnimNotify_WaveStart", &ULvPlayerAnimInstance::execAnimNotify_WaveStart },
 		};
@@ -67,6 +83,50 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_FishingEnd_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Character/LvPlayerAnimInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULvPlayerAnimInstance, nullptr, "AnimNotify_SittingEnd", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Character/LvPlayerAnimInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULvPlayerAnimInstance, nullptr, "AnimNotify_SitWaveEnd", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -148,6 +208,10 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mSittingWaveMontage_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_mSittingWaveMontage;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mSawAimMontage_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_mSawAimMontage;
 		static const UECodeGen_Private::FBytePropertyParams NewProp_mPlayerState_Underlying;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mPlayerState_MetaData[];
@@ -168,6 +232,8 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ULvPlayerAnimInstance_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_FishingEnd, "AnimNotify_FishingEnd" }, // 493892488
+		{ &Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SittingEnd, "AnimNotify_SittingEnd" }, // 2562757647
+		{ &Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_SitWaveEnd, "AnimNotify_SitWaveEnd" }, // 4282883524
 		{ &Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_WaveEnd, "AnimNotify_WaveEnd" }, // 257587251
 		{ &Z_Construct_UFunction_ULvPlayerAnimInstance_AnimNotify_WaveStart, "AnimNotify_WaveStart" }, // 336478372
 	};
@@ -226,6 +292,14 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSittingWaveMontage = { "mSittingWaveMontage", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ULvPlayerAnimInstance, mSittingWaveMontage), Z_Construct_UClass_UAnimMontage_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSittingWaveMontage_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSittingWaveMontage_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSawAimMontage_MetaData[] = {
+		{ "AllowPrivateAccess", "TRUE" },
+		{ "Category", "LvPlayerAnimInstance" },
+		{ "ModuleRelativePath", "Character/LvPlayerAnimInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSawAimMontage = { "mSawAimMontage", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ULvPlayerAnimInstance, mSawAimMontage), Z_Construct_UClass_UAnimMontage_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSawAimMontage_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSawAimMontage_MetaData)) };
 	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_MetaData[] = {
@@ -234,7 +308,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		{ "ModuleRelativePath", "Character/LvPlayerAnimInstance.h" },
 	};
 #endif
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState = { "mPlayerState", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ULvPlayerAnimInstance, mPlayerState), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_MetaData)) }; // 467600455
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState = { "mPlayerState", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ULvPlayerAnimInstance, mPlayerState), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_MetaData)) }; // 3494842403
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mFinishFishing_MetaData[] = {
 		{ "AllowPrivateAccess", "TRUE" },
@@ -253,6 +327,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSit,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mWaveMontage,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSittingWaveMontage,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mSawAimMontage,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mPlayerState,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULvPlayerAnimInstance_Statics::NewProp_mFinishFishing,
@@ -293,9 +368,9 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayerAnimInstance() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ULvPlayerAnimInstance, ULvPlayerAnimInstance::StaticClass, TEXT("ULvPlayerAnimInstance"), &Z_Registration_Info_UClass_ULvPlayerAnimInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULvPlayerAnimInstance), 1569727653U) },
+		{ Z_Construct_UClass_ULvPlayerAnimInstance, ULvPlayerAnimInstance::StaticClass, TEXT("ULvPlayerAnimInstance"), &Z_Registration_Info_UClass_ULvPlayerAnimInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULvPlayerAnimInstance), 4232233594U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_2300805667(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_3330243156(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

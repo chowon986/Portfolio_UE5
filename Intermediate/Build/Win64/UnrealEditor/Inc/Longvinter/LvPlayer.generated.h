@@ -14,8 +14,8 @@ enum class EPlayerState : uint8;
 #endif
 #define LONGVINTER_LvPlayer_generated_h
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_SPARSE_DATA
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_RPC_WRAPPERS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_SPARSE_DATA
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS \
 	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
 	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
@@ -25,7 +25,7 @@ enum class EPlayerState : uint8;
 	DECLARE_FUNCTION(execServerSetState);
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
 	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
@@ -35,7 +35,7 @@ enum class EPlayerState : uint8;
 	DECLARE_FUNCTION(execServerSetState);
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_EVENT_PARMS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_EVENT_PARMS \
 	struct LvPlayer_eventClientOnFishingFinished_Parms \
 	{ \
 		int32 ItemID; \
@@ -50,8 +50,8 @@ enum class EPlayerState : uint8;
 	};
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_CALLBACK_WRAPPERS
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_INCLASS_NO_PURE_DECLS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_CALLBACK_WRAPPERS
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesALvPlayer(); \
 	friend struct Z_Construct_UClass_ALvPlayer_Statics; \
@@ -67,7 +67,7 @@ public: \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_INCLASS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_INCLASS \
 private: \
 	static void StaticRegisterNativesALvPlayer(); \
 	friend struct Z_Construct_UClass_ALvPlayer_Statics; \
@@ -83,7 +83,7 @@ public: \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_STANDARD_CONSTRUCTORS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ALvPlayer(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ALvPlayer) \
@@ -96,7 +96,7 @@ private: \
 public:
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_ENHANCED_CONSTRUCTORS \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ALvPlayer(ALvPlayer&&); \
@@ -107,30 +107,30 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ALvPlayer)
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_19_PROLOG \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_EVENT_PARMS
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_PROLOG \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_EVENT_PARMS
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_GENERATED_BODY_LEGACY \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_SPARSE_DATA \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_RPC_WRAPPERS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_CALLBACK_WRAPPERS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_INCLASS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_STANDARD_CONSTRUCTORS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_SPARSE_DATA \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_CALLBACK_WRAPPERS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_INCLASS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_GENERATED_BODY \
+#define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_SPARSE_DATA \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_CALLBACK_WRAPPERS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_INCLASS_NO_PURE_DECLS \
-	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_22_ENHANCED_CONSTRUCTORS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_SPARSE_DATA \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_CALLBACK_WRAPPERS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_INCLASS_NO_PURE_DECLS \
+	FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -145,6 +145,9 @@ template<> LONGVINTER_API UClass* StaticClass<class ALvPlayer>();
 	op(EPlayerState::Idle) \
 	op(EPlayerState::SwimmingIdle) \
 	op(EPlayerState::Sit) \
+	op(EPlayerState::SitIdle) \
+	op(EPlayerState::SitWave) \
+	op(EPlayerState::Aim) \
 	op(EPlayerState::Fishing) \
 	op(EPlayerState::Death) 
 

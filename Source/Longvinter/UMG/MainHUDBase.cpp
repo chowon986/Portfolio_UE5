@@ -9,7 +9,7 @@ void UMainHUDBase::NativeConstruct()
 
 	mPlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
 	mInventory = Cast<UInventoryBase>(GetWidgetFromName(FName(TEXT("UIInventory"))));
-	//mInventory->SetVisibility(ESlateVisibility::Hidden);
+	mInventory->SetVisibility(ESlateVisibility::Hidden);
 	
 	//mItemIcon = Cast<UInventoryItemBase>(GetWidgetFromName(FName(TEXT("InventoryItemIcon"))));
 

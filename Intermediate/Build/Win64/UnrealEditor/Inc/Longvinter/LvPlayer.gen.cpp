@@ -42,17 +42,23 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		{ "EPlayerState::Idle", (int64)EPlayerState::Idle },
 		{ "EPlayerState::SwimmingIdle", (int64)EPlayerState::SwimmingIdle },
 		{ "EPlayerState::Sit", (int64)EPlayerState::Sit },
+		{ "EPlayerState::SitIdle", (int64)EPlayerState::SitIdle },
+		{ "EPlayerState::SitWave", (int64)EPlayerState::SitWave },
+		{ "EPlayerState::Aim", (int64)EPlayerState::Aim },
 		{ "EPlayerState::Fishing", (int64)EPlayerState::Fishing },
 		{ "EPlayerState::Death", (int64)EPlayerState::Death },
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UEnum_Longvinter_EPlayerState_Statics::Enum_MetaDataParams[] = {
+		{ "Aim.Name", "EPlayerState::Aim" },
 		{ "BlueprintType", "true" },
 		{ "Death.Name", "EPlayerState::Death" },
 		{ "Fishing.Name", "EPlayerState::Fishing" },
 		{ "Idle.Name", "EPlayerState::Idle" },
 		{ "ModuleRelativePath", "Character/LvPlayer.h" },
 		{ "Sit.Name", "EPlayerState::Sit" },
+		{ "SitIdle.Name", "EPlayerState::SitIdle" },
+		{ "SitWave.Name", "EPlayerState::SitWave" },
 		{ "SwimmingIdle.Name", "EPlayerState::SwimmingIdle" },
 	};
 #endif
@@ -198,7 +204,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
 	const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::NewProp_State_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::NewProp_State = { "State", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(LvPlayer_eventServerSetState_Parms, State), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(nullptr, 0) }; // 467600455
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::NewProp_State = { "State", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(LvPlayer_eventServerSetState_Parms, State), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(nullptr, 0) }; // 3494842403
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::NewProp_State_Underlying,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ALvPlayer_ServerSetState_Statics::NewProp_State,
@@ -259,7 +265,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_ALvPlayer_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_ALvPlayer_ClientOnFishingFinished, "ClientOnFishingFinished" }, // 685044061
 		{ &Z_Construct_UFunction_ALvPlayer_ServerAddInventoryItem, "ServerAddInventoryItem" }, // 1364000383
-		{ &Z_Construct_UFunction_ALvPlayer_ServerSetState, "ServerSetState" }, // 2613808317
+		{ &Z_Construct_UFunction_ALvPlayer_ServerSetState, "ServerSetState" }, // 2401251152
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALvPlayer_Statics::Class_MetaDataParams[] = {
@@ -294,7 +300,7 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		{ "ModuleRelativePath", "Character/LvPlayer.h" },
 	};
 #endif
-	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState = { "mPlayerState", nullptr, (EPropertyFlags)0x0010000000020025, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALvPlayer, mPlayerState), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState_MetaData)) }; // 467600455
+	const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState = { "mPlayerState", nullptr, (EPropertyFlags)0x0010000000020025, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALvPlayer, mPlayerState), Z_Construct_UEnum_Longvinter_EPlayerState, METADATA_PARAMS(Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALvPlayer_Statics::NewProp_mPlayerState_MetaData)) }; // 3494842403
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALvPlayer_Statics::NewProp_mCanFishing_MetaData[] = {
 		{ "ModuleRelativePath", "Character/LvPlayer.h" },
@@ -361,12 +367,12 @@ void EmptyLinkFunctionForGeneratedCodeLvPlayer() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo[] = {
-		{ EPlayerState_StaticEnum, TEXT("EPlayerState"), &Z_Registration_Info_UEnum_EPlayerState, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 467600455U) },
+		{ EPlayerState_StaticEnum, TEXT("EPlayerState"), &Z_Registration_Info_UEnum_EPlayerState, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 3494842403U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 2218301913U) },
+		{ Z_Construct_UClass_ALvPlayer, ALvPlayer::StaticClass, TEXT("ALvPlayer"), &Z_Registration_Info_UClass_ALvPlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ALvPlayer), 1490261586U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_2049518894(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_3121423728(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_Statics::EnumInfo));

@@ -16,6 +16,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_14_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_14_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execAnimNotify_SitWaveEnd); \
+	DECLARE_FUNCTION(execAnimNotify_SittingEnd); \
 	DECLARE_FUNCTION(execAnimNotify_FishingEnd); \
 	DECLARE_FUNCTION(execAnimNotify_WaveEnd); \
 	DECLARE_FUNCTION(execAnimNotify_WaveStart);
@@ -23,6 +25,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayerAnimInstance_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execAnimNotify_SitWaveEnd); \
+	DECLARE_FUNCTION(execAnimNotify_SittingEnd); \
 	DECLARE_FUNCTION(execAnimNotify_FishingEnd); \
 	DECLARE_FUNCTION(execAnimNotify_WaveEnd); \
 	DECLARE_FUNCTION(execAnimNotify_WaveStart);

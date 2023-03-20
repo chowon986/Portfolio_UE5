@@ -32,8 +32,6 @@ public:
 
 	bool IsInventoryOpen();
 
-	static UWorld* GetWorld() { return mCurWorld; }
-
 private:
 	static UWorld* mCurWorld;
 

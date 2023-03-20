@@ -10,7 +10,15 @@ UCLASS()
 class LONGVINTER_API ACharacterBase : public ACharacter
 {
 	GENERATED_BODY()
+protected:
+	// HP RPC, Replicated 관련 변수
+	UPROPERTY(EditDefaultsOnly, Category = "Health")
+		float MaxHealth;
+	UPROPERTY(ReplicatedUsing = OnRep_CurrentHealth)
+		float CurrentHealth;
 
+	float mMoveDir;
+	bool mDeath;
 public:
 	ACharacterBase();
 
@@ -35,14 +43,4 @@ public:
 	FORCEINLINE float GetCurrentHealth() const { return CurrentHealth; }
 
 	void OnHealthUpdate();
-
-protected:
-	// HP RPC, Replicated 관련 변수
-	UPROPERTY(EditDefaultsOnly, Category = "Health")
-	float MaxHealth;
-	UPROPERTY(ReplicatedUsing = OnRep_CurrentHealth)
-	float CurrentHealth;
-
-	float mMoveDir;
-	bool mDeath;
 };

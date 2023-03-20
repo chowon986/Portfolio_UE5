@@ -24,19 +24,4 @@ public:
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 	virtual void PostLogin(APlayerController* NewPlayer);
 	virtual void Tick(float DeltaTime)	override;
-
-	UMainHUDBase* GetMainHUD() { return m_MainHUD; }
-
-
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-		TSubclassOf<UUserWidget>	m_StartHUDClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	UUserWidget* m_StartHUD;
-
-	UMainHUDBase* m_MainHUD;
-
-private:
-	TSubclassOf<UUserWidget>	m_MainHUDClass;
 };

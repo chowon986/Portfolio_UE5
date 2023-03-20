@@ -27,28 +27,28 @@ void AVendorBase::ShopOnOff(bool Value)
 
 	mPrevTime = CurTime;
 
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		ALongvinterGameModeBase* GameModeBase = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
-		if (nullptr == GameModeBase)
-			return;
+	//if (GetLocalRole() == ROLE_Authority)
+	//{
+	//	ALongvinterGameModeBase* GameModeBase = Cast<ALongvinterGameModeBase>(GetWorld()->GetAuthGameMode());
+	//	if (nullptr == GameModeBase)
+	//		return;
 
-		UMainHUDBase* MainHUD = GameModeBase->GetMainHUD();
-		USgtLakeVenderBase* VendorWidget = MainHUD->GetVendorWidget();
+	//	UMainHUDBase* MainHUD = GameModeBase->GetMainHUD();
+	//	USgtLakeVenderBase* VendorWidget = MainHUD->GetVendorWidget();
 
-		// MainHUD->GetVendorWidget할 때 모든 Vendor의 부모 클래스로 캐스팅해서
-		// 여기서 Cast로 VendorWidet 바꾸고 아래서 보여주기 하면 될 듯
+	//	// MainHUD->GetVendorWidget할 때 모든 Vendor의 부모 클래스로 캐스팅해서
+	//	// 여기서 Cast로 VendorWidet 바꾸고 아래서 보여주기 하면 될 듯
 
-		if (true == Value)
-		{
-			VendorWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-		else
-		{
-			// 일정 범위 넘어가면 꺼지게 하면 될 듯
-			VendorWidget->SetVisibility(ESlateVisibility::Hidden);
-		}
-	}
+	//	if (true == Value)
+	//	{
+	//		VendorWidget->SetVisibility(ESlateVisibility::Visible);
+	//	}
+	//	else
+	//	{
+	//		// 일정 범위 넘어가면 꺼지게 하면 될 듯
+	//		VendorWidget->SetVisibility(ESlateVisibility::Hidden);
+	//	}
+	//}
 }
 
 void AVendorBase::Tick(float DeltaTime)
