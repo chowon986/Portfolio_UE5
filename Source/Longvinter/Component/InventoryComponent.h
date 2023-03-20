@@ -32,6 +32,9 @@ public:
 	UFUNCTION()
 	void OnRep_Items();
 
+	UFUNCTION(Server, Reliable)
+	void ServerUseItem(int32 ItemID);
+
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Items)
 	TArray<int32> mItems;

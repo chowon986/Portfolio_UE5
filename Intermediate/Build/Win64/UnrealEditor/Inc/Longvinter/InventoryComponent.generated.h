@@ -15,15 +15,27 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS \
+	virtual void ServerUseItem_Implementation(int32 ItemID); \
  \
+	DECLARE_FUNCTION(execServerUseItem); \
 	DECLARE_FUNCTION(execOnRep_Items);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void ServerUseItem_Implementation(int32 ItemID); \
  \
+	DECLARE_FUNCTION(execServerUseItem); \
 	DECLARE_FUNCTION(execOnRep_Items);
 
 
+#define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_EVENT_PARMS \
+	struct InventoryComponent_eventServerUseItem_Parms \
+	{ \
+		int32 ItemID; \
+	};
+
+
+#define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_CALLBACK_WRAPPERS
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUInventoryComponent(); \
@@ -78,12 +90,16 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UInventoryComponent)
 
 
-#define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_10_PROLOG
+#define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_10_PROLOG \
+	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_EVENT_PARMS
+
+
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_SPARSE_DATA \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS \
+	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_CALLBACK_WRAPPERS \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_INCLASS \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_STANDARD_CONSTRUCTORS \
 public: \
@@ -95,6 +111,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_SPARSE_DATA \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_CALLBACK_WRAPPERS \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_INCLASS_NO_PURE_DECLS \
 	FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_ENHANCED_CONSTRUCTORS \
 private: \

@@ -91,6 +91,12 @@
     <ClInclude Include="..\..\Source\Longvinter\Character\BasicVendor.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\Bullet.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\Bullet.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\CharacterBase.cpp">
       <Filter>Source\Longvinter\Character</Filter>
     </ClCompile>
@@ -212,6 +218,12 @@
       <Filter>Source\Longvinter\UMG</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\UMG\RandomBoxBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\RandomBoxItem.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\RandomBoxItem.h">
       <Filter>Source\Longvinter\UMG</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\UMG\SgtLakeVenderBase.cpp">

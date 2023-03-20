@@ -14,6 +14,14 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	UPackage* Z_Construct_UPackage__Script_Longvinter();
 // End Cross Module References
+	DEFINE_FUNCTION(UInventoryComponent::execServerUseItem)
+	{
+		P_GET_PROPERTY(FIntProperty,Z_Param_ItemID);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->ServerUseItem_Implementation(Z_Param_ItemID);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UInventoryComponent::execOnRep_Items)
 	{
 		P_FINISH;
@@ -21,11 +29,19 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 		P_THIS->OnRep_Items();
 		P_NATIVE_END;
 	}
+	static FName NAME_UInventoryComponent_ServerUseItem = FName(TEXT("ServerUseItem"));
+	void UInventoryComponent::ServerUseItem(int32 ItemID)
+	{
+		InventoryComponent_eventServerUseItem_Parms Parms;
+		Parms.ItemID=ItemID;
+		ProcessEvent(FindFunctionChecked(NAME_UInventoryComponent_ServerUseItem),&Parms);
+	}
 	void UInventoryComponent::StaticRegisterNativesUInventoryComponent()
 	{
 		UClass* Class = UInventoryComponent::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "OnRep_Items", &UInventoryComponent::execOnRep_Items },
+			{ "ServerUseItem", &UInventoryComponent::execServerUseItem },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -48,6 +64,34 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UInventoryComponent_OnRep_Items_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics
+	{
+		static const UECodeGen_Private::FIntPropertyParams NewProp_ItemID;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::NewProp_ItemID = { "ItemID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(InventoryComponent_eventServerUseItem_Parms, ItemID), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::NewProp_ItemID,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Component/InventoryComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UInventoryComponent, nullptr, "ServerUseItem", nullptr, nullptr, sizeof(InventoryComponent_eventServerUseItem_Parms), Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UInventoryComponent_ServerUseItem()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UInventoryComponent_ServerUseItem_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -78,6 +122,7 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UInventoryComponent_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UInventoryComponent_OnRep_Items, "OnRep_Items" }, // 712357966
+		{ &Z_Construct_UFunction_UInventoryComponent_ServerUseItem, "ServerUseItem" }, // 1803677378
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UInventoryComponent_Statics::Class_MetaDataParams[] = {
@@ -144,9 +189,9 @@ void EmptyLinkFunctionForGeneratedCodeInventoryComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UInventoryComponent, UInventoryComponent::StaticClass, TEXT("UInventoryComponent"), &Z_Registration_Info_UClass_UInventoryComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventoryComponent), 4031987189U) },
+		{ Z_Construct_UClass_UInventoryComponent, UInventoryComponent::StaticClass, TEXT("UInventoryComponent"), &Z_Registration_Info_UClass_UInventoryComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventoryComponent), 3694988040U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_1400417546(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_2136288264(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
