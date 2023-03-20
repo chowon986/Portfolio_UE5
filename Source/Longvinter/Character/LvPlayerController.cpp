@@ -102,12 +102,22 @@ void ALvPlayerController::Click()
 			return;
 		}
 
+		// 이걸 나중에 하나로 묶어야할듯
 		AMushroom* Mushroom = Cast<AMushroom>(result.GetActor());
 		if (IsValid(Mushroom))
 		{
 			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
 			PlayerCharacter->ServerAddInventoryItem(149);
 			Mushroom->Destroy();
+		}
+
+		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
+		if (IsValid(PlayerCharacter))
+		{
+			if (true == PlayerCharacter->IsInventoryOpen())
+			{
+
+			}
 		}
 	}
 }

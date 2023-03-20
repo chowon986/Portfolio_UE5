@@ -101,7 +101,8 @@ void ALvPlayer::ServerSetBanFishingTimer()
 void ALvPlayer::ServerOnFishingTimerExpired()
 {
 	// 낚시가 성공했을 때 캐릭터한테 아이템 주기
-	int ItemID = FMath::RandRange(1, 17);
+	//int ItemID = FMath::RandRange(1, 17);
+	int ItemID = 1;
 	ClientOnFishingFinished(ItemID);
 	GetInventoryComponent()->ServerAddItem(ItemID);
 	FishingTimerHandle.Invalidate();
