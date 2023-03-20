@@ -4,6 +4,7 @@
 #include "LvPlayerController.h"
 #include "FishingSpot.h"
 #include "VendorBase.h"
+#include "CampFire.h"
 #include "LvPlayer.h"
 #include "ChickenBase.h"
 #include "../Inventory/Inventory.h"
@@ -111,6 +112,11 @@ void ALvPlayerController::Click()
 			Mushroom->Destroy();
 		}
 
+		ACampFire* CampFire = Cast<ACampFire>(result.GetActor());
+		if (IsValid(CampFire))
+		{
+			GetMainHUD()->GetCampFireWidget()->SetVisibility(ESlateVisibility::Visible);
+		}
 	}
 }
 
@@ -121,22 +127,22 @@ void ALvPlayerController::UseTool(/*사용중인 아이템 넘겨줘야 함*/)
 	if(IsValid(PlayerCharacter))
 	PlayerCharacter->TakeDamage(1.f, FDamageEvent(), PlayerCharacter->GetController(), this);
 
-	//FHitResult result;
-	//bool Hit = GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, result);
+	FHitResult result;
+	bool Hit = GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, result);
 
-	//if (Hit)
-	//{
-	//	AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
-	//	Chicken->TakeDamage()
-	//	//if(/*사용중인 아이템이 A면*/)
-	//	
-	//	// 그리고 그게 나무면
-	//	//AWoodBase* Wood = Cast<AWoodBase>(result.GetActor());
-	//	// 아이템 테이블에서 해당 아이템 정보를 가져오고
-	//	// Wood->TakeDamage(데미지만큼 마이너스)
-	//	
-	//	// 그게 닭이면
-	//	// AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
-	//	// Chicken->TakeDamage(데미지만큼 마이너스)
-	//}
+	if (Hit)
+	{
+		//AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
+		//Chicken->TakeDamage();
+		//if(/*사용중인 아이템이 A면*/)
+		
+		// 그리고 그게 나무면
+		//AWoodBase* Wood = Cast<AWoodBase>(result.GetActor());
+		// 아이템 테이블에서 해당 아이템 정보를 가져오고
+		// Wood->TakeDamage(데미지만큼 마이너스)
+		
+		// 그게 닭이면
+		// AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
+		// Chicken->TakeDamage(데미지만큼 마이너스)
+	}
 }

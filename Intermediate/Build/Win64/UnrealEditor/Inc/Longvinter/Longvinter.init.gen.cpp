@@ -17,13 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeLongvinter_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x54AB658F,
-				0x7CFCEEB7,
+				0x440FA262,
+				0x23926A5A,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_Longvinter.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_Longvinter.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Longvinter(Z_Construct_UPackage__Script_Longvinter, TEXT("/Script/Longvinter"), Z_Registration_Info_UPackage__Script_Longvinter, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x54AB658F, 0x7CFCEEB7));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Longvinter(Z_Construct_UPackage__Script_Longvinter, TEXT("/Script/Longvinter"), Z_Registration_Info_UPackage__Script_Longvinter, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x440FA262, 0x23926A5A));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

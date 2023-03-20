@@ -8,6 +8,7 @@ void UMainHUDBase::NativeConstruct()
 	Super::NativeConstruct();
 
 	mPlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
+
 	mInventory = Cast<UInventoryBase>(GetWidgetFromName(FName(TEXT("UIInventory"))));
 	mInventory->SetVisibility(ESlateVisibility::Hidden);
 	
@@ -15,6 +16,9 @@ void UMainHUDBase::NativeConstruct()
 
 	mSgtLakeVendor = Cast< USgtLakeVenderBase>(GetWidgetFromName(FName(TEXT("SgtLakesKitchenVendor"))));
 	mSgtLakeVendor->SetVisibility(ESlateVisibility::Hidden);
+
+	mCampFire = Cast<UCampFireBase>(GetWidgetFromName(FName(TEXT("UICampFire"))));
+	mCampFire->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

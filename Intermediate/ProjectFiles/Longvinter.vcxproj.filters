@@ -97,6 +97,12 @@
     <ClInclude Include="..\..\Source\Longvinter\Character\Bullet.h">
       <Filter>Source\Longvinter\Character</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Longvinter\Character\CampFire.cpp">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\Character\CampFire.h">
+      <Filter>Source\Longvinter\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\Character\CharacterBase.cpp">
       <Filter>Source\Longvinter\Character</Filter>
     </ClCompile>
@@ -184,6 +190,12 @@
     <Filter Include="Source\Longvinter\UMG">
       <UniqueIdentifier>{5D17B0FB-8A6B-3969-8787-4940A4D126E3}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\CampFireBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\CampFireBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Longvinter\UMG\InventoryBase.cpp">
       <Filter>Source\Longvinter\UMG</Filter>
     </ClCompile>
@@ -236,6 +248,16 @@
       <Filter>Source\Longvinter\UMG</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Longvinter\UMG\SgtLakeVenderItemBase.h">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Longvinter\UMG\CampFireItemBase.cpp">
+      <Filter>Source\Longvinter\UMG</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Longvinter\UMG\CampFireItemBase.h">
       <Filter>Source\Longvinter\UMG</Filter>
     </ClInclude>
   </ItemGroup>

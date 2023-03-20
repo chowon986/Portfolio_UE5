@@ -7,6 +7,7 @@
 #include "../UMG/InventoryBase.h"
 #include "../UMG/SgtLakeVenderBase.h"
 #include "../UMG/InventoryItemBase.h"
+#include "../UMG/CampFireBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -24,6 +25,7 @@ public:
 
 	UInventoryBase* GetInventoryWidget() { return mInventory; }
 	USgtLakeVenderBase* GetVendorWidget() { return mSgtLakeVendor; }
+	UCampFireBase* GetCampFireWidget() { return mCampFire; }
 
 	UFUNCTION()
 		void OnItemIconHovered();
@@ -33,6 +35,7 @@ private:
 	UInventoryBase* mInventory;
 	USgtLakeVenderBase* mSgtLakeVendor;
 	UInventoryItemBase* mItemIcon;
+	UCampFireBase* mCampFire;
 
 	//UPROPERTY(meta = (BindWidgetAnim), Transient)
 	//UWidgetAnimation* IConHoverAnimation;
