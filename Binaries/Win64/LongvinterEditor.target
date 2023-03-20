@@ -23495,6 +23495,18 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(ProjectDir)/Content/Slate/cursor_2x.uasset",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Content/Slate/cursor_3x.uasset",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Content/Slate/T_Cursor01.uasset",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(ProjectDir)/Longvinter.uproject",
 			"Type": "UFS"
 		}

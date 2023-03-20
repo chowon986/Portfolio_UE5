@@ -25,7 +25,11 @@ public:
 	void SetItemDescription(const FString& _Desc) { mItemDescription = _Desc; }
 	const FString& GetItemDescription() { return mItemDescription; }
 
+	void SetItemID(int ID) { mItemID = ID; }
+	int GetItemID() { return mItemID; }
+
 private:
 	FString mItemIconPath;
 	FString mItemDescription;
+	int mItemID;
 };

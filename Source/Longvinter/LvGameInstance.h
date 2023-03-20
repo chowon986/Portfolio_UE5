@@ -25,5 +25,6 @@ public:
 
 private:
 	UDataTable* mItemTable;
+	UDataTable* mBuffTable;
 	class UInventory* mInventory;
 };

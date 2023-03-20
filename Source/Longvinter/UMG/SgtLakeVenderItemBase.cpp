@@ -27,6 +27,8 @@ void USgtLakeVenderItemBase::InitFromData(UObject* _Data)
 
 		const FString& SellMoney = pData->GetItemDescription();
 
+		const int& ItemID = pData->GetItemID();
+
 		// 데이터에 들어있던 IconPath 를 이용해서 해당 텍스쳐를 로딩 후, 
 		// Image 위젯에 해당 텍스쳐를 설정해준다.
 		UTexture2D* pTex2D = LoadObject<UTexture2D>(nullptr, *IconPath);

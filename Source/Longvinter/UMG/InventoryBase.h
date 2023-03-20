@@ -20,6 +20,7 @@ public:
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
 	void OnItemsChanged(TArray<int32> Items);
+	void ItemClick(UObject* Object);
 
 private:
 	static UTileView* mTileView;

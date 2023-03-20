@@ -14,6 +14,13 @@ ULvGameInstance::ULvGameInstance()
 		mItemTable = ItemTable.Object;
 		UInventory::GetInst(this)->SetItemTable(mItemTable);
 	}
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> BuffTable(TEXT("DataTable'/Game/DataTable/TBuffTable.TBuffTable'"));
+	if (BuffTable.Succeeded())
+	{
+		mBuffTable = BuffTable.Object;
+		UInventory::GetInst(this)->SetBuffTable(mBuffTable);
+	}
 }
 
 ULvGameInstance::~ULvGameInstance()

@@ -111,14 +111,6 @@ void ALvPlayerController::Click()
 			Mushroom->Destroy();
 		}
 
-		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
-		if (IsValid(PlayerCharacter))
-		{
-			if (true == PlayerCharacter->IsInventoryOpen())
-			{
-
-			}
-		}
 	}
 }
 

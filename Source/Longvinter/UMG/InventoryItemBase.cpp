@@ -3,6 +3,7 @@
 
 #include "InventoryItemBase.h"
 #include "ItemDataBase.h"
+#include "../Character/LvPlayerController.h"
 
 void UInventoryItemBase::NativeConstruct()
 {

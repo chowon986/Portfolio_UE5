@@ -26,6 +26,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetItemTable(UDataTable* Table);
+	UDataTable* GetItemTable() { return mItemTable;	}
+	void SetBuffTable(UDataTable* Table) { mBuffTable = Table; }
+	UDataTable* GetBuffTable() { return mBuffTable; }
 	void UpdateItems(TArray<int32> Items);
 
 	FItemTable* GetInfoItem(int ItemID);
@@ -37,4 +40,5 @@ private:
 
 public:
 	UDataTable* mItemTable;
+	UDataTable* mBuffTable;
 };
