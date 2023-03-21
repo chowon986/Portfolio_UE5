@@ -17,6 +17,7 @@
 			"PlayerCharacterBase.cpp.obj",
 			"VendorBase.cpp.obj",
 			"CraftComponent.cpp.obj",
+			"InventoryComponent.cpp.obj",
 			"GameInfo.cpp.obj",
 			"Inventory.cpp.obj",
 			"Longvinter.cpp.obj",
@@ -26,17 +27,16 @@
 			"TestGameModeBase.cpp.obj",
 			"CampFireBase.cpp.obj",
 			"CampFireItemBase.cpp.obj",
+			"InventoryBase.cpp.obj",
 			"InventoryItemBase.cpp.obj",
+			"ItemDataBase.cpp.obj",
 			"MainHUDBase.cpp.obj",
 			"PlayerInfoBase.cpp.obj",
 			"RandomBoxBase.cpp.obj",
 			"RandomBoxItem.cpp.obj",
+			"SgtLakeVenderItemBase.cpp.obj",
 			"LvPlayer.cpp.obj",
-			"InventoryComponent.cpp.obj",
-			"InventoryBase.cpp.obj",
-			"ItemDataBase.cpp.obj",
-			"SgtLakeVenderBase.cpp.obj",
-			"SgtLakeVenderItemBase.cpp.obj"
+			"SgtLakeVenderBase.cpp.obj"
 		],
 		"Module.Longvinter.gen.cpp.obj": [
 			"ActorBase.gen.cpp.obj",
@@ -55,8 +55,10 @@
 			"InventoryComponent.gen.cpp.obj",
 			"InventoryItemBase.gen.cpp.obj",
 			"ItemDataBase.gen.cpp.obj",
+			"Longvinter.init.gen.cpp.obj",
 			"LongvinterGameModeBase.gen.cpp.obj",
 			"LvGameInstance.gen.cpp.obj",
+			"LvPlayer.gen.cpp.obj",
 			"LvPlayerAnimInstance.gen.cpp.obj",
 			"LvPlayerController.gen.cpp.obj",
 			"MainHUDBase.gen.cpp.obj",
@@ -71,9 +73,7 @@
 			"SgtLakeVenderBase.gen.cpp.obj",
 			"SgtLakeVenderItemBase.gen.cpp.obj",
 			"TestGameModeBase.gen.cpp.obj",
-			"VendorBase.gen.cpp.obj",
-			"Longvinter.init.gen.cpp.obj",
-			"LvPlayer.gen.cpp.obj"
+			"VendorBase.gen.cpp.obj"
 		]
 	}
 }

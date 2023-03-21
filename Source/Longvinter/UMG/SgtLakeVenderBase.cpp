@@ -159,9 +159,18 @@ void USgtLakeVenderBase::ItemClick(UObject* Object)
 			if (pData->GetItemDescriptionLeft() == "0") // 판매
 			{
 				// 타일뷰에 이게 있는지 체크해야할거같은디
-				Controller->GetMainHUD()->GetInventoryWidget()->mTileView->RemoveItem(pData);
-				LvPlayer->ServerRemoveInventoryItem(pData->GetItemID());
-				LvPlayer->SetMK(LvPlayer->GetMK() + FCString::Atoi(*(pData->GetItemDescription())));
+				TArray<int32> Items = LvPlayer->GetInventoryComponent()->GetItems();
+				
+				for (int32 Item : Items)
+				{
+					if (Item == pData->GetItemID())
+					{
+						Controller->GetMainHUD()->GetInventoryWidget()->mTileView->RemoveItem(pData);
+						LvPlayer->ServerRemoveInventoryItem(pData->GetItemID());
+						LvPlayer->SetMK(LvPlayer->GetMK() + FCString::Atoi(*(pData->GetItemDescription())));
+						return;
+					}
+				}
 			}
 			else
 			{

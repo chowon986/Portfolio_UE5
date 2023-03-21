@@ -72,7 +72,7 @@ public:
 	void ServerAddInventoryItem(int ItemID);
 
 	UFUNCTION(Server, Reliable)
-		void ServerRemoveInventoryItem(int ItemID);
+	void ServerRemoveInventoryItem(int ItemID);
 
 	bool IsInventoryOpen();
 
