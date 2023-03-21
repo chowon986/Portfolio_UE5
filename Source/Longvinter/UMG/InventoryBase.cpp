@@ -5,6 +5,7 @@
 #include "ItemDataBase.h"
 #include "../Character/LvPlayer.h"
 #include "../Inventory/Inventory.h"
+#include "../Character/LvPlayerController.h"
 #include "../Component/InventoryComponent.h"
 
 UTileView* UInventoryBase::mTileView = nullptr;
@@ -74,6 +75,15 @@ void UInventoryBase::ItemClick(UObject* Object)
 			if (IsValid(pData))
 			{
 				int ItemID = pData->GetItemID();
+				ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
+				UCampFireBase* CampFireWidget = LvPlayerController->GetMainHUD()->GetCampFireWidget();
+				if (true == CampFireWidget->IsVisible())
+				{
+					Character->GetInventoryComponent()->ServerRemoveItem(ItemID);
+					Character->GetCraftComponent()->ServerAddItem(ItemID);
+				}
+
+				else
 				Character->GetInventoryComponent()->ServerUseItem(ItemID);
 			}
 		}

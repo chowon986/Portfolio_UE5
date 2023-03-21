@@ -2,6 +2,7 @@
 
 
 #include "CraftComponent.h"
+#include "../Inventory/Inventory.h"
 #include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
@@ -43,6 +44,36 @@ void UCraftComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 void UCraftComponent::ServerAddItem(int32 ItemID)
 {
 	mCraftItems.Add(ItemID);
+
+	mCraftItems.Sort();
+
+	UDataTable* Table = UInventory::GetInst(GetWorld())->GetCraftTable();
+	FString Str;
+	TArray<FCraftTable*> Rows; 
+	
+	Table->GetAllRows<FCraftTable>(Str, Rows);
+
+
+	for (FCraftTable* CraftTable : Rows)
+	{
+		if (mCraftItems.Num() != CraftTable->RequiredItemList.Num())
+			continue;
+
+		bool AllMatch = true;
+
+		for (int i = 0; i < CraftTable->RequiredItemList.Num(); i++)
+		{
+			if (mCraftItems[i] != CraftTable->RequiredItemList[i])
+			{
+				AllMatch = false;
+			}
+		}
+
+		//if (true == AllMatch)
+		//{
+		//	mCraftItems.Empty();
+		//}
+	}
 }
 
 

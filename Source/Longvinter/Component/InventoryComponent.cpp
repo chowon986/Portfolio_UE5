@@ -103,11 +103,9 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 	FItemTable* ItemInfo = ItemTable->FindRow<FItemTable>(FName(FString::FromInt(ItemID)), nullptr);
 
 	//
-	ACharacterBase* Character = Cast<ACharacterBase>(GetOwner());
-	ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Character->GetController());
-	UCampFireBase* CampFireWidget = LvPlayerController->GetMainHUD()->GetCampFireWidget();
+
 	
-	//if (true == CampFireWidget->IsVisible()) 
+
 	{
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
