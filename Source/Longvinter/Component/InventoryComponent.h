@@ -12,7 +12,6 @@ class LONGVINTER_API UInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 	DECLARE_EVENT_OneParam(UInventoryComponent, ItemsChangedEvent, TArray<int32>)
-
 public:	
 	// Sets default values for this component's properties
 	UInventoryComponent();

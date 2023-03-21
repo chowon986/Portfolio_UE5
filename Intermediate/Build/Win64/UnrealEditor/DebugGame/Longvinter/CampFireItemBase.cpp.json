@@ -829,7 +829,9 @@
             "c:\\unreal\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\dynamicpropertypath.generated.h",
             "c:\\unreal\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\widgetblueprintgeneratedclass.generated.h",
             "c:\\unreal\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\userwidget.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\campfireitembase.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\campfireitembase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\itemdatabase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\itemdatabase.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

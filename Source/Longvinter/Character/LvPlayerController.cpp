@@ -31,7 +31,7 @@ void ALvPlayerController::BeginPlay()
 	SetInputMode(Mode);
 	bShowMouseCursor = true;
 
-	if (IsValid(m_MainHUDClass) && IsLocalController() == true)
+	if (IsValid(m_MainHUDClass) /*&& IsLocalController() == true*/)
 	{
 		// 생성한 객체의 주소를 m_MainHUD 에 받아둔다.
 		m_MainHUD = Cast<UMainHUDBase>(CreateWidget(GetWorld(), m_MainHUDClass));
@@ -116,6 +116,9 @@ void ALvPlayerController::Click()
 		if (IsValid(CampFire))
 		{
 			GetMainHUD()->GetCampFireWidget()->SetVisibility(ESlateVisibility::Visible);
+			UInventoryBase* InventoryWidget = GetMainHUD()->GetInventoryWidget();
+			if(false == InventoryWidget->IsVisible())
+				InventoryWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
 }

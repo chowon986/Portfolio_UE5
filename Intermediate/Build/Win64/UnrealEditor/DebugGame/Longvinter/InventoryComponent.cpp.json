@@ -700,9 +700,7 @@
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\engine\\public\\net\\unrealnetwork.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
-            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\inventory\\inventory.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\inventory.generated.h",
-            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\longvintergamemodebase.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\lvplayercontroller.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\mainhudbase.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\playerinfobase.h",
             "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\umg\\public\\components\\progressbar.h",
@@ -868,8 +866,16 @@
             "c:\\unreal\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\slatetextureatlasinterface.generated.h",
             "c:\\unreal\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\image.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\inventoryitembase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\campfirebase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\campfirebase.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\mainhudbase.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\longvintergamemodebase.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\lvplayercontroller.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\inventory\\inventory.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\inventory.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\longvintergamemodebase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\longvintergamemodebase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\itemdatabase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\itemdatabase.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

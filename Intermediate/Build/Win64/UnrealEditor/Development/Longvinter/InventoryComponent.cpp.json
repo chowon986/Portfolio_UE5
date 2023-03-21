@@ -873,7 +873,9 @@
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\inventory\\inventory.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\inventory.generated.h",
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\longvintergamemodebase.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\longvintergamemodebase.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\longvintergamemodebase.generated.h",
+            "c:\\unrealportfolio\\longvinter\\source\\longvinter\\umg\\itemdatabase.h",
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\itemdatabase.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

@@ -21,5 +21,8 @@ public:
 
 public:
 	static UTileView* mCampFireTileView;
+
+private:
 	bool OnceCheck;
+
 };
