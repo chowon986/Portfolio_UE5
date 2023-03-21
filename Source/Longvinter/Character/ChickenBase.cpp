@@ -2,6 +2,8 @@
 
 
 #include "ChickenBase.h"
+#include "Net/UnrealNetwork.h"
+
 
 AChickenBase::AChickenBase()
 {
@@ -17,4 +19,9 @@ AChickenBase::AChickenBase()
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	SetCanBeDamaged(true);
+}
+
+void AChickenBase::ServerTakeDamage_Implementation(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageTaken, DamageEvent, EventInstigator, DamageCauser);
 }

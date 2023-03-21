@@ -13,15 +13,6 @@ void UCampFireBase::NativeConstruct()
 	Super::NativeConstruct();
 	OnceCheck = false;
 	mCampFireTileView = Cast<UTileView>(GetWidgetFromName(FName(TEXT("CampFireTileView"))));
-	{
-		// 이미지 로드 잘 되는지 테스트 코드
-		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(1);
-		UItemDataBase* pNewData = NewObject<UItemDataBase>();
-		pNewData->SetItemIconPath(Table->TexturePath);
-		pNewData->SetItemDescription(Table->Description);
-
-		mCampFireTileView->AddItem(pNewData);
-	}
 }
 
 void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

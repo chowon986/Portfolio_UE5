@@ -700,7 +700,8 @@
             "c:\\unrealportfolio\\longvinter\\source\\longvinter\\character\\characterbase.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\characterbase.generated.h",
             "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\nonplayercharacterbase.generated.h",
-            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\chickenbase.generated.h"
+            "c:\\unrealportfolio\\longvinter\\intermediate\\build\\win64\\unrealeditor\\inc\\longvinter\\chickenbase.generated.h",
+            "c:\\unreal\\ue_5.0\\engine\\source\\runtime\\engine\\public\\net\\unrealnetwork.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

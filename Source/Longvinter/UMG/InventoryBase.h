@@ -25,6 +25,8 @@ public:
 	void ItemClick(UObject* Object);
 
 private:
-	static UTileView* mTileView;
 	bool OnceCheck;
+
+public:
+	static UTileView* mTileView;
 };

@@ -8,6 +8,7 @@
 #include "LvPlayer.h"
 #include "ChickenBase.h"
 #include "../Inventory/Inventory.h"
+#include "../UMG/SgtLakeVenderBase.h"
 #include "Mushroom.h"
 
 ALvPlayerController::ALvPlayerController()
@@ -96,11 +97,14 @@ void ALvPlayerController::Click()
 		{
 			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
 			
-			//Vendor->ShopOnOff(true);
+			USgtLakeVenderBase* VendorBase = GetMainHUD()->GetVendorWidget();
 
-			PrintViewport(1.f, FColor::Red, TEXT("ClickVendor"));
+			if(false == VendorBase->IsVisible())
+				VendorBase->SetVisibility(ESlateVisibility::Visible);
 
-			return;
+			UInventoryBase* InventoryWidget = GetMainHUD()->GetInventoryWidget();
+			if (false == InventoryWidget->IsVisible())
+				InventoryWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 
 		// 이걸 나중에 하나로 묶어야할듯
@@ -127,16 +131,16 @@ void ALvPlayerController::UseTool(/*사용중인 아이템 넘겨줘야 함*/)
 {
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
 
-	if(IsValid(PlayerCharacter))
-	PlayerCharacter->TakeDamage(1.f, FDamageEvent(), PlayerCharacter->GetController(), this);
+	//if(IsValid(PlayerCharacter))
+	//PlayerCharacter->TakeDamage(1.f, FDamageEvent(), PlayerCharacter->GetController(), this);
 
 	FHitResult result;
 	bool Hit = GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, result);
 
 	if (Hit)
 	{
-		//AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
-		//Chicken->TakeDamage();
+		AChickenBase* Chicken = Cast<AChickenBase>(result.GetActor());
+		Chicken->ServerTakeDamage(1, FDamageEvent(), this, GetCharacter());
 		//if(/*사용중인 아이템이 A면*/)
 		
 		// 그리고 그게 나무면

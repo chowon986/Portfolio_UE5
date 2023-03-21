@@ -29,6 +29,8 @@ public:
 	UDataTable* GetItemTable() { return mItemTable;	}
 	void SetBuffTable(UDataTable* Table) { mBuffTable = Table; }
 	UDataTable* GetBuffTable() { return mBuffTable; }
+	void SetCraftTable(UDataTable* Table) { mCraftTable = Table; }
+	UDataTable* GetCraftTable() { return mCraftTable; }
 	void UpdateItems(TArray<int32> Items);
 
 	FItemTable* GetInfoItem(int ItemID);
@@ -41,4 +43,5 @@ private:
 public:
 	UDataTable* mItemTable;
 	UDataTable* mBuffTable;
+	UDataTable* mCraftTable;
 };
