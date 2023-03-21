@@ -18,7 +18,7 @@ void UMainHUDBase::NativeConstruct()
 	mSgtLakeVendor->SetVisibility(ESlateVisibility::Hidden);
 
 	mCampFire = Cast<UCampFireBase>(GetWidgetFromName(FName(TEXT("UICampFire"))));
-	mCampFire->SetVisibility(ESlateVisibility::Hidden);
+	mCampFire->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

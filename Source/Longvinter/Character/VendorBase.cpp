@@ -46,7 +46,7 @@ void AVendorBase::ShopOnOff(bool Value)
 	//	else
 	//	{
 	//		// 일정 범위 넘어가면 꺼지게 하면 될 듯
-	//		VendorWidget->SetVisibility(ESlateVisibility::Hidden);
+	//		VendorWidget->SetVisibility(ESlateVisibility::Collapsed);
 	//	}
 	//}
 }

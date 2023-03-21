@@ -327,7 +327,7 @@ void ALvPlayer::InventoryOnOff()
 		}
 		else
 		{
-			InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+			InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
 }
