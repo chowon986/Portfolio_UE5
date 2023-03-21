@@ -11,6 +11,7 @@
 #include "../UMG/InventoryBase.h"
 #include "../UMG/MainHUDBase.h"
 #include "../Component/InventoryComponent.h"
+#include "../Component/CraftComponent.h"
 #include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
 
@@ -54,7 +55,7 @@ ALvPlayer::ALvPlayer()
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 
 	mPrevTime = 0;
-	mMK = 0;
+	mCanEKeyPressed = false;
 }
 
 void ALvPlayer::BeginPlay()
@@ -87,7 +88,7 @@ void ALvPlayer::ServerSetFishingTimer()
 {
 	if (FishingTimerHandle.IsValid() == false)
 	{
-		mFishingTime = 5.f;
+		mFishingTime = FMath::RandRange(3, 5);
 		GetWorldTimerManager().SetTimer(FishingTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnFishingTimerExpired), mFishingTime, false);
 	}
 }
@@ -96,19 +97,39 @@ void ALvPlayer::ServerSetBanFishingTimer()
 {
 	mBanFishingTime = 5.f;
 	mCanFishing = false;
-	GetWorldTimerManager().SetTimer(FishingTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnBanFishingTimerExpired), mBanFishingTime, false);
+	GetWorldTimerManager().SetTimer(FishingBanTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnBanFishingTimerExpired), mBanFishingTime, false);
 }
 
 void ALvPlayer::ServerOnFishingTimerExpired()
 {
-	// 낚시가 성공했을 때 캐릭터한테 아이템 주기
-	//int ItemID = FMath::RandRange(1, 17);
-	int ItemID = 1;
-	ClientOnFishingFinished(ItemID);
-	GetInventoryComponent()->ServerAddItem(ItemID);
+	// E키를 입력하시오
+	ClientNotifyPressE();
+
+	float Time = 1.f;
+	GetWorldTimerManager().SetTimer(PendingClientResponseTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnPendingClientResponseTimerExpired), Time, false);
+
 	FishingTimerHandle.Invalidate();
+}
+
+void ALvPlayer::ServerOnBanFishingTimerExpired()
+{
+	FishingBanTimerHandle.Invalidate();
+	mCanFishing = true;
+}
+
+void ALvPlayer::CheckSuccessedFishing()
+{
+	if (true == mCanEKeyPressed)
+	{
+		ServerEKeyPressed();
+		mCanEKeyPressed = false;
+	}
+}
+
+void ALvPlayer::ServerOnPendingClientResponseTimerExpired()
+{
 	GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
-		[this]() 
+		[this]()
 		{
 			if (IsValid(this))
 			{
@@ -116,11 +137,8 @@ void ALvPlayer::ServerOnFishingTimerExpired()
 				SetIdleStateTimerHandle.Invalidate();
 			}
 		}), 1, false);
-}
 
-void ALvPlayer::ServerOnBanFishingTimerExpired()
-{
-	mCanFishing = true;
+	ClientOnFishingFinished();
 }
 
 void ALvPlayer::Tick(float DeltaTime)
@@ -154,6 +172,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Click"), EInputEvent::IE_Pressed, this, &ALvPlayer::Click);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Inventory"), EInputEvent::IE_Pressed, this, &ALvPlayer::InventoryOnOff);
+	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("FinishFishing"), EInputEvent::IE_Pressed, this, &ALvPlayer::CheckSuccessedFishing);
 }
 
 void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -342,20 +361,46 @@ void ALvPlayer::SetState(EPlayerState State)
 	}
 }
 
-void ALvPlayer::ServerAddInventoryItem_Implementation(int ItemID)
+void ALvPlayer::ServerAddCraftItem_Implementation(int ItemID)
 {
-	GetInventoryComponent()->ServerAddItem(ItemID);
+	GetCraftComponent()->ServerAddItem(ItemID);
 }
 
 
-void ALvPlayer::ClientOnFishingFinished_Implementation(int ItemID)
+void ALvPlayer::ClientOnFishingFinished_Implementation()
 {
 	mFinishFishing = true;
+	mCanEKeyPressed = false;
 }
 
-void ALvPlayer::ServerRemoveInventoryItem_Implementation(int ItemID)
+
+void ALvPlayer::ClientNotifyPressE_Implementation()
 {
-	GetInventoryComponent()->ServerRemoveItem(ItemID);
+	mCanEKeyPressed = true;
+}
+
+void ALvPlayer::ServerEKeyPressed_Implementation()
+{
+	if (PendingClientResponseTimerHandle.IsValid())
+	{
+		int ItemID = FMath::RandRange(1, 17);
+		ClientOnFishingFinished();
+		GetInventoryComponent()->ServerAddItem(ItemID);
+
+		GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
+			[this]()
+			{
+				if (IsValid(this))
+				{
+					this->SetState(EPlayerState::Idle);
+					SetIdleStateTimerHandle.Invalidate();
+				}
+			}), 1, false);
+
+		GetWorldTimerManager().ClearTimer(PendingClientResponseTimerHandle);
+		PendingClientResponseTimerHandle.Invalidate();
+
+	}
 }
 
 bool ALvPlayer::IsInventoryOpen()

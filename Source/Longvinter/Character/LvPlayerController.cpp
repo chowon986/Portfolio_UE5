@@ -8,6 +8,7 @@
 #include "LvPlayer.h"
 #include "ChickenBase.h"
 #include "../Inventory/Inventory.h"
+#include "../Component/InventoryComponent.h"
 #include "../UMG/SgtLakeVenderBase.h"
 #include "Mushroom.h"
 
@@ -112,7 +113,7 @@ void ALvPlayerController::Click()
 		if (IsValid(Mushroom))
 		{
 			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
-			PlayerCharacter->ServerAddInventoryItem(149);
+			PlayerCharacter->GetInventoryComponent()->ServerAddItem(149);
 			Mushroom->Destroy();
 		}
 

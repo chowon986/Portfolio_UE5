@@ -39,6 +39,8 @@ private:
 	void ServerSetBanFishingTimer();
 	void ServerOnFishingTimerExpired();
 	void ServerOnBanFishingTimerExpired();
+	void CheckSuccessedFishing();
+	void ServerOnPendingClientResponseTimerExpired();
 
 public:
 	// Called every frame
@@ -56,25 +58,27 @@ public:
 	void Fishing();
 	void InventoryOnOff();
 
-	int32 GetMK() { return mMK; }
-	void SetMK(int32 MK) { mMK = MK; }
-
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
 	bool GetCanFishing() { return mCanFishing; }
 	bool GetFinishFishing() { return mFinishFishing; }
 	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
+	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
 
-	UFUNCTION(Client, Unreliable)
-	void ClientOnFishingFinished(int ItemID);
+	UFUNCTION(Client, Reliable)
+	void ClientOnFishingFinished();
+
+	UFUNCTION(Client, Reliable)
+	void ClientNotifyPressE();
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddInventoryItem(int ItemID);
+	void ServerAddCraftItem(int ItemID);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRemoveInventoryItem(int ItemID);
+		void ServerEKeyPressed();
 
 	bool IsInventoryOpen();
+
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
@@ -93,7 +97,9 @@ public:
 	float mFishingTime;
 	float mBanFishingTime;
 	FTimerHandle FishingTimerHandle;
+	FTimerHandle FishingBanTimerHandle;
 	FTimerHandle SetIdleStateTimerHandle;
+	FTimerHandle PendingClientResponseTimerHandle;
 
 	UPROPERTY(Replicated)
 	bool mCanFishing;
@@ -101,8 +107,9 @@ public:
 
 	class UInventoryBase* InventoryBase;
 	class UInventoryComponent* mInventoryComponent;
+	class UCraftComponent* mCraftComponent;
 
 	int32 mPrevTime;
 
-	int32 mMK;
+	bool mCanEKeyPressed;
 };

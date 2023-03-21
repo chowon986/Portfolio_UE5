@@ -15,20 +15,54 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS \
+	virtual void ServerBuyItem_Implementation(int32 ItemID); \
+	virtual void ServerSellItem_Implementation(int32 ItemID); \
 	virtual void ServerUseItem_Implementation(int32 ItemID); \
+	virtual void ServerRemoveItem_Implementation(int32 ItemID); \
+	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
+	DECLARE_FUNCTION(execServerBuyItem); \
+	DECLARE_FUNCTION(execServerSellItem); \
 	DECLARE_FUNCTION(execServerUseItem); \
+	DECLARE_FUNCTION(execServerRemoveItem); \
+	DECLARE_FUNCTION(execServerAddItem); \
+	DECLARE_FUNCTION(execOnRep_MK); \
 	DECLARE_FUNCTION(execOnRep_Items);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void ServerBuyItem_Implementation(int32 ItemID); \
+	virtual void ServerSellItem_Implementation(int32 ItemID); \
 	virtual void ServerUseItem_Implementation(int32 ItemID); \
+	virtual void ServerRemoveItem_Implementation(int32 ItemID); \
+	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
+	DECLARE_FUNCTION(execServerBuyItem); \
+	DECLARE_FUNCTION(execServerSellItem); \
 	DECLARE_FUNCTION(execServerUseItem); \
+	DECLARE_FUNCTION(execServerRemoveItem); \
+	DECLARE_FUNCTION(execServerAddItem); \
+	DECLARE_FUNCTION(execOnRep_MK); \
 	DECLARE_FUNCTION(execOnRep_Items);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_InventoryComponent_h_13_EVENT_PARMS \
+	struct InventoryComponent_eventServerAddItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
+	struct InventoryComponent_eventServerBuyItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
+	struct InventoryComponent_eventServerRemoveItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
+	struct InventoryComponent_eventServerSellItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
 	struct InventoryComponent_eventServerUseItem_Parms \
 	{ \
 		int32 ItemID; \
@@ -47,7 +81,8 @@ public: \
 	{ \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mItems=NETFIELD_REP_START, \
-		NETFIELD_REP_END=mItems	}; \
+		mMK, \
+		NETFIELD_REP_END=mMK	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
@@ -62,7 +97,8 @@ public: \
 	{ \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mItems=NETFIELD_REP_START, \
-		NETFIELD_REP_END=mItems	}; \
+		mMK, \
+		NETFIELD_REP_END=mMK	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 

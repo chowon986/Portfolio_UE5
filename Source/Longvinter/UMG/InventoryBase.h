@@ -21,6 +21,7 @@ public:
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
 	void OnItemsChanged(TArray<int32> Items);
+	void OnMKChanged(int32 MK);
 
 
 	void ItemClick(UObject* Object);
@@ -31,5 +32,4 @@ private:
 public:
 	static UTileView* mTileView;
 	UTextBlock* mMKTxt;
-	int32 mBeforeMK;
 };

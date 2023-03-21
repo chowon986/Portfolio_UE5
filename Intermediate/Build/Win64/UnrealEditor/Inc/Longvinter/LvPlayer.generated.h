@@ -16,39 +16,35 @@ enum class EPlayerState : uint8;
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS \
-	virtual void ServerRemoveInventoryItem_Implementation(int32 ItemID); \
-	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
-	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
+	virtual void ServerEKeyPressed_Implementation(); \
+	virtual void ServerAddCraftItem_Implementation(int32 ItemID); \
+	virtual void ClientNotifyPressE_Implementation(); \
+	virtual void ClientOnFishingFinished_Implementation(); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
  \
-	DECLARE_FUNCTION(execServerRemoveInventoryItem); \
-	DECLARE_FUNCTION(execServerAddInventoryItem); \
+	DECLARE_FUNCTION(execServerEKeyPressed); \
+	DECLARE_FUNCTION(execServerAddCraftItem); \
+	DECLARE_FUNCTION(execClientNotifyPressE); \
 	DECLARE_FUNCTION(execClientOnFishingFinished); \
 	DECLARE_FUNCTION(execServerSetState);
 
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
-	virtual void ServerRemoveInventoryItem_Implementation(int32 ItemID); \
-	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
-	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
+	virtual void ServerEKeyPressed_Implementation(); \
+	virtual void ServerAddCraftItem_Implementation(int32 ItemID); \
+	virtual void ClientNotifyPressE_Implementation(); \
+	virtual void ClientOnFishingFinished_Implementation(); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
  \
-	DECLARE_FUNCTION(execServerRemoveInventoryItem); \
-	DECLARE_FUNCTION(execServerAddInventoryItem); \
+	DECLARE_FUNCTION(execServerEKeyPressed); \
+	DECLARE_FUNCTION(execServerAddCraftItem); \
+	DECLARE_FUNCTION(execClientNotifyPressE); \
 	DECLARE_FUNCTION(execClientOnFishingFinished); \
 	DECLARE_FUNCTION(execServerSetState);
 
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_EVENT_PARMS \
-	struct LvPlayer_eventClientOnFishingFinished_Parms \
-	{ \
-		int32 ItemID; \
-	}; \
-	struct LvPlayer_eventServerAddInventoryItem_Parms \
-	{ \
-		int32 ItemID; \
-	}; \
-	struct LvPlayer_eventServerRemoveInventoryItem_Parms \
+	struct LvPlayer_eventServerAddCraftItem_Parms \
 	{ \
 		int32 ItemID; \
 	}; \

@@ -18,6 +18,8 @@ class LONGVINTER_API UCampFireBase : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
+	void OnItemsChanged(TArray<int32> Items);
+	void OnCheckCanCraft(TArray<int32> Items);
 
 public:
 	static UTileView* mCampFireTileView;

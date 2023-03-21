@@ -14,8 +14,42 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	UPackage* Z_Construct_UPackage__Script_Longvinter();
 // End Cross Module References
+	DEFINE_FUNCTION(UCraftComponent::execOnRep_CraftItems)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->OnRep_CraftItems();
+		P_NATIVE_END;
+	}
 	void UCraftComponent::StaticRegisterNativesUCraftComponent()
 	{
+		UClass* Class = UCraftComponent::StaticClass();
+		static const FNameNativePtrPair Funcs[] = {
+			{ "OnRep_CraftItems", &UCraftComponent::execOnRep_CraftItems },
+		};
+		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Component/CraftComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCraftComponent, nullptr, "OnRep_CraftItems", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UCraftComponent);
 	UClass* Z_Construct_UClass_UCraftComponent_NoRegister()
@@ -25,15 +59,25 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	struct Z_Construct_UClass_UCraftComponent_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
+		static const FClassFunctionLinkInfo FuncInfo[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
+		static const UECodeGen_Private::FIntPropertyParams NewProp_mCraftItems_Inner;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mCraftItems_MetaData[];
+#endif
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_mCraftItems;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
 	};
 	UObject* (*const Z_Construct_UClass_UCraftComponent_Statics::DependentSingletons[])() = {
 		(UObject* (*)())Z_Construct_UClass_UActorComponent,
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
+	};
+	const FClassFunctionLinkInfo Z_Construct_UClass_UCraftComponent_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems, "OnRep_CraftItems" }, // 3008830454
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCraftComponent_Statics::Class_MetaDataParams[] = {
@@ -43,6 +87,17 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		{ "ModuleRelativePath", "Component/CraftComponent.h" },
 	};
 #endif
+	const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_Inner = { "mCraftItems", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_MetaData[] = {
+		{ "ModuleRelativePath", "Component/CraftComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems = { "mCraftItems", "OnRep_CraftItems", (EPropertyFlags)0x0040000100000020, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UCraftComponent, mCraftItems), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_MetaData)) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UCraftComponent_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems,
+	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UCraftComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UCraftComponent>::IsAbstract,
 	};
@@ -51,12 +106,12 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		"Engine",
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
-		nullptr,
-		nullptr,
+		FuncInfo,
+		Z_Construct_UClass_UCraftComponent_Statics::PropPointers,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
-		0,
-		0,
+		UE_ARRAY_COUNT(FuncInfo),
+		UE_ARRAY_COUNT(Z_Construct_UClass_UCraftComponent_Statics::PropPointers),
 		0,
 		0x00B000A4u,
 		METADATA_PARAMS(Z_Construct_UClass_UCraftComponent_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_UCraftComponent_Statics::Class_MetaDataParams))
@@ -73,15 +128,25 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	{
 		return UCraftComponent::StaticClass();
 	}
+
+	void UCraftComponent::ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const
+	{
+		static const FName Name_mCraftItems(TEXT("mCraftItems"));
+
+		const bool bIsValid = true
+			&& Name_mCraftItems == ClassReps[(int32)ENetFields_Private::mCraftItems].Property->GetFName();
+
+		checkf(bIsValid, TEXT("UHT Generated Rep Indices do not match runtime populated Rep Indices for properties in UCraftComponent"));
+	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UCraftComponent);
 	struct Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 2726887349U) },
+		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 4051351248U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_3667975087(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_2282501332(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

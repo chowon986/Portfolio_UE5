@@ -2,6 +2,7 @@
 
 
 #include "CraftComponent.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UCraftComponent::UCraftComponent()
@@ -30,5 +31,23 @@ void UCraftComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UCraftComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCraftComponent, mCraftItems);
+}
+
+void UCraftComponent::ServerAddItem(int32 ItemID)
+{
+	mCraftItems.Add(ItemID);
+}
+
+
+void UCraftComponent::OnRep_CraftItems()
+{
+	OnItemsChangedEvent.Broadcast(mCraftItems);
 }
 

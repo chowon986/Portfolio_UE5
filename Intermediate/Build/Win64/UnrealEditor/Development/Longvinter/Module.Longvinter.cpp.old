@@ -23,7 +23,6 @@
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/TestGameModeBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/CampFireBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/CampFireItemBase.cpp"
-#include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/InventoryBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/InventoryItemBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/MainHUDBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/PlayerInfoBase.cpp"

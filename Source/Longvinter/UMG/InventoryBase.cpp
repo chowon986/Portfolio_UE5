@@ -16,7 +16,6 @@ void UInventoryBase::NativeConstruct()
 	OnceCheck = false;
 	mTileView = Cast<UTileView>(GetWidgetFromName(FName(TEXT("TileView"))));
 	mMKTxt = Cast<UTextBlock>(GetWidgetFromName(FName(TEXT("TTLMK"))));
-	mBeforeMK = 0;
 }
 
 void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -25,22 +24,15 @@ void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 	APlayerController* Controller = GetOwningPlayer();
 	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+	UInventoryComponent* Component = Character->GetInventoryComponent();
 	if (OnceCheck == false)
 	{
-		if (IsValid(Character))
-		{
-			UInventoryComponent* Component = Character->GetInventoryComponent();
-			Component->OnItemsChangedEvent.AddUObject(this, &UInventoryBase::OnItemsChanged);
-			OnItemsChanged(Component->GetItems());
-			OnceCheck = true;
-			mTileView->OnItemDoubleClicked().AddUObject(this, &UInventoryBase::ItemClick);
-			mMKTxt->SetText(FText::FromString(FString::FromInt(Character->GetMK())));
-		}
-	}
-
-	if (mBeforeMK != Character->GetMK())
-	{
-		mMKTxt->SetText(FText::FromString(FString::FromInt(Character->GetMK())));
+		Component->OnItemsChangedEvent.AddUObject(this, &UInventoryBase::OnItemsChanged);
+		Component->OnMKChangedEvent.AddUObject(this, &UInventoryBase::OnMKChanged);
+		OnItemsChanged(Component->GetItems());
+		OnMKChanged(Component->GetMK());
+		OnceCheck = true;
+		mTileView->OnItemDoubleClicked().AddUObject(this, &UInventoryBase::ItemClick);
 	}
 }
 
@@ -57,6 +49,15 @@ void UInventoryBase::OnItemsChanged(TArray<int32> Items)
 
 		mTileView->AddItem(pNewData);
 	}
+}
+
+void UInventoryBase::OnMKChanged(int32 MK)
+{
+	APlayerController* Controller = GetOwningPlayer();
+	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+	UInventoryComponent* Component = Character->GetInventoryComponent();
+
+	mMKTxt->SetText(FText::FromString(FString::FromInt(Component->GetMK())));
 }
 
 void UInventoryBase::ItemClick(UObject* Object)

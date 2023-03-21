@@ -14,15 +14,29 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define LONGVINTER_CraftComponent_generated_h
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_SPARSE_DATA
-#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS
-#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execOnRep_CraftItems);
+
+
+#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execOnRep_CraftItems);
+
+
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCraftComponent(); \
 	friend struct Z_Construct_UClass_UCraftComponent_Statics; \
 public: \
 	DECLARE_CLASS(UCraftComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/Longvinter"), NO_API) \
-	DECLARE_SERIALIZER(UCraftComponent)
+	DECLARE_SERIALIZER(UCraftComponent) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		mCraftItems=NETFIELD_REP_START, \
+		NETFIELD_REP_END=mCraftItems	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_INCLASS \
@@ -31,7 +45,13 @@ private: \
 	friend struct Z_Construct_UClass_UCraftComponent_Statics; \
 public: \
 	DECLARE_CLASS(UCraftComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/Longvinter"), NO_API) \
-	DECLARE_SERIALIZER(UCraftComponent)
+	DECLARE_SERIALIZER(UCraftComponent) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		mCraftItems=NETFIELD_REP_START, \
+		NETFIELD_REP_END=mCraftItems	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_STANDARD_CONSTRUCTORS \
