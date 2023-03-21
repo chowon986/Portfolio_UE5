@@ -51,6 +51,11 @@ void UInventoryComponent::ServerAddItem(int32 ItemID)
 	mItems.Add(ItemID);
 }
 
+void UInventoryComponent::ServerRemoveItem(int32 ItemID)
+{
+	mItems.RemoveSingle(ItemID);
+}
+
 
 void UInventoryComponent::OnRep_Items()
 {

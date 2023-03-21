@@ -22,14 +22,24 @@ public:
 	void SetItemIconPath(const FString& Path) { mItemIconPath = Path; }
 	const FString& GetItemIconPath() { return mItemIconPath; }
 
+	void SetItemIconPathRight(const FString& Path) { mItemIconPathRight = Path; }
+	const FString& GetItemIconPathRight() { return mItemIconPathRight; }
+
 	void SetItemDescription(const FString& _Desc) { mItemDescription = _Desc; }
 	const FString& GetItemDescription() { return mItemDescription; }
+
+	void SetItemDescriptionLeft(const FString& _Desc) { mItemDescriptionLeft = _Desc; }
+	const FString& GetItemDescriptionLeft() { return mItemDescriptionLeft; }
 
 	void SetItemID(int ID) { mItemID = ID; }
 	int GetItemID() { return mItemID; }
 
+
+
 private:
 	FString mItemIconPath;
+	FString mItemIconPathRight;
 	FString mItemDescription;
+	FString mItemDescriptionLeft;
 	int mItemID;
 };

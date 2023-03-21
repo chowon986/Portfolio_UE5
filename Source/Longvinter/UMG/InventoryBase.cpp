@@ -15,16 +15,18 @@ void UInventoryBase::NativeConstruct()
 	Super::NativeConstruct();
 	OnceCheck = false;
 	mTileView = Cast<UTileView>(GetWidgetFromName(FName(TEXT("TileView"))));
+	mMKTxt = Cast<UTextBlock>(GetWidgetFromName(FName(TEXT("TTLMK"))));
+	mBeforeMK = 0;
 }
 
 void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
 
+	APlayerController* Controller = GetOwningPlayer();
+	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 	if (OnceCheck == false)
 	{
-		APlayerController* Controller = GetOwningPlayer();
-		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		if (IsValid(Character))
 		{
 			UInventoryComponent* Component = Character->GetInventoryComponent();
@@ -32,7 +34,13 @@ void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			OnItemsChanged(Component->GetItems());
 			OnceCheck = true;
 			mTileView->OnItemDoubleClicked().AddUObject(this, &UInventoryBase::ItemClick);
+			mMKTxt->SetText(FText::FromString(FString::FromInt(Character->GetMK())));
 		}
+	}
+
+	if (mBeforeMK != Character->GetMK())
+	{
+		mMKTxt->SetText(FText::FromString(FString::FromInt(Character->GetMK())));
 	}
 }
 

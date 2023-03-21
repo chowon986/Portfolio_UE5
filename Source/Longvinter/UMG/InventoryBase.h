@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include <Components/TileView.h>
+#include <Components\TextBlock.h>
 #include "Blueprint/UserWidget.h"
 #include "InventoryBase.generated.h"
 
@@ -29,4 +30,6 @@ private:
 
 public:
 	static UTileView* mTileView;
+	UTextBlock* mMKTxt;
+	int32 mBeforeMK;
 };

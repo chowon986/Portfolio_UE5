@@ -26,6 +26,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	void ServerAddItem(int32 ItemID);
+	void ServerRemoveItem(int32 ItemID);
 	const TArray<int32>& GetItems() { return mItems; }
 
 	UFUNCTION()

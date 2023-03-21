@@ -25,5 +25,9 @@ public:
 
 private:
 	UImage* m_IconImg;
+	UImage* m_IconRightImg;
 	UTextBlock* m_ItemNameTxt;
+	UTextBlock* m_ItemNameLeftTxt;
+	UTextBlock* m_RightMK;
+	UTextBlock* m_LeftMK;
 };

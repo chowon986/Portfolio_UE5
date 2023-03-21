@@ -56,6 +56,9 @@ public:
 	void Fishing();
 	void InventoryOnOff();
 
+	int32 GetMK() { return mMK; }
+	void SetMK(int32 MK) { mMK = MK; }
+
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
 	bool GetCanFishing() { return mCanFishing; }
@@ -67,6 +70,9 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddInventoryItem(int ItemID);
+
+	UFUNCTION(Server, Reliable)
+		void ServerRemoveInventoryItem(int ItemID);
 
 	bool IsInventoryOpen();
 
@@ -98,4 +104,5 @@ public:
 
 	int32 mPrevTime;
 
+	int32 mMK;
 };

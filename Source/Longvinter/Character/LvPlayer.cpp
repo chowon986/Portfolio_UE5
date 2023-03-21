@@ -54,6 +54,7 @@ ALvPlayer::ALvPlayer()
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 
 	mPrevTime = 0;
+	mMK = 0;
 }
 
 void ALvPlayer::BeginPlay()
@@ -350,6 +351,11 @@ void ALvPlayer::ServerAddInventoryItem_Implementation(int ItemID)
 void ALvPlayer::ClientOnFishingFinished_Implementation(int ItemID)
 {
 	mFinishFishing = true;
+}
+
+void ALvPlayer::ServerRemoveInventoryItem_Implementation(int ItemID)
+{
+	GetInventoryComponent()->ServerRemoveItem(ItemID);
 }
 
 bool ALvPlayer::IsInventoryOpen()

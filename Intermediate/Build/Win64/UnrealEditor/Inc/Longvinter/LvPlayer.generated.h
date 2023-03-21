@@ -16,20 +16,24 @@ enum class EPlayerState : uint8;
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS \
+	virtual void ServerRemoveInventoryItem_Implementation(int32 ItemID); \
 	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
 	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
  \
+	DECLARE_FUNCTION(execServerRemoveInventoryItem); \
 	DECLARE_FUNCTION(execServerAddInventoryItem); \
 	DECLARE_FUNCTION(execClientOnFishingFinished); \
 	DECLARE_FUNCTION(execServerSetState);
 
 
 #define FID_Longvinter_Source_Longvinter_Character_LvPlayer_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void ServerRemoveInventoryItem_Implementation(int32 ItemID); \
 	virtual void ServerAddInventoryItem_Implementation(int32 ItemID); \
 	virtual void ClientOnFishingFinished_Implementation(int32 ItemID); \
 	virtual void ServerSetState_Implementation(EPlayerState State); \
  \
+	DECLARE_FUNCTION(execServerRemoveInventoryItem); \
 	DECLARE_FUNCTION(execServerAddInventoryItem); \
 	DECLARE_FUNCTION(execClientOnFishingFinished); \
 	DECLARE_FUNCTION(execServerSetState);
@@ -41,6 +45,10 @@ enum class EPlayerState : uint8;
 		int32 ItemID; \
 	}; \
 	struct LvPlayer_eventServerAddInventoryItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
+	struct LvPlayer_eventServerRemoveInventoryItem_Parms \
 	{ \
 		int32 ItemID; \
 	}; \
