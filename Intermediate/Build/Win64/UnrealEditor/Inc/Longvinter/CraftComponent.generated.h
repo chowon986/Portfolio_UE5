@@ -15,15 +15,33 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS \
+	virtual void ServerClear_Implementation(); \
+	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
-	DECLARE_FUNCTION(execOnRep_CraftItems);
+	DECLARE_FUNCTION(execServerClear); \
+	DECLARE_FUNCTION(execOnRep_CraftID); \
+	DECLARE_FUNCTION(execOnRep_CraftItems); \
+	DECLARE_FUNCTION(execServerAddItem);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void ServerClear_Implementation(); \
+	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
-	DECLARE_FUNCTION(execOnRep_CraftItems);
+	DECLARE_FUNCTION(execServerClear); \
+	DECLARE_FUNCTION(execOnRep_CraftID); \
+	DECLARE_FUNCTION(execOnRep_CraftItems); \
+	DECLARE_FUNCTION(execServerAddItem);
 
 
+#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_EVENT_PARMS \
+	struct CraftComponent_eventServerAddItem_Parms \
+	{ \
+		int32 ItemID; \
+	};
+
+
+#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_CALLBACK_WRAPPERS
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCraftComponent(); \
@@ -35,7 +53,8 @@ public: \
 	{ \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mCraftItems=NETFIELD_REP_START, \
-		NETFIELD_REP_END=mCraftItems	}; \
+		mCraftedItemID, \
+		NETFIELD_REP_END=mCraftedItemID	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
@@ -50,7 +69,8 @@ public: \
 	{ \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mCraftItems=NETFIELD_REP_START, \
-		NETFIELD_REP_END=mCraftItems	}; \
+		mCraftedItemID, \
+		NETFIELD_REP_END=mCraftedItemID	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
@@ -78,12 +98,16 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UCraftComponent)
 
 
-#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_10_PROLOG
+#define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_10_PROLOG \
+	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_EVENT_PARMS
+
+
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_SPARSE_DATA \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS \
+	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_CALLBACK_WRAPPERS \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_INCLASS \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_STANDARD_CONSTRUCTORS \
 public: \
@@ -95,6 +119,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_SPARSE_DATA \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_CALLBACK_WRAPPERS \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_INCLASS_NO_PURE_DECLS \
 	FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_ENHANCED_CONSTRUCTORS \
 private: \

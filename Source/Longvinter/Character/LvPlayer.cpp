@@ -53,6 +53,7 @@ ALvPlayer::ALvPlayer()
 	mFinishFishing = true;
 
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
@@ -67,8 +68,7 @@ void ALvPlayer::BeginPlay()
 
 void ALvPlayer::ServerSetState_Implementation(EPlayerState State)
 {
-	SetState(State);
-
+	SetState(State); // 서버의 State 변경
 	if (State == EPlayerState::Fishing)
 	{
 		ServerSetFishingTimer();
@@ -136,7 +136,7 @@ void ALvPlayer::ServerOnPendingClientResponseTimerExpired()
 				this->SetState(EPlayerState::Idle);
 				SetIdleStateTimerHandle.Invalidate();
 			}
-		}), 1, false);
+		}), 1.0f, false);
 
 	ClientOnFishingFinished();
 }
@@ -383,7 +383,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 {
 	if (PendingClientResponseTimerHandle.IsValid())
 	{
-		int ItemID = FMath::RandRange(1, 17);
+		//int ItemID = FMath::RandRange(1, 17);
+		int ItemID = 1;
 		ClientOnFishingFinished();
 		GetInventoryComponent()->ServerAddItem(ItemID);
 

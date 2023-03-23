@@ -14,8 +14,42 @@ void EmptyLinkFunctionForGeneratedCodeCampFireBase() {}
 	UMG_API UClass* Z_Construct_UClass_UUserWidget();
 	UPackage* Z_Construct_UPackage__Script_Longvinter();
 // End Cross Module References
+	DEFINE_FUNCTION(UCampFireBase::execOnClickedCraftItem)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->OnClickedCraftItem();
+		P_NATIVE_END;
+	}
 	void UCampFireBase::StaticRegisterNativesUCampFireBase()
 	{
+		UClass* Class = UCampFireBase::StaticClass();
+		static const FNameNativePtrPair Funcs[] = {
+			{ "OnClickedCraftItem", &UCampFireBase::execOnClickedCraftItem },
+		};
+		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "UMG/CampFireBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCampFireBase, nullptr, "OnClickedCraftItem", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UCampFireBase);
 	UClass* Z_Construct_UClass_UCampFireBase_NoRegister()
@@ -25,6 +59,7 @@ void EmptyLinkFunctionForGeneratedCodeCampFireBase() {}
 	struct Z_Construct_UClass_UCampFireBase_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
+		static const FClassFunctionLinkInfo FuncInfo[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
@@ -34,6 +69,9 @@ void EmptyLinkFunctionForGeneratedCodeCampFireBase() {}
 	UObject* (*const Z_Construct_UClass_UCampFireBase_Statics::DependentSingletons[])() = {
 		(UObject* (*)())Z_Construct_UClass_UUserWidget,
 		(UObject* (*)())Z_Construct_UPackage__Script_Longvinter,
+	};
+	const FClassFunctionLinkInfo Z_Construct_UClass_UCampFireBase_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_UCampFireBase_OnClickedCraftItem, "OnClickedCraftItem" }, // 2561126291
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCampFireBase_Statics::Class_MetaDataParams[] = {
@@ -50,11 +88,11 @@ void EmptyLinkFunctionForGeneratedCodeCampFireBase() {}
 		nullptr,
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
-		nullptr,
+		FuncInfo,
 		nullptr,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
-		0,
+		UE_ARRAY_COUNT(FuncInfo),
 		0,
 		0,
 		0x00B010A0u,
@@ -78,9 +116,9 @@ void EmptyLinkFunctionForGeneratedCodeCampFireBase() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCampFireBase, UCampFireBase::StaticClass, TEXT("UCampFireBase"), &Z_Registration_Info_UClass_UCampFireBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCampFireBase), 3608603901U) },
+		{ Z_Construct_UClass_UCampFireBase, UCampFireBase::StaticClass, TEXT("UCampFireBase"), &Z_Registration_Info_UClass_UCampFireBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCampFireBase), 252994451U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_152446822(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_1260968221(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

@@ -106,21 +106,21 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 
 	
 
-	{
-		UItemDataBase* pNewData = NewObject<UItemDataBase>();
-		FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+	//{
+	//	UItemDataBase* pNewData = NewObject<UItemDataBase>();
+	//	FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
 
-		pNewData->SetItemIconPath(Table->TexturePath);
-		pNewData->SetItemID(ItemID);
-		CampFireWidget->mCampFireTileView->AddItem(pNewData);
-		
-		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(Character);
+	//	pNewData->SetItemIconPath(Table->TexturePath);
+	//	pNewData->SetItemID(ItemID);
+	//	Ca//mpFireWidget->mCampFireTileView->AddItem(pNewData);
+	//	
+	//	//ALvPlayer* PlayerCharacter = Cast<ALvPlayer>();
 
-		if (IsValid(PlayerCharacter))
-		{
-			PlayerCharacter->GetCraftComponent()->ServerAddItem(ItemID);
-		}
-	}
+	//	if (IsValid(PlayerCharacter))
+	//	{
+	//		PlayerCharacter->GetCraftComponent()->ServerAddItem(ItemID);
+	//	}
+	//}
 	
 	//else
 	//{

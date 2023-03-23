@@ -7,6 +7,7 @@
 #include "../Inventory/Inventory.h"
 #include "../Character/LvPlayerController.h"
 #include "../Component/InventoryComponent.h"
+#include "../Component/CraftComponent.h"
 
 UTileView* UInventoryBase::mTileView = nullptr;
 

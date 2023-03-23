@@ -7,7 +7,6 @@
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CampFireItemBase.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CharacterBase.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/ChickenBase.gen.cpp"
-#include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CraftComponent.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/FishingSpot.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/GameInfo.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/Inventory.gen.cpp"

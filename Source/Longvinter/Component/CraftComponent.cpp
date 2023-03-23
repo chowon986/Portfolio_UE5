@@ -3,7 +3,10 @@
 
 #include "CraftComponent.h"
 #include "../Inventory/Inventory.h"
+#include "../Character/LvPlayer.h"
+#include "../Character/LvPlayerController.h"
 #include "Net/UnrealNetwork.h"
+#include "../UMG/ItemDataBase.h"
 
 // Sets default values for this component's properties
 UCraftComponent::UCraftComponent()
@@ -11,8 +14,10 @@ UCraftComponent::UCraftComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
 	// ...
+
+	SetIsReplicated(true);
+
 }
 
 
@@ -39,9 +44,10 @@ void UCraftComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UCraftComponent, mCraftItems);
+	DOREPLIFETIME(UCraftComponent, mCraftedItemID);
 }
 
-void UCraftComponent::ServerAddItem(int32 ItemID)
+void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)
 {
 	mCraftItems.Add(ItemID);
 
@@ -52,7 +58,6 @@ void UCraftComponent::ServerAddItem(int32 ItemID)
 	TArray<FCraftTable*> Rows; 
 	
 	Table->GetAllRows<FCraftTable>(Str, Rows);
-
 
 	for (FCraftTable* CraftTable : Rows)
 	{
@@ -69,16 +74,26 @@ void UCraftComponent::ServerAddItem(int32 ItemID)
 			}
 		}
 
-		//if (true == AllMatch)
-		//{
-		//	mCraftItems.Empty();
-		//}
+		if (true == AllMatch)
+		{
+			int CraftedItemID = FCString::Atoi(*(CraftTable->Name.ToString()));
+			mCraftedItemID = CraftedItemID;
+		}
 	}
 }
-
 
 void UCraftComponent::OnRep_CraftItems()
 {
 	OnItemsChangedEvent.Broadcast(mCraftItems);
 }
 
+void UCraftComponent::OnRep_CraftID()
+{
+	OnCraftFinishedEvent.Broadcast(mCraftedItemID);
+}
+
+void UCraftComponent::ServerClear_Implementation()
+{
+	mCraftItems.Empty();
+	mCraftedItemID = -1;
+}
