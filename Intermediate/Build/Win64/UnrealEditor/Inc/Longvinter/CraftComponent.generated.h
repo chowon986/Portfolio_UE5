@@ -16,28 +16,36 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS \
 	virtual void ServerClear_Implementation(); \
+	virtual void ServerRemoveItem_Implementation(int32 ItemID); \
 	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
 	DECLARE_FUNCTION(execServerClear); \
 	DECLARE_FUNCTION(execOnRep_ProgressRatio); \
 	DECLARE_FUNCTION(execOnRep_CraftID); \
 	DECLARE_FUNCTION(execOnRep_CraftItems); \
+	DECLARE_FUNCTION(execServerRemoveItem); \
 	DECLARE_FUNCTION(execServerAddItem);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void ServerClear_Implementation(); \
+	virtual void ServerRemoveItem_Implementation(int32 ItemID); \
 	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
 	DECLARE_FUNCTION(execServerClear); \
 	DECLARE_FUNCTION(execOnRep_ProgressRatio); \
 	DECLARE_FUNCTION(execOnRep_CraftID); \
 	DECLARE_FUNCTION(execOnRep_CraftItems); \
+	DECLARE_FUNCTION(execServerRemoveItem); \
 	DECLARE_FUNCTION(execServerAddItem);
 
 
 #define FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_13_EVENT_PARMS \
 	struct CraftComponent_eventServerAddItem_Parms \
+	{ \
+		int32 ItemID; \
+	}; \
+	struct CraftComponent_eventServerRemoveItem_Parms \
 	{ \
 		int32 ItemID; \
 	};

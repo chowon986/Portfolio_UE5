@@ -88,9 +88,18 @@ void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)
 	}
 }
 
+void UCraftComponent::ServerRemoveItem_Implementation(int32 ItemID)
+{
+	mCraftItems.RemoveSingle(ItemID);
+	mCraftedItemID = -1;
+	mProgressRatio = 0.f;
+	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
+	AllMatchTimerHandle.Invalidate();
+}
+
 void UCraftComponent::ServerSetAllMatchTimer(int32 IngredientCount, int32 ItemID)
 {
-	mCookingTime = IngredientCount * 1.f;
+	mCookingTime = IngredientCount * 4.f;
 
 	GetOwner()->GetWorldTimerManager().SetTimer(AllMatchTimerHandle, FTimerDelegate::CreateUObject(this, &UCraftComponent::ServerOnAllMatchTimerExpired, ItemID), mCookingTime, false);
 }
@@ -124,4 +133,6 @@ void UCraftComponent::ServerClear_Implementation()
 	mCraftItems.Empty();
 	mCraftedItemID = -1;
 	mProgressRatio = 0.f;
+	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
+	AllMatchTimerHandle.Invalidate();
 }

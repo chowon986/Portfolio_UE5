@@ -42,6 +42,14 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		P_THIS->OnRep_CraftItems();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(UCraftComponent::execServerRemoveItem)
+	{
+		P_GET_PROPERTY(FIntProperty,Z_Param_ItemID);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->ServerRemoveItem_Implementation(Z_Param_ItemID);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UCraftComponent::execServerAddItem)
 	{
 		P_GET_PROPERTY(FIntProperty,Z_Param_ItemID);
@@ -62,6 +70,13 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	{
 		ProcessEvent(FindFunctionChecked(NAME_UCraftComponent_ServerClear),NULL);
 	}
+	static FName NAME_UCraftComponent_ServerRemoveItem = FName(TEXT("ServerRemoveItem"));
+	void UCraftComponent::ServerRemoveItem(int32 ItemID)
+	{
+		CraftComponent_eventServerRemoveItem_Parms Parms;
+		Parms.ItemID=ItemID;
+		ProcessEvent(FindFunctionChecked(NAME_UCraftComponent_ServerRemoveItem),&Parms);
+	}
 	void UCraftComponent::StaticRegisterNativesUCraftComponent()
 	{
 		UClass* Class = UCraftComponent::StaticClass();
@@ -71,6 +86,7 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 			{ "OnRep_ProgressRatio", &UCraftComponent::execOnRep_ProgressRatio },
 			{ "ServerAddItem", &UCraftComponent::execServerAddItem },
 			{ "ServerClear", &UCraftComponent::execServerClear },
+			{ "ServerRemoveItem", &UCraftComponent::execServerRemoveItem },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -190,6 +206,34 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics
+	{
+		static const UECodeGen_Private::FIntPropertyParams NewProp_ItemID;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::NewProp_ItemID = { "ItemID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(CraftComponent_eventServerRemoveItem_Parms, ItemID), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::NewProp_ItemID,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Component/CraftComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCraftComponent, nullptr, "ServerRemoveItem", nullptr, nullptr, sizeof(CraftComponent_eventServerRemoveItem_Parms), Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCraftComponent_ServerRemoveItem()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCraftComponent_ServerRemoveItem_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UCraftComponent);
 	UClass* Z_Construct_UClass_UCraftComponent_NoRegister()
 	{
@@ -229,6 +273,7 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		{ &Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio, "OnRep_ProgressRatio" }, // 1734913695
 		{ &Z_Construct_UFunction_UCraftComponent_ServerAddItem, "ServerAddItem" }, // 3338259284
 		{ &Z_Construct_UFunction_UCraftComponent_ServerClear, "ServerClear" }, // 4208845809
+		{ &Z_Construct_UFunction_UCraftComponent_ServerRemoveItem, "ServerRemoveItem" }, // 1051927650
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCraftComponent_Statics::Class_MetaDataParams[] = {
@@ -315,9 +360,9 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 4102319576U) },
+		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 4119114286U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_3705017098(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_3512247390(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

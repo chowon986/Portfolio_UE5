@@ -21,6 +21,9 @@ void UCampFireBase::NativeConstruct()
 	mResultBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("ResultBtn"))));
 	mResultBtn->OnClicked.AddDynamic(this, &UCampFireBase::OnClickedCraftItem);
 
+	mCampFireTileView->OnItemClicked().AddUObject(this, &UCampFireBase::OnCancelCraftItem);
+
+
 	mProgressBar = Cast<UProgressBar>(GetWidgetFromName(FName(TEXT("ProgressBar"))));
 
 	mCanGetCraftedItem = false;
@@ -102,5 +105,24 @@ void UCampFireBase::OnClickedCraftItem()
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		Character->GetInventoryComponent()->ServerAddItem(mItemID);
 		Character->GetCraftComponent()->ServerClear();
+	}
+}
+
+void UCampFireBase::OnCancelCraftItem(UObject* Object)
+{
+	UItemDataBase* ItemInfo = Cast<UItemDataBase>(Object);
+	int32 ItemID = ItemInfo->GetItemID();
+
+	APlayerController* Controller = GetOwningPlayer();
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(Controller->GetCharacter());
+	if (IsValid(PlayerCharacter))
+	{
+		UCraftComponent* CraftComponent = Cast<UCraftComponent>(PlayerCharacter->GetCraftComponent());
+		if(IsValid(CraftComponent))
+			CraftComponent->ServerRemoveItem(ItemID);
+
+		UInventoryComponent* InventoryComponent = Cast<UInventoryComponent>(PlayerCharacter->GetInventoryComponent());
+		if (IsValid(InventoryComponent))
+			InventoryComponent->ServerAddItem(ItemID);
 	}
 }

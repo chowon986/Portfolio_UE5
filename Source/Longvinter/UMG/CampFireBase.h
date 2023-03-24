@@ -28,6 +28,9 @@ public:
 	UFUNCTION()
 	void OnClickedCraftItem();
 
+	UFUNCTION()
+	void OnCancelCraftItem(UObject* Object);
+
 public:
 	static UTileView* mCampFireTileView;
 

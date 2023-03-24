@@ -32,6 +32,9 @@ public:
 	UFUNCTION(Server, Reliable)	
 	void ServerAddItem(int32 ItemID);
 
+	UFUNCTION(Server, Reliable)	
+	void ServerRemoveItem(int32 ItemID);
+
 	void ServerSetAllMatchTimer(int32 IngredientCount, int32 ItemID);
 	void ServerOnAllMatchTimerExpired(int32 ItemID);
 
@@ -49,6 +52,7 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerClear();
 
+	FTimerHandle GetAllMatchTimerHandle() { return AllMatchTimerHandle; }
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_CraftItems)

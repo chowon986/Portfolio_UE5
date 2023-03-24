@@ -76,7 +76,7 @@ public:
 	void ServerAddCraftItem(int ItemID);
 
 	UFUNCTION(Server, Reliable)
-		void ServerEKeyPressed();
+	void ServerEKeyPressed();
 
 	bool IsInventoryOpen();
 

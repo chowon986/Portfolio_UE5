@@ -365,6 +365,14 @@ void ALvPlayer::WidgetOff()
 		{
 			if (CampFireWidget->IsVisible())
 			{
+				TArray<int32> AllItems = GetCraftComponent()->GetCraftItems();
+
+				for (int32 Item : AllItems)
+				{
+					GetInventoryComponent()->ServerAddItem(Item);
+				}
+
+				GetCraftComponent()->ServerClear();
 				CampFireWidget->SetVisibility(ESlateVisibility::Collapsed);
 			}
 		}

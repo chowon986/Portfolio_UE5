@@ -8,6 +8,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UObject;
 #ifdef LONGVINTER_CampFireBase_generated_h
 #error "CampFireBase.generated.h already included, missing '#pragma once' in CampFireBase.h"
 #endif
@@ -16,11 +17,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_19_SPARSE_DATA
 #define FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_19_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execOnCancelCraftItem); \
 	DECLARE_FUNCTION(execOnClickedCraftItem);
 
 
 #define FID_Longvinter_Source_Longvinter_UMG_CampFireBase_h_19_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execOnCancelCraftItem); \
 	DECLARE_FUNCTION(execOnClickedCraftItem);
 
 
