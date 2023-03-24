@@ -57,6 +57,7 @@ public:
 	void Click();
 	void Fishing();
 	void InventoryOnOff();
+	void WidgetOff();
 
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }

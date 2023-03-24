@@ -35,8 +35,8 @@
 /FUNCTIONPADMIN
 "C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\LongvinterEditor\DebugGame\Engine\SharedPCH.Engine.NonOptimized.ShadowErrors.h.obj"
 "C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\Module.Longvinter.cpp.obj"
-"C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\CraftComponent.cpp.obj"
-"C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\CampFireBase.cpp.obj"
+"C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\LvPlayer.cpp.obj"
+"C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\LvPlayerController.cpp.obj"
 "C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\Module.Longvinter.gen.cpp.obj"
 "C:\UnrealPortfolio\Longvinter\Intermediate\Build\Win64\UnrealEditor\DebugGame\Longvinter\Default.rc2.res"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\CoreUObject\UnrealEditor-CoreUObject.lib"

@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "LvPlayerAnimInstance.h"
 #include "../Inventory/Inventory.h"
+#include "../UMG/CampFireBase.h"
 #include "../UMG/InventoryBase.h"
 #include "../UMG/MainHUDBase.h"
 #include "../Component/InventoryComponent.h"
@@ -69,6 +70,7 @@ void ALvPlayer::BeginPlay()
 void ALvPlayer::ServerSetState_Implementation(EPlayerState State)
 {
 	SetState(State); // 서버의 State 변경
+
 	if (State == EPlayerState::Fishing)
 	{
 		ServerSetFishingTimer();
@@ -348,6 +350,32 @@ void ALvPlayer::InventoryOnOff()
 		else
 		{
 			InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+		}
+	}
+}
+
+void ALvPlayer::WidgetOff()
+{
+	ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
+
+	if (IsValid(PlayerController))
+	{
+		UCampFireBase* CampFireWidget = PlayerController->GetMainHUD()->GetCampFireWidget();
+		if (IsValid(CampFireWidget))
+		{
+			if (CampFireWidget->IsVisible())
+			{
+				CampFireWidget->SetVisibility(ESlateVisibility::Collapsed);
+			}
+		}
+
+		USgtLakeVenderBase* SgtLakeVenderWidget = PlayerController->GetMainHUD()->GetVendorWidget();
+		if (IsValid(SgtLakeVenderWidget))
+		{
+			if (SgtLakeVenderWidget->IsVisible())
+			{
+				SgtLakeVenderWidget->SetVisibility(ESlateVisibility::Collapsed);
+			}
 		}
 	}
 }

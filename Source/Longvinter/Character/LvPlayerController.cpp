@@ -98,10 +98,10 @@ void ALvPlayerController::Click()
 		{
 			ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetCharacter());
 			
-			USgtLakeVenderBase* VendorBase = GetMainHUD()->GetVendorWidget();
+			USgtLakeVenderBase* VendorWidget = GetMainHUD()->GetVendorWidget();
 
-			if(false == VendorBase->IsVisible())
-				VendorBase->SetVisibility(ESlateVisibility::Visible);
+			if(false == VendorWidget->IsVisible())
+				VendorWidget->SetVisibility(ESlateVisibility::Visible);
 
 			UInventoryBase* InventoryWidget = GetMainHUD()->GetInventoryWidget();
 			if (false == InventoryWidget->IsVisible())
