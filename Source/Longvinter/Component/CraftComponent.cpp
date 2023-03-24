@@ -18,6 +18,7 @@ UCraftComponent::UCraftComponent()
 
 	SetIsReplicated(true);
 
+	mCookingTime = 0.f;
 }
 
 
@@ -30,12 +31,17 @@ void UCraftComponent::BeginPlay()
 	
 }
 
-
 // Called every frame
 void UCraftComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (AllMatchTimerHandle.IsValid())
+	{
+		float ElapsedTime = GetOwner()->GetWorld()->GetTimerManager().GetTimerElapsed(AllMatchTimerHandle);
+
+		mProgressRatio = (ElapsedTime / mCookingTime);
+	}
 	// ...
 }
 
@@ -45,6 +51,7 @@ void UCraftComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 
 	DOREPLIFETIME(UCraftComponent, mCraftItems);
 	DOREPLIFETIME(UCraftComponent, mCraftedItemID);
+	DOREPLIFETIME(UCraftComponent, mProgressRatio);
 }
 
 void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)
@@ -76,11 +83,26 @@ void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)
 
 		if (true == AllMatch)
 		{
-			int CraftedItemID = FCString::Atoi(*(CraftTable->Name.ToString()));
-			mCraftedItemID = CraftedItemID;
+			ServerSetAllMatchTimer(mCraftItems.Num(), FCString::Atoi(*(CraftTable->Name.ToString())));
 		}
 	}
 }
+
+void UCraftComponent::ServerSetAllMatchTimer(int32 IngredientCount, int32 ItemID)
+{
+	mCookingTime = IngredientCount * 1.f;
+
+	GetOwner()->GetWorldTimerManager().SetTimer(AllMatchTimerHandle, FTimerDelegate::CreateUObject(this, &UCraftComponent::ServerOnAllMatchTimerExpired, ItemID), mCookingTime, false);
+}
+
+void UCraftComponent::ServerOnAllMatchTimerExpired(int32 ItemID)
+{
+	mCraftedItemID = ItemID;
+	mProgressRatio = 1.f;
+	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
+	AllMatchTimerHandle.Invalidate();
+}
+
 
 void UCraftComponent::OnRep_CraftItems()
 {
@@ -92,8 +114,14 @@ void UCraftComponent::OnRep_CraftID()
 	OnCraftFinishedEvent.Broadcast(mCraftedItemID);
 }
 
+void UCraftComponent::OnRep_ProgressRatio()
+{
+	OnProgressBarChangedEvent.Broadcast(mProgressRatio);
+}
+
 void UCraftComponent::ServerClear_Implementation()
 {
 	mCraftItems.Empty();
 	mCraftedItemID = -1;
+	mProgressRatio = 0.f;
 }

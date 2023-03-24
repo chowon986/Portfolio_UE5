@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include <Components\ProgressBar.h>
 #include <Components\Image.h>
 #include <Components/TileView.h>
 #include "Blueprint/UserWidget.h"
@@ -22,6 +23,7 @@ public:
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 	void OnItemsChanged(TArray<int32> Items);
 	void OnCraftFinished(int32 ItemID);
+	void OnProgressBarChanged(float Ratio);
 
 	UFUNCTION()
 	void OnClickedCraftItem();
@@ -37,4 +39,5 @@ private:
 	UButton* mResultBtn;
 	bool mCanGetCraftedItem;
 	int32 mItemID;
+	UProgressBar* mProgressBar;
 };

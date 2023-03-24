@@ -3,6 +3,7 @@
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/BasicVendor.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/Bullet.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CampFire.gen.cpp"
+#include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CampFireBase.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CampFireItemBase.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/CharacterBase.gen.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Intermediate/Build/Win64/UnrealEditor/Inc/Longvinter/ChickenBase.gen.cpp"

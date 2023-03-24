@@ -21,6 +21,8 @@ void UCampFireBase::NativeConstruct()
 	mResultBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("ResultBtn"))));
 	mResultBtn->OnClicked.AddDynamic(this, &UCampFireBase::OnClickedCraftItem);
 
+	mProgressBar = Cast<UProgressBar>(GetWidgetFromName(FName(TEXT("ProgressBar"))));
+
 	mCanGetCraftedItem = false;
 	mItemID = 0;
 }
@@ -39,8 +41,9 @@ void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			UCraftComponent* Component = Character->GetCraftComponent();
 			Component->OnItemsChangedEvent.AddUObject(this, &UCampFireBase::OnItemsChanged);
 			Component->OnCraftFinishedEvent.AddUObject(this, &UCampFireBase::OnCraftFinished);
-
+			Component->OnProgressBarChangedEvent.AddUObject(this, &UCampFireBase::OnProgressBarChanged);
 			OnItemsChanged(Component->GetCraftItems());
+			OnProgressBarChanged(0);
 			OnceCheck = true;
 		}
 	}
@@ -78,6 +81,11 @@ void UCampFireBase::OnCraftFinished(int32 ItemID)
 
 		GetResultImage()->SetBrushFromTexture(pTex2D);
 	}
+}
+
+void UCampFireBase::OnProgressBarChanged(float Ratio)
+{
+	mProgressBar->SetPercent(Ratio);
 }
 
 void UCampFireBase::OnClickedCraftItem()

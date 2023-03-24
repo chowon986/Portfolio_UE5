@@ -19,6 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
 	DECLARE_FUNCTION(execServerClear); \
+	DECLARE_FUNCTION(execOnRep_ProgressRatio); \
 	DECLARE_FUNCTION(execOnRep_CraftID); \
 	DECLARE_FUNCTION(execOnRep_CraftItems); \
 	DECLARE_FUNCTION(execServerAddItem);
@@ -29,6 +30,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	virtual void ServerAddItem_Implementation(int32 ItemID); \
  \
 	DECLARE_FUNCTION(execServerClear); \
+	DECLARE_FUNCTION(execOnRep_ProgressRatio); \
 	DECLARE_FUNCTION(execOnRep_CraftID); \
 	DECLARE_FUNCTION(execOnRep_CraftItems); \
 	DECLARE_FUNCTION(execServerAddItem);
@@ -54,7 +56,8 @@ public: \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mCraftItems=NETFIELD_REP_START, \
 		mCraftedItemID, \
-		NETFIELD_REP_END=mCraftedItemID	}; \
+		mProgressRatio, \
+		NETFIELD_REP_END=mProgressRatio	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
@@ -70,7 +73,8 @@ public: \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
 		mCraftItems=NETFIELD_REP_START, \
 		mCraftedItemID, \
-		NETFIELD_REP_END=mCraftedItemID	}; \
+		mProgressRatio, \
+		NETFIELD_REP_END=mProgressRatio	}; \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 

@@ -21,6 +21,13 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		P_THIS->ServerClear_Implementation();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(UCraftComponent::execOnRep_ProgressRatio)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->OnRep_ProgressRatio();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UCraftComponent::execOnRep_CraftID)
 	{
 		P_FINISH;
@@ -61,6 +68,7 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		static const FNameNativePtrPair Funcs[] = {
 			{ "OnRep_CraftID", &UCraftComponent::execOnRep_CraftID },
 			{ "OnRep_CraftItems", &UCraftComponent::execOnRep_CraftItems },
+			{ "OnRep_ProgressRatio", &UCraftComponent::execOnRep_ProgressRatio },
 			{ "ServerAddItem", &UCraftComponent::execServerAddItem },
 			{ "ServerClear", &UCraftComponent::execServerClear },
 		};
@@ -107,6 +115,28 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Component/CraftComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UCraftComponent, nullptr, "OnRep_ProgressRatio", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -181,6 +211,10 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mCraftedItemID_MetaData[];
 #endif
 		static const UECodeGen_Private::FIntPropertyParams NewProp_mCraftedItemID;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mProgressRatio_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_mProgressRatio;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -192,6 +226,7 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_UCraftComponent_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UCraftComponent_OnRep_CraftID, "OnRep_CraftID" }, // 1215535121
 		{ &Z_Construct_UFunction_UCraftComponent_OnRep_CraftItems, "OnRep_CraftItems" }, // 3008830454
+		{ &Z_Construct_UFunction_UCraftComponent_OnRep_ProgressRatio, "OnRep_ProgressRatio" }, // 1734913695
 		{ &Z_Construct_UFunction_UCraftComponent_ServerAddItem, "ServerAddItem" }, // 3338259284
 		{ &Z_Construct_UFunction_UCraftComponent_ServerClear, "ServerClear" }, // 4208845809
 	};
@@ -216,10 +251,19 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftedItemID = { "mCraftedItemID", "OnRep_CraftID", (EPropertyFlags)0x0040000100000020, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UCraftComponent, mCraftedItemID), METADATA_PARAMS(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftedItemID_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftedItemID_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UCraftComponent_Statics::NewProp_mProgressRatio_MetaData[] = {
+		{ "Comment", "// ?????? ?????\xd8\xbe? \xc5\xac???? ????\n" },
+		{ "ModuleRelativePath", "Component/CraftComponent.h" },
+		{ "ToolTip", "?????? ?????\xd8\xbe? \xc5\xac???? ????" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UCraftComponent_Statics::NewProp_mProgressRatio = { "mProgressRatio", "OnRep_ProgressRatio", (EPropertyFlags)0x0040000100000020, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UCraftComponent, mProgressRatio), METADATA_PARAMS(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mProgressRatio_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UCraftComponent_Statics::NewProp_mProgressRatio_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UCraftComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems_Inner,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftItems,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mCraftedItemID,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCraftComponent_Statics::NewProp_mProgressRatio,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UCraftComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UCraftComponent>::IsAbstract,
@@ -256,10 +300,12 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 	{
 		static const FName Name_mCraftItems(TEXT("mCraftItems"));
 		static const FName Name_mCraftedItemID(TEXT("mCraftedItemID"));
+		static const FName Name_mProgressRatio(TEXT("mProgressRatio"));
 
 		const bool bIsValid = true
 			&& Name_mCraftItems == ClassReps[(int32)ENetFields_Private::mCraftItems].Property->GetFName()
-			&& Name_mCraftedItemID == ClassReps[(int32)ENetFields_Private::mCraftedItemID].Property->GetFName();
+			&& Name_mCraftedItemID == ClassReps[(int32)ENetFields_Private::mCraftedItemID].Property->GetFName()
+			&& Name_mProgressRatio == ClassReps[(int32)ENetFields_Private::mProgressRatio].Property->GetFName();
 
 		checkf(bIsValid, TEXT("UHT Generated Rep Indices do not match runtime populated Rep Indices for properties in UCraftComponent"));
 	}
@@ -269,9 +315,9 @@ void EmptyLinkFunctionForGeneratedCodeCraftComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 774982569U) },
+		{ Z_Construct_UClass_UCraftComponent, UCraftComponent::StaticClass, TEXT("UCraftComponent"), &Z_Registration_Info_UClass_UCraftComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCraftComponent), 4102319576U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_434297169(TEXT("/Script/Longvinter"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_3705017098(TEXT("/Script/Longvinter"),
 		Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Longvinter_Source_Longvinter_Component_CraftComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

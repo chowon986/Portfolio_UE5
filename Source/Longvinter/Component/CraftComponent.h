@@ -13,6 +13,7 @@ class LONGVINTER_API UCraftComponent : public UActorComponent
 	GENERATED_BODY()
 	DECLARE_EVENT_OneParam(UCraftComponent, ItemsChangedEvent, TArray<int32>)
 	DECLARE_EVENT_OneParam(UCraftComponent, CraftFinishedEvent, int32)
+	DECLARE_EVENT_OneParam(UCraftComponent, ProgressBarChangedEvent, float)
 
 
 public:	
@@ -31,6 +32,9 @@ public:
 	UFUNCTION(Server, Reliable)	
 	void ServerAddItem(int32 ItemID);
 
+	void ServerSetAllMatchTimer(int32 IngredientCount, int32 ItemID);
+	void ServerOnAllMatchTimerExpired(int32 ItemID);
+
 	const TArray<int32>& GetCraftItems() { return mCraftItems; }
 
 	UFUNCTION()
@@ -38,6 +42,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CraftID();
+
+	UFUNCTION()
+	void OnRep_ProgressRatio();
 
 	UFUNCTION(Server, Reliable)
 	void ServerClear();
@@ -50,7 +57,13 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_CraftID)
 	int32 mCraftedItemID; // 서버가 변경해야 클라에 적용
 
+	UPROPERTY(ReplicatedUsing = OnRep_ProgressRatio)
+	float mProgressRatio;
+
 public:
 	ItemsChangedEvent OnItemsChangedEvent;
 	CraftFinishedEvent OnCraftFinishedEvent;
+	ProgressBarChangedEvent OnProgressBarChangedEvent;
+	FTimerHandle AllMatchTimerHandle;
+	float mCookingTime;
 };
