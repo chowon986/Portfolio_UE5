@@ -21,6 +21,9 @@ void UCampFireBase::NativeConstruct()
 	mResultBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("ResultBtn"))));
 	mResultBtn->OnClicked.AddDynamic(this, &UCampFireBase::OnClickedCraftItem);
 
+	mEatImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("EatIcon"))));
+	mEatImg->SetVisibility(ESlateVisibility::Collapsed);
+
 	mCampFireTileView->OnItemClicked().AddUObject(this, &UCampFireBase::OnCancelCraftItem);
 
 
@@ -62,6 +65,7 @@ void UCampFireBase::OnItemsChanged(TArray<int32> Items)
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
+		pNewData->SetItemType(Table->ItemType);
 
 		mCampFireTileView->AddItem(pNewData);
 	}
@@ -83,6 +87,9 @@ void UCampFireBase::OnCraftFinished(int32 ItemID)
 		UTexture2D* pTex2D = LoadObject<UTexture2D>(nullptr, *(ItemTable->TexturePath));
 
 		GetResultImage()->SetBrushFromTexture(pTex2D);
+
+		if(ItemTable->ItemType == EItemType::Food)
+			mEatImg->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 
@@ -105,6 +112,7 @@ void UCampFireBase::OnClickedCraftItem()
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		Character->GetInventoryComponent()->ServerAddItem(mItemID);
 		Character->GetCraftComponent()->ServerClear();
+		mEatImg->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
 

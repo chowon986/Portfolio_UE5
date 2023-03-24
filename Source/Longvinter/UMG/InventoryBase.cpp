@@ -48,6 +48,7 @@ void UInventoryBase::OnItemsChanged(TArray<int32> Items)
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
+		pNewData->SetItemType(Table->ItemType);
 
 		mTileView->AddItem(pNewData);
 	}

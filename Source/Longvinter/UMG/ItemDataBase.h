@@ -34,7 +34,8 @@ public:
 	void SetItemID(int ID) { mItemID = ID; }
 	int GetItemID() { return mItemID; }
 
-
+	void SetItemType(EItemType Type) { mItemType = Type; }
+	EItemType GetItemType() { return mItemType; }
 
 private:
 	FString mItemIconPath;
@@ -42,4 +43,5 @@ private:
 	FString mItemDescription;
 	FString mItemDescriptionLeft;
 	int mItemID;
+	EItemType mItemType;
 };

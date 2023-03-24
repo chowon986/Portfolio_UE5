@@ -26,4 +26,6 @@ public:
 
 private:
 	UImage* m_IconImg;
+	UImage* mEatImg;
+
 };

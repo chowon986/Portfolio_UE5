@@ -9,6 +9,9 @@ void UInventoryItemBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 	m_IconImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("Icon"))));
+
+	mEatImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("EatIcon"))));
+	mEatImg->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UInventoryItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -24,6 +27,7 @@ void UInventoryItemBase::InitFromData(UObject* _Data)
 	{
 		// 입력된 데이터에 들어있는 값으로 InventoryItem 이 초기화 된다.	
 		const FString& IconPath = pData->GetItemIconPath();
+		EItemType Type = pData->GetItemType();
 
 		// 데이터에 들어있던 IconPath 를 이용해서 해당 텍스쳐를 로딩 후, 
 		// Image 위젯에 해당 텍스쳐를 설정해준다.
@@ -31,6 +35,12 @@ void UInventoryItemBase::InitFromData(UObject* _Data)
 		if (IsValid(pTex2D))
 		{
 			m_IconImg->SetBrushFromTexture(pTex2D);
+
+			if (Type == EItemType::Food)
+				mEatImg->SetVisibility(ESlateVisibility::Visible);
+			else
+				mEatImg->SetVisibility(ESlateVisibility::Collapsed);
+
 		}
 	}
 }

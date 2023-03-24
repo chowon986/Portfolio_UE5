@@ -39,6 +39,7 @@ public:
 private:
 	bool OnceCheck;
 	UImage* mResultImg;
+	UImage* mEatImg;
 	UButton* mResultBtn;
 	bool mCanGetCraftedItem;
 	int32 mItemID;

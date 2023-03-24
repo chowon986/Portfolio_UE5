@@ -60,6 +60,7 @@ void UInventory::UpdateItems(TArray<int32> Items)
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
+		pNewData->SetItemType(Table->ItemType);
 	}
 }
 

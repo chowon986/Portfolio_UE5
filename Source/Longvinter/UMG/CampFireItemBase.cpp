@@ -9,6 +9,8 @@ void UCampFireItemBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 	mIconImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("CampFireIcon"))));
+	mEatImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("EatIcon"))));
+	mEatImg->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UCampFireItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -31,6 +33,9 @@ void UCampFireItemBase::InitFromData(UObject* _Data)
 		if (IsValid(pTex2D))
 		{
 			mIconImg->SetBrushFromTexture(pTex2D);
+
+			if(pData->GetItemType() == EItemType::Food)
+				mEatImg->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
 }
