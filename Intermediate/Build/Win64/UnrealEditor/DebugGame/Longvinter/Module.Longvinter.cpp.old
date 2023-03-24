@@ -21,7 +21,6 @@
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/LvGameInstance.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/ObjectSpawnPoint.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/TestGameModeBase.cpp"
-#include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/CampFireBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/CampFireItemBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/InventoryBase.cpp"
 #include "C:/UnrealPortfolio/Longvinter/Source/Longvinter/UMG/InventoryItemBase.cpp"

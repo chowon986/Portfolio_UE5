@@ -58,6 +58,11 @@ void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)
 {
 	mCraftItems.Add(ItemID);
 
+	mCraftedItemID = -1;
+	mProgressRatio = 0.f;
+	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
+	AllMatchTimerHandle.Invalidate();
+
 	mCraftItems.Sort();
 
 	UDataTable* Table = UInventory::GetInst(GetWorld())->GetCraftTable();
@@ -95,6 +100,35 @@ void UCraftComponent::ServerRemoveItem_Implementation(int32 ItemID)
 	mProgressRatio = 0.f;
 	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
 	AllMatchTimerHandle.Invalidate();
+
+	mCraftItems.Sort();
+
+	UDataTable* Table = UInventory::GetInst(GetWorld())->GetCraftTable();
+	FString Str;
+	TArray<FCraftTable*> Rows;
+
+	Table->GetAllRows<FCraftTable>(Str, Rows);
+
+	for (FCraftTable* CraftTable : Rows)
+	{
+		if (mCraftItems.Num() != CraftTable->RequiredItemList.Num())
+			continue;
+
+		bool AllMatch = true;
+
+		for (int i = 0; i < CraftTable->RequiredItemList.Num(); i++)
+		{
+			if (mCraftItems[i] != CraftTable->RequiredItemList[i])
+			{
+				AllMatch = false;
+			}
+		}
+
+		if (true == AllMatch)
+		{
+			ServerSetAllMatchTimer(mCraftItems.Num(), FCString::Atoi(*(CraftTable->Name.ToString())));
+		}
+	}
 }
 
 void UCraftComponent::ServerSetAllMatchTimer(int32 IngredientCount, int32 ItemID)
@@ -111,7 +145,6 @@ void UCraftComponent::ServerOnAllMatchTimerExpired(int32 ItemID)
 	GetOwner()->GetWorldTimerManager().ClearTimer(AllMatchTimerHandle);
 	AllMatchTimerHandle.Invalidate();
 }
-
 
 void UCraftComponent::OnRep_CraftItems()
 {
