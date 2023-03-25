@@ -49,9 +49,9 @@ void UCraftComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UCraftComponent, mCraftItems);
-	DOREPLIFETIME(UCraftComponent, mCraftedItemID);
-	DOREPLIFETIME(UCraftComponent, mProgressRatio);
+	DOREPLIFETIME_CONDITION(UCraftComponent, mCraftItems, COND_AutonomousOnly);
+	DOREPLIFETIME_CONDITION(UCraftComponent, mCraftedItemID, COND_AutonomousOnly);
+	DOREPLIFETIME_CONDITION(UCraftComponent, mProgressRatio, COND_AutonomousOnly);
 }
 
 void UCraftComponent::ServerAddItem_Implementation(int32 ItemID)

@@ -5,6 +5,7 @@
 
 AMushroom::AMushroom()
 {
+	mItemID = 149;
 	PrimaryActorTick.bCanEverTick = true;
 
 	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));

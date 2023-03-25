@@ -10,11 +10,11 @@
 #include "../Inventory/Inventory.h"
 #include "../UMG/CampFireBase.h"
 #include "../UMG/InventoryBase.h"
-#include "../UMG/MainHUDBase.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 #include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
+#include "../Character/ChickenBase.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -34,7 +34,7 @@ ALvPlayer::ALvPlayer()
 
 	mSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	
+
 	mSpringArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mSpringArm);
 
@@ -58,13 +58,13 @@ ALvPlayer::ALvPlayer()
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
+
+
 }
 
 void ALvPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//UInventory::GetInst(GetWorld())->ShowInventory(false);
 }
 
 void ALvPlayer::ServerSetState_Implementation(EPlayerState State)
@@ -105,12 +105,14 @@ void ALvPlayer::ServerSetBanFishingTimer()
 void ALvPlayer::ServerOnFishingTimerExpired()
 {
 	// E키를 입력하시오
-	ClientNotifyPressE();
+	{
+		ClientNotifyPressE();
 
-	float Time = 1.f;
-	GetWorldTimerManager().SetTimer(PendingClientResponseTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnPendingClientResponseTimerExpired), Time, false);
+		float Time = 1.f;
+		GetWorldTimerManager().SetTimer(PendingClientResponseTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnPendingClientResponseTimerExpired), Time, false);
 
-	FishingTimerHandle.Invalidate();
+		FishingTimerHandle.Invalidate();
+	}
 }
 
 void ALvPlayer::ServerOnBanFishingTimerExpired()
@@ -166,13 +168,17 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// 방향키
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("VerticalMove"), this, &ALvPlayer::VerticalMove);
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("HorizontalMove"), this, &ALvPlayer::HorizontalMove);
-	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
 
-	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Wave"), EInputEvent::IE_Pressed, this, &ALvPlayer::Wave);
-	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
+	// 마우스
+	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Click"), EInputEvent::IE_Pressed, this, &ALvPlayer::Click);
+
+	// 키
+	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
+	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Wave"), EInputEvent::IE_Pressed, this, &ALvPlayer::Wave);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Inventory"), EInputEvent::IE_Pressed, this, &ALvPlayer::InventoryOnOff);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("FinishFishing"), EInputEvent::IE_Pressed, this, &ALvPlayer::CheckSuccessedFishing);
 }
@@ -181,8 +187,8 @@ void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ALvPlayer, mPlayerState);
-	DOREPLIFETIME(ALvPlayer, mCanFishing);
+	DOREPLIFETIME_CONDITION(ALvPlayer, mPlayerState, COND_AutonomousOnly);
+	DOREPLIFETIME_CONDITION(ALvPlayer, mCanFishing, COND_AutonomousOnly);
 }
 
 void ALvPlayer::VerticalMove(float Scale)
@@ -285,17 +291,40 @@ void ALvPlayer::Sit()
 
 void ALvPlayer::Click()
 {
-	ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
-	
-	if (IsValid(PlayerController))
+	FHitResult Result;
+	ALvPlayerController* PlayerController = GetController<ALvPlayerController>();
+	bool Hit = PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, Result);
+	if (GetState() == EPlayerState::Aim)
 	{
-		if (GetState() == EPlayerState::Aim)
+		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
+		Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
+	}
+	else
+	{
+		if (Hit)
 		{
-			PlayerController->UseTool();
-		}
+			AFishingSpot* FishingSpot = Cast<AFishingSpot>(Result.GetActor());
+			if (IsValid(FishingSpot))
+			{
+				if (GetCanFishing() == true)
+					Fishing();
+			}
+			else
+			{
+				ANonPlayerActorBase* NPC = Cast<ANonPlayerActorBase>(Result.GetActor());
+				if (IsValid(NPC))
+				{
+					int ItemID = NPC->GetItemID();
+					if (ItemID != -1)
+					{
+						GetInventoryComponent()->ServerAddItem(NPC->GetItemID());
+						ServerDestroy(NPC);
+					}
+				}
+			}
 
-		else
-		PlayerController->Click();
+			OnActorClickedEvent.Broadcast(Result.GetActor());
+		}
 	}
 }
 
@@ -326,66 +355,7 @@ void ALvPlayer::Fishing()
 
 void ALvPlayer::InventoryOnOff()
 {
-	bool IsOpened = IsInventoryOpen();
-
-	int CurTime = 0;
-	float CurPartical = 0.f;
-	UGameplayStatics::GetAccurateRealTime(CurTime, CurPartical);
-
-	if (CurTime - mPrevTime < 1)
-		return;
-
-	mPrevTime = CurTime;
-
-	ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(GetController());
-	if (true == LvPlayerController->IsLocalController())
-	{
-		UMainHUDBase* MainHUDBase = LvPlayerController->GetMainHUD();
-		UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
-
-		if (!IsOpened)
-		{
-			InventoryWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-		else
-		{
-			InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
-		}
-	}
-}
-
-void ALvPlayer::WidgetOff()
-{
-	ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
-
-	if (IsValid(PlayerController))
-	{
-		UCampFireBase* CampFireWidget = PlayerController->GetMainHUD()->GetCampFireWidget();
-		if (IsValid(CampFireWidget))
-		{
-			if (CampFireWidget->IsVisible())
-			{
-				TArray<int32> AllItems = GetCraftComponent()->GetCraftItems();
-
-				for (int32 Item : AllItems)
-				{
-					GetInventoryComponent()->ServerAddItem(Item);
-				}
-
-				GetCraftComponent()->ServerClear();
-				CampFireWidget->SetVisibility(ESlateVisibility::Collapsed);
-			}
-		}
-
-		USgtLakeVenderBase* SgtLakeVenderWidget = PlayerController->GetMainHUD()->GetVendorWidget();
-		if (IsValid(SgtLakeVenderWidget))
-		{
-			if (SgtLakeVenderWidget->IsVisible())
-			{
-				SgtLakeVenderWidget->SetVisibility(ESlateVisibility::Collapsed);
-			}
-		}
-	}
+	OnInventoryOnOffEvent.Broadcast();
 }
 
 void ALvPlayer::SetState(EPlayerState State)
@@ -395,11 +365,6 @@ void ALvPlayer::SetState(EPlayerState State)
 		mPlayerState = State;
 		ServerSetState(mPlayerState);
 	}
-}
-
-void ALvPlayer::ServerAddCraftItem_Implementation(int ItemID)
-{
-	GetCraftComponent()->ServerAddItem(ItemID);
 }
 
 
@@ -420,37 +385,28 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 	if (PendingClientResponseTimerHandle.IsValid())
 	{
 		//int ItemID = FMath::RandRange(1, 17);
-		int ItemID = 1;
-		ClientOnFishingFinished();
-		GetInventoryComponent()->ServerAddItem(ItemID);
+		{
+			int ItemID = 1;
+			ClientOnFishingFinished();
+			GetInventoryComponent()->ServerAddItem(ItemID);
 
-		GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
-			[this]()
-			{
-				if (IsValid(this))
+			GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
+				[this]()
 				{
-					this->SetState(EPlayerState::Idle);
-					SetIdleStateTimerHandle.Invalidate();
-				}
-			}), 1, false);
+					if (IsValid(this))
+					{
+						this->SetState(EPlayerState::Idle);
+						SetIdleStateTimerHandle.Invalidate();
+					}
+				}), 1, false);
 
-		GetWorldTimerManager().ClearTimer(PendingClientResponseTimerHandle);
-		PendingClientResponseTimerHandle.Invalidate();
-
+			GetWorldTimerManager().ClearTimer(PendingClientResponseTimerHandle);
+			PendingClientResponseTimerHandle.Invalidate();
+		}
 	}
 }
 
-bool ALvPlayer::IsInventoryOpen()
+void ALvPlayer::ServerDestroy_Implementation(AActor* Actor)
 {
-	ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(GetController());
-	UMainHUDBase* MainHUDBase = LvPlayerController->GetMainHUD();
-
-	if (IsValid(MainHUDBase))
-	{
-		UInventoryBase* InventoryWidget = MainHUDBase->GetInventoryWidget();
-
-		return InventoryWidget->IsVisible();
-	}
-
-	return false;
+	Actor->Destroy();
 }

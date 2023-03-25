@@ -45,8 +45,8 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UInventoryComponent, mItems);
-	DOREPLIFETIME(UInventoryComponent, mMK);
+	DOREPLIFETIME_CONDITION(UInventoryComponent, mItems, COND_AutonomousOnly);
+	DOREPLIFETIME_CONDITION(UInventoryComponent, mMK, COND_AutonomousOnly);
 }
 
 void UInventoryComponent::ServerAddItem_Implementation(int32 ItemID)

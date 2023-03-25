@@ -39,7 +39,7 @@ void ACharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ACharacterBase, CurrentHealth);
+	DOREPLIFETIME_CONDITION(ACharacterBase, CurrentHealth, COND_AutonomousOnly);
 }
 
 void ACharacterBase::OnRep_CurrentHealth()

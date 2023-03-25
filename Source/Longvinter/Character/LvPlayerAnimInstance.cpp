@@ -35,11 +35,6 @@ void ULvPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		mMove = mSpeedRatio != 0;
 		mFinishFishing = PlayerCharacter->GetFinishFishing();
 
-		if (mMove)
-		{
-			PlayerCharacter->WidgetOff();
-		}
-
 		/*if (IsMoving != mMove)
 		{
 			mMove = IsMoving;

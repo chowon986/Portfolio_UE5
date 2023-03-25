@@ -23,6 +23,8 @@ public:
 	void OnItemsChanged(TArray<int32> Items);
 	void OnMKChanged(int32 MK);
 
+	UFUNCTION()
+	void OnIsHoveredChanged(UObject* Item, bool bIsHovered);
 
 	void ItemClick(UObject* Object);
 

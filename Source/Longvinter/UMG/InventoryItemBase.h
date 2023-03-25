@@ -24,8 +24,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void InitFromData(UObject* _Data);
 
+	void PlayWidgetAnimation(FString AnimationName);
+
 private:
 	UImage* m_IconImg;
 	UImage* mEatImg;
-
+	TMap<FString, UWidgetAnimation*> mMapWidgetAnimation;
 };

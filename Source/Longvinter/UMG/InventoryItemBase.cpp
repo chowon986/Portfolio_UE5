@@ -12,6 +12,14 @@ void UInventoryItemBase::NativeConstruct()
 
 	mEatImg = Cast<UImage>(GetWidgetFromName(FName(TEXT("EatIcon"))));
 	mEatImg->SetVisibility(ESlateVisibility::Collapsed);
+
+	UWidgetBlueprintGeneratedClass* WidgetClass = GetWidgetTreeOwningClass();
+
+	for (int i = 0; i < WidgetClass->Animations.Num(); ++i)
+	{
+		FString name = WidgetClass->Animations[i]->GetName();
+		mMapWidgetAnimation.Add(name, WidgetClass->Animations[i]);
+	}
 }
 
 void UInventoryItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -42,5 +50,14 @@ void UInventoryItemBase::InitFromData(UObject* _Data)
 				mEatImg->SetVisibility(ESlateVisibility::Collapsed);
 
 		}
+	}
+}
+
+void UInventoryItemBase::PlayWidgetAnimation(FString AnimationName)
+{
+	UWidgetAnimation* pAnim = mMapWidgetAnimation.FindRef(AnimationName);
+	if (IsValid(pAnim))
+	{
+		PlayAnimation(pAnim);
 	}
 }

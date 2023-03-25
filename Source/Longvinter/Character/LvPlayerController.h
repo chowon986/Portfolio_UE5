@@ -17,6 +17,8 @@ class LONGVINTER_API ALvPlayerController : public APlayerController
 
 public:
 	ALvPlayerController();
+
+	UMainHUDBase* GetMainHUD() const { return m_MainHUD; }
 protected:
 	virtual void BeginPlay() override;
 
@@ -30,19 +32,14 @@ protected:
 	virtual void OnUnPossess() override;
 
 public:
-	void Click();
-	void UseTool();
-	void SetMainHUD(UMainHUDBase* MainHUD) { m_MainHUD = MainHUD; }
-	UMainHUDBase* GetMainHUD() { return m_MainHUD; }
-public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-		TSubclassOf<UUserWidget>	m_StartHUDClass;
+	TSubclassOf<UUserWidget> m_StartHUDClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-		UUserWidget* m_StartHUD;
+	UUserWidget* m_StartHUD;
 
+	UPROPERTY()
 	UMainHUDBase* m_MainHUD;
-
 private:
 	TSubclassOf<UUserWidget>	m_MainHUDClass;
 };

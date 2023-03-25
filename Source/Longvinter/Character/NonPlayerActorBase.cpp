@@ -4,6 +4,7 @@
 #include "NonPlayerActorBase.h"
 
 ANonPlayerActorBase::ANonPlayerActorBase()
+	: mItemID(-1)
 {
 }
 

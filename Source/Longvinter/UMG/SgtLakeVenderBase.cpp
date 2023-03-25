@@ -157,7 +157,7 @@ void USgtLakeVenderBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 void USgtLakeVenderBase::ItemClick(UObject* Object)
 {
-	ALvPlayerController* Controller = Cast<ALvPlayerController>(GetOwningPlayer());
+	ALvPlayerController* Controller = Cast<ALvPlayerController>(GetOwningLocalPlayer()->GetPlayerController(GetWorld()));
 	ALvPlayer* LvPlayer = Cast<ALvPlayer>(Controller->GetCharacter());
 
 	if (IsValid(Controller))

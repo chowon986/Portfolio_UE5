@@ -26,7 +26,6 @@ void UCampFireBase::NativeConstruct()
 
 	mCampFireTileView->OnItemClicked().AddUObject(this, &UCampFireBase::OnCancelCraftItem);
 
-
 	mProgressBar = Cast<UProgressBar>(GetWidgetFromName(FName(TEXT("ProgressBar"))));
 
 	mCanGetCraftedItem = false;
@@ -37,7 +36,7 @@ void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
 
-	APlayerController* Controller = GetOwningPlayer();
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 	if (OnceCheck == false)
 	{
@@ -108,7 +107,7 @@ void UCampFireBase::OnClickedCraftItem()
 		//pNewData->SetItemIconPath(Table->TexturePath);
 		//pNewData->SetItemID(ItemID);
 
-		APlayerController* Controller = GetOwningPlayer();
+		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		Character->GetInventoryComponent()->ServerAddItem(mItemID);
 		Character->GetCraftComponent()->ServerClear();
@@ -121,7 +120,7 @@ void UCampFireBase::OnCancelCraftItem(UObject* Object)
 	UItemDataBase* ItemInfo = Cast<UItemDataBase>(Object);
 	int32 ItemID = ItemInfo->GetItemID();
 
-	APlayerController* Controller = GetOwningPlayer();
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(Controller->GetCharacter());
 	if (IsValid(PlayerCharacter))
 	{

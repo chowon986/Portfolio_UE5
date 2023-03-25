@@ -19,10 +19,14 @@ enum class EPlayerState : uint8
 	Death
 };
 
+
 UCLASS()
 class LONGVINTER_API ALvPlayer : public APlayerCharacterBase
 {
 	GENERATED_BODY()
+
+	DECLARE_EVENT_OneParam(ALvPlayer, ActorClickedEvent, AActor*)
+	DECLARE_EVENT(ALvPlayer, InventoryOnOffEvent)
 	
 public:
 	ALvPlayer();
@@ -57,7 +61,6 @@ public:
 	void Click();
 	void Fishing();
 	void InventoryOnOff();
-	void WidgetOff();
 
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
@@ -73,15 +76,16 @@ public:
 	void ClientNotifyPressE();
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddCraftItem(int ItemID);
-
-	UFUNCTION(Server, Reliable)
 	void ServerEKeyPressed();
 
-	bool IsInventoryOpen();
+	UFUNCTION(Server, Reliable)
+	void ServerDestroy(AActor* Actor);
 
 
 public:
+	ActorClickedEvent OnActorClickedEvent;
+	InventoryOnOffEvent OnInventoryOnOffEvent;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
 	USpringArmComponent*	mSpringArm;
 
@@ -89,8 +93,6 @@ public:
 	UCameraComponent*		mCamera;
 
 	float mVerticalDir;
-
-	AFishingSpot* FishingSpot;
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	EPlayerState mPlayerState;

@@ -17,6 +17,7 @@ class LONGVINTER_API ANonPlayerActorBase : public AActorBase
 public:
 	ANonPlayerActorBase();
 
+	int GetItemID() const { return mItemID; }
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -25,4 +26,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	int32 mItemID;
 };

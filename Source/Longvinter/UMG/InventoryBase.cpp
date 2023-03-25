@@ -18,13 +18,14 @@ void UInventoryBase::NativeConstruct()
 	OnceCheck = false;
 	mTileView = Cast<UTileView>(GetWidgetFromName(FName(TEXT("TileView"))));
 	mMKTxt = Cast<UTextBlock>(GetWidgetFromName(FName(TEXT("TTLMK"))));
+	mTileView->OnItemIsHoveredChanged().AddUObject(this, &UInventoryBase::OnIsHoveredChanged);
 }
 
 void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
 
-	APlayerController* Controller = GetOwningPlayer();
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 	UInventoryComponent* Component = Character->GetInventoryComponent();
 	if (OnceCheck == false)
@@ -56,7 +57,7 @@ void UInventoryBase::OnItemsChanged(TArray<int32> Items)
 
 void UInventoryBase::OnMKChanged(int32 MK)
 {
-	APlayerController* Controller = GetOwningPlayer();
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 	UInventoryComponent* Component = Character->GetInventoryComponent();
 
@@ -65,7 +66,7 @@ void UInventoryBase::OnMKChanged(int32 MK)
 
 void UInventoryBase::ItemClick(UObject* Object)
 {
-	APlayerController* Controller = GetOwningPlayer();
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	
 	if (IsValid(Controller))
 	{
@@ -88,6 +89,22 @@ void UInventoryBase::ItemClick(UObject* Object)
 				else
 				Character->GetInventoryComponent()->ServerUseItem(ItemID);
 			}
+		}
+	}
+}
+
+void UInventoryBase::OnIsHoveredChanged(UObject* Item, bool bIsHovered)
+{
+	UItemDataBase* ItemInfo = Cast<UItemDataBase>(Item);
+	if (IsValid(ItemInfo))
+	{
+		UInventoryItemBase* ItemBase = mTileView->GetEntryWidgetFromItem<UInventoryItemBase>(ItemInfo);
+		if (nullptr != ItemBase)
+		{
+			if (bIsHovered)
+				ItemBase->PlayWidgetAnimation("IconBtnHovered_INST");
+			else
+				ItemBase->PlayWidgetAnimation("IconBtnUnHovered_INST");
 		}
 	}
 }

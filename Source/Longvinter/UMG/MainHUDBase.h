@@ -27,8 +27,9 @@ public:
 	USgtLakeVenderBase* GetVendorWidget() { return mSgtLakeVendor; }
 	UCampFireBase* GetCampFireWidget() { return mCampFire; }
 
-	UFUNCTION()
-		void OnItemIconHovered();
+private:
+	void OnActorClicked(AActor* Actor);
+	void OnInventoryOnOff();
 
 private:
 	UPlayerInfoBase* mPlayerInfo;
@@ -36,6 +37,9 @@ private:
 	USgtLakeVenderBase* mSgtLakeVendor;
 	UInventoryItemBase* mItemIcon;
 	UCampFireBase* mCampFire;
+
+	bool mOnceCheck;
+	int32 mPrevTime;
 
 	//UPROPERTY(meta = (BindWidgetAnim), Transient)
 	//UWidgetAnimation* IConHoverAnimation;
