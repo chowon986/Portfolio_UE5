@@ -58,8 +58,6 @@ ALvPlayer::ALvPlayer()
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
-
-
 }
 
 void ALvPlayer::BeginPlay()
@@ -311,14 +309,14 @@ void ALvPlayer::Click()
 			}
 			else
 			{
-				ANonPlayerActorBase* NPC = Cast<ANonPlayerActorBase>(Result.GetActor());
-				if (IsValid(NPC))
+				ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
+				if (IsValid(NPA))
 				{
-					int ItemID = NPC->GetItemID();
-					if (ItemID != -1)
+					int ItemID = NPA->GetItemID();
+					if (-1 != ItemID)
 					{
-						GetInventoryComponent()->ServerAddItem(NPC->GetItemID());
-						ServerDestroy(NPC);
+						GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
+						ServerDestroy(NPA);
 					}
 				}
 			}
@@ -366,7 +364,6 @@ void ALvPlayer::SetState(EPlayerState State)
 		ServerSetState(mPlayerState);
 	}
 }
-
 
 void ALvPlayer::ClientOnFishingFinished_Implementation()
 {

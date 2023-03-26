@@ -81,7 +81,6 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerDestroy(AActor* Actor);
 
-
 public:
 	ActorClickedEvent OnActorClickedEvent;
 	InventoryOnOffEvent OnInventoryOnOffEvent;

@@ -6,12 +6,15 @@
 ANonPlayerActorBase::ANonPlayerActorBase()
 	: mItemID(-1)
 {
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ANonPlayerActorBase::BeginPlay()
 {
+	Super::BeginPlay();
 }
 
 void ANonPlayerActorBase::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 }

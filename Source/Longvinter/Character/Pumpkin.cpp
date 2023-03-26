@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Mushroom.h"
+#include "Pumpkin.h"
 
-AMushroom::AMushroom()
+APumpkin::APumpkin()
 {
-	mItemID = 149;
+	mItemID = 168;
 	PrimaryActorTick.bCanEverTick = true;
 
 	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Mushrooms_SM_Mushroom_01_Merged_mo.Mushrooms_SM_Mushroom_01_Merged_mo'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Pumpkins_SM_CarvedPumpkin01_mo.Pumpkins_SM_CarvedPumpkin01_mo'"));
 
 	if (finder.Succeeded())
 	{
@@ -27,17 +27,15 @@ AMushroom::AMushroom()
 	mCapsuleComponent->SetCapsuleHalfHeight(300.f);
 	mCapsuleComponent->SetCapsuleRadius(100.f);
 
-	mStaticMeshComponent->SetIsReplicated(true);
-
 	bReplicates = true;
 }
 
-void AMushroom::BeginPlay()
+void APumpkin::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void AMushroom::Tick(float DeltaTime)
+void APumpkin::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
