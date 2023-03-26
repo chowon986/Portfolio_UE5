@@ -21,7 +21,18 @@ AChickenBase::AChickenBase()
 	SetCanBeDamaged(true);
 }
 
-void AChickenBase::ServerTakeDamage_Implementation(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+void AChickenBase::BeginPlay()
 {
-	Super::TakeDamage(DamageTaken, DamageEvent, EventInstigator, DamageCauser);
+	Super::BeginPlay();
 }
+
+void AChickenBase::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+//
+//void AChickenBase::ServerTakeDamage_Implementation(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+//{
+//	Super::TakeDamage(DamageTaken, DamageEvent, EventInstigator, DamageCauser);
+//}

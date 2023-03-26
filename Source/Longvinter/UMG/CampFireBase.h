@@ -36,6 +36,8 @@ public:
 
 	UImage* GetResultImage() { return mResultImg; }
 
+	UImage* GetEatImg() { return mEatImg; }
+
 private:
 	bool OnceCheck;
 	UImage* mResultImg;

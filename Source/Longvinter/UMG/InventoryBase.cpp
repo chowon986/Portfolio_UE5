@@ -70,6 +70,7 @@ void UInventoryBase::ItemClick(UObject* Object)
 	
 	if (IsValid(Controller))
 	{
+		//ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetLocalPlayer());
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		if (IsValid(Character))
 		{

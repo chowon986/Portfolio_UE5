@@ -17,6 +17,13 @@ class LONGVINTER_API AChickenBase : public ANonPlayerCharacterBase
 public:
 	AChickenBase();
 
-	UFUNCTION(Server, Reliable)
-	void ServerTakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:
+	virtual void Tick(float DeltaTime) override;
 };
+
+	//UFUNCTION(Server, Reliable)
+	//void ServerTakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);

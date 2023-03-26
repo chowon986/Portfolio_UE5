@@ -295,7 +295,7 @@ void ALvPlayer::Click()
 	if (GetState() == EPlayerState::Aim)
 	{
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
-		Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
+		//Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
 	}
 	else
 	{

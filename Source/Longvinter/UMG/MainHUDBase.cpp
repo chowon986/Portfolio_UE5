@@ -53,10 +53,11 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			}
 			Character->GetCraftComponent()->ServerClear();
 			mCampFire->SetVisibility(ESlateVisibility::Collapsed);
+			mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
 		}
 
-		if (mSgtLakeVendor->IsVisible())
 		{
+		if (mSgtLakeVendor->IsVisible())
 			mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
