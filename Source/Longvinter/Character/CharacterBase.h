@@ -42,5 +42,5 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	FORCEINLINE float GetCurrentHealth() const { return CurrentHealth; }
 
-	void OnHealthUpdate();
+	virtual void OnHealthUpdate();
 };

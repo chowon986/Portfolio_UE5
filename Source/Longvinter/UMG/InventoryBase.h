@@ -27,6 +27,7 @@ public:
 	void OnIsHoveredChanged(UObject* Item, bool bIsHovered);
 
 	void ItemClick(UObject* Object);
+	// 마우스 우클릭
 
 private:
 	bool OnceCheck;

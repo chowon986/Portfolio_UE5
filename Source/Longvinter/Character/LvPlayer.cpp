@@ -12,6 +12,7 @@
 #include "../UMG/InventoryBase.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
+#include "../Component/Placeholder.h"
 #include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
 #include "../Character/ChickenBase.h"
@@ -55,6 +56,7 @@ ALvPlayer::ALvPlayer()
 
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
+	mPlaceholder = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
@@ -296,6 +298,11 @@ void ALvPlayer::Click()
 	{
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
 		//Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
+		if (IsValid(Chicken))
+		{
+			ServerAttack(Chicken, 3.f);
+			//Chicken->ServerTakeDamage(3.f, FDamageEvent(), GetController(), this);
+		}
 	}
 	else
 	{
@@ -363,6 +370,11 @@ void ALvPlayer::SetState(EPlayerState State)
 		mPlayerState = State;
 		ServerSetState(mPlayerState);
 	}
+}
+
+void ALvPlayer::ServerAttack_Implementation(AActor* Actor, float Damage)
+{
+	Actor->TakeDamage(Damage, FDamageEvent(), GetController(), this);
 }
 
 void ALvPlayer::ClientOnFishingFinished_Implementation()

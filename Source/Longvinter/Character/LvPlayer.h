@@ -68,6 +68,7 @@ public:
 	bool GetFinishFishing() { return mFinishFishing; }
 	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
 	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
+	class UPlaceholder* GetPlaceholder() { return mPlaceholder; }
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnFishingFinished();
@@ -80,6 +81,9 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerDestroy(AActor* Actor);
+
+	UFUNCTION(Server, Reliable)
+	void ServerAttack(AActor* Actor, float Damage);
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
@@ -110,6 +114,7 @@ public:
 	class UInventoryBase* InventoryBase;
 	class UInventoryComponent* mInventoryComponent;
 	class UCraftComponent* mCraftComponent;
+	class UPlaceholder* mPlaceholder;
 
 	int32 mPrevTime;
 

@@ -7,6 +7,10 @@
 #include "EngineGlobals.h"
 #include "Engine.h"
 #include "UObject/NoExportTypes.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "GameInfo.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LONGVINTER, Log, All);

@@ -5,6 +5,7 @@
 
 ANonPlayerCharacterBase::ANonPlayerCharacterBase()
 {
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ANonPlayerCharacterBase::BeginPlay()

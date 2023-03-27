@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "../GameInfo.h"
+#include "NonPlayerActorBase.h"
 #include "NonPlayerCharacterBase.h"
 #include "ChickenBase.generated.h"
 
@@ -22,8 +23,26 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	virtual void Tick(float DeltaTime) override;
-};
+	float TakeDamage(float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	//UFUNCTION(Server, Reliable)
-	//void ServerTakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
+	virtual void Tick(float DeltaTime) override;
+
+	void OnHealthUpdate() override;
+
+	void SetCurrentHealth(float healthValue);
+
+	virtual void PossessedBy(AController* NewController);
+	virtual void UnPossessed();
+
+	void RunAway();
+	void Idle();
+
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	UStaticMeshComponent* mBodyStaticMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	UStaticMeshComponent* mFootStaticMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	TSubclassOf<ANonPlayerActorBase> mItemClass;
+};
