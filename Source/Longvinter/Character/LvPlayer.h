@@ -96,6 +96,9 @@ public:
 	AEquipmentActor* GetHat() { return mHat; }
 	void SetHat(int32 ItemID);
 
+	AEquipmentActor* GetWeapon() { return mWeapon; }
+	void SetWeapon(int32 ItemID);
+
 public:
 	ActorClickedEvent OnActorClickedEvent;
 	InventoryOnOffEvent OnInventoryOnOffEvent;
@@ -143,4 +146,5 @@ public:
 	int32 mAmmoCount;
 
 	class AEquipmentActor* mHat;
+	class AEquipmentActor* mWeapon;
 };

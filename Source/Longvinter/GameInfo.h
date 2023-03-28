@@ -28,7 +28,9 @@ enum class EEquipmentType : uint8
 {
 	None,
 	Equipment_Hat,
-	Equipment_Weapon,
+	Equipment_Weapon_Gun,
+	Equipment_Weapon_Saw,
+	Equipment_Weapon_Rod,
 	Equipment_Backpack,
 };
 

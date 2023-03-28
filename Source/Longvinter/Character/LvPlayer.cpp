@@ -66,6 +66,7 @@ ALvPlayer::ALvPlayer()
 	mCanEKeyPressed = false;
 
 	mHat = nullptr;
+	mWeapon = nullptr;
 }
 
 void ALvPlayer::BeginPlay()
@@ -278,7 +279,11 @@ void ALvPlayer::Aim(float Scale)
 	{
 		if (GetState() == EPlayerState::Idle)
 		{
-			SetState(EPlayerState::Aim);
+			if (!mWeapon)
+			{
+				if(mWeapon->EquipmentType != EEquipmentType::Equipment_Weapon_Rod)
+				SetState(EPlayerState::Aim);
+			}
 		}
 	}
 	else if (Scale == 0 && GetState() != EPlayerState::Fishing)
@@ -312,8 +317,13 @@ void ALvPlayer::Click()
 	FHitResult Result;
 	ALvPlayerController* PlayerController = GetController<ALvPlayerController>();
 	bool Hit = PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, Result);
-	if (GetState() == EPlayerState::Aim)
+	if (GetState() == EPlayerState::Aim) // 낚시대 제외 무기를 끼고 Aim하면 Aim 상태임
 	{
+		if (mWeapon->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		{
+			// 총알 생성
+		}
+
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
 		//Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
 		if (IsValid(Chicken))
@@ -323,6 +333,7 @@ void ALvPlayer::Click()
 		}
 		else
 		{
+			//mWeapon
 			ATreeBase* Tree = Cast<ATreeBase>(Result.GetActor());
 			if (IsValid(Tree))
 			{
@@ -445,6 +456,25 @@ void ALvPlayer::SetHat(int32 ItemID)
 	mHat->SetMesh(ItemTable->EquipmentTexturePath);
 
 	//mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+
+	mHat->ItemID = ItemID;
+}
+
+void ALvPlayer::SetWeapon(int32 ItemID)
+{
+	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+
+	FActorSpawnParameters	SpawnParam;
+	SpawnParam.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	mWeapon = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), SpawnParam);
+
+	mWeapon->SetMesh(ItemTable->EquipmentTexturePath);
+
+	//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+
+	mWeapon->EquipmentType = ItemTable->EquipmentType;
 }
 
 void ALvPlayer::ServerAttack_Implementation(AActor* Actor, float Damage)

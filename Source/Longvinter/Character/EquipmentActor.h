@@ -25,10 +25,16 @@ public:
 
 	void SetMesh(const FString& Path);
 
+	EEquipmentType GetEquipmentType() {	return EquipmentType; }
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* mMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UBoxComponent* mBox;
+
+public:
+	int32 ItemID;
+	EEquipmentType EquipmentType;
 };
