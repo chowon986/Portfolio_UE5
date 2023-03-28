@@ -13,9 +13,12 @@
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 #include "../Component/Placeholder.h"
+#include "../Component/EquipmentComponent.h"
 #include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
 #include "../Character/ChickenBase.h"
+#include "../Character/TreeBase.h"
+#include "Projectile_Bullet.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -57,9 +60,12 @@ ALvPlayer::ALvPlayer()
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
 	mPlaceholder = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
+	mEquipmentComponent = CreateDefaultSubobject<UEquipmentComponent>(TEXT("Equipment"));
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
+
+	mHat = nullptr;
 }
 
 void ALvPlayer::BeginPlay()
@@ -155,7 +161,8 @@ void ALvPlayer::Tick(float DeltaTime)
 		bool isMoving = Movement->Velocity.Size() != 0;
 		if (isMoving)
 		{
-			SetState(EPlayerState::Idle);
+			if (GetState() != EPlayerState::Aim)
+				SetState(EPlayerState::Idle);
 		}
 		else if (Movement->IsSwimming())
 		{
@@ -210,14 +217,17 @@ void ALvPlayer::HorizontalMove(float Scale)
 		if (Scale == 0.f)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
+			mPlayerRotator = FRotator(0.0, -90.0, 0.0);
 		}
 		else if (Scale == 1.f)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -45.0, 0.0));
+			mPlayerRotator = FRotator(0.0, -45.0, 0.0);
 		}
 		else
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -135.0, 0.0));
+			mPlayerRotator = FRotator(0.0, -135.0, 0.0);
 		}
 	}
 	else if (mVerticalDir == 0.f)
@@ -229,10 +239,12 @@ void ALvPlayer::HorizontalMove(float Scale)
 		else if (Scale == 1.f)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, 0.0, 0.0));
+			mPlayerRotator = FRotator(0.0, 0.0, 0.0);
 		}
 		else
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -180.0, 0.0));
+			mPlayerRotator = FRotator(0.0, -180.0, 0.0);
 		}
 	}
 	else
@@ -240,14 +252,17 @@ void ALvPlayer::HorizontalMove(float Scale)
 		if (Scale == 0.f)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -270.0, 0.0));
+			mPlayerRotator = FRotator(0.0, -270.0, 0.0);
 		}
 		else if (Scale == 1.f)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -315, 0.0));
+			mPlayerRotator = FRotator(0.0, -315.0, 0.0);
 		}
 		else
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -225, 0.0));
+			mPlayerRotator = FRotator(0.0, -225.0, 0.0);
 		}
 	}
 
@@ -266,7 +281,7 @@ void ALvPlayer::Aim(float Scale)
 			SetState(EPlayerState::Aim);
 		}
 	}
-	else if (GetState() == EPlayerState::Aim && Scale == 0)
+	else if (Scale == 0 && GetState() != EPlayerState::Fishing)
 	{
 		SetState(EPlayerState::Idle);
 	}
@@ -291,6 +306,9 @@ void ALvPlayer::Sit()
 
 void ALvPlayer::Click()
 {
+	if (GetState() != EPlayerState::Aim)
+		SetState(EPlayerState::GetItem);
+
 	FHitResult Result;
 	ALvPlayerController* PlayerController = GetController<ALvPlayerController>();
 	bool Hit = PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, Result);
@@ -303,9 +321,20 @@ void ALvPlayer::Click()
 			ServerAttack(Chicken, 3.f);
 			//Chicken->ServerTakeDamage(3.f, FDamageEvent(), GetController(), this);
 		}
+		else
+		{
+			ATreeBase* Tree = Cast<ATreeBase>(Result.GetActor());
+			if (IsValid(Tree))
+			{
+				ServerAttack(Tree, 3.f);
+			}
+		}
 	}
 	else
 	{
+		// 총
+		//Fire();
+
 		if (Hit)
 		{
 			AFishingSpot* FishingSpot = Cast<AFishingSpot>(Result.GetActor());
@@ -372,6 +401,52 @@ void ALvPlayer::SetState(EPlayerState State)
 	}
 }
 
+void ALvPlayer::Fire()
+{
+	if (ProjectileClass)
+	{
+		FVector Location;
+		FRotator Rotation;
+		GetActorEyesViewPoint(Location, Rotation);
+
+		FVector MuzzleLocation = Location + FTransform(Rotation).TransformVector(MuzzleOffset);
+		FRotator MuzzleRotation = mPlayerRotator + FRotator(0.f, 90.f, 0.f);
+
+		MuzzleLocation.Z -= 30.0f;
+
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = GetInstigator();
+
+			AProjectile_Bullet* Projectile = World->SpawnActor<AProjectile_Bullet>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile)
+			{
+				// 발사 방향을 알아냅니다.
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
+}
+
+void ALvPlayer::SetHat(int32 ItemID)
+{
+	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+
+	FActorSpawnParameters	SpawnParam;
+	SpawnParam.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	mHat = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), SpawnParam);
+
+	mHat->SetMesh(ItemTable->EquipmentTexturePath);
+
+	//mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+}
+
 void ALvPlayer::ServerAttack_Implementation(AActor* Actor, float Damage)
 {
 	Actor->TakeDamage(Damage, FDamageEvent(), GetController(), this);
@@ -395,7 +470,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 	{
 		//int ItemID = FMath::RandRange(1, 17);
 		{
-			int ItemID = 1;
+			//int ItemID = 1;
+			int ItemID = 403;
 			ClientOnFishingFinished();
 			GetInventoryComponent()->ServerAddItem(ItemID);
 

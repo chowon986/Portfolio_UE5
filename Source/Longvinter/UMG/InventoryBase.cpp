@@ -19,17 +19,20 @@ void UInventoryBase::NativeConstruct()
 	mTileView = Cast<UTileView>(GetWidgetFromName(FName(TEXT("TileView"))));
 	mMKTxt = Cast<UTextBlock>(GetWidgetFromName(FName(TEXT("TTLMK"))));
 	mTileView->OnItemIsHoveredChanged().AddUObject(this, &UInventoryBase::OnIsHoveredChanged);
+
+	mEquipmentBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("EquipmentBtn"))));
+	mEquipmentBtn->OnClicked.AddDynamic(this, &UInventoryBase::ClickEquipment);
 }
 
 void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
 
-	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
-	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
-	UInventoryComponent* Component = Character->GetInventoryComponent();
 	if (OnceCheck == false)
 	{
+		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+		UInventoryComponent* Component = Character->GetInventoryComponent();
 		Component->OnItemsChangedEvent.AddUObject(this, &UInventoryBase::OnItemsChanged);
 		Component->OnMKChangedEvent.AddUObject(this, &UInventoryBase::OnMKChanged);
 		OnItemsChanged(Component->GetItems());
@@ -106,6 +109,26 @@ void UInventoryBase::OnIsHoveredChanged(UObject* Item, bool bIsHovered)
 				ItemBase->PlayWidgetAnimation("IconBtnHovered_INST");
 			else
 				ItemBase->PlayWidgetAnimation("IconBtnUnHovered_INST");
+		}
+	}
+}
+
+void UInventoryBase::ClickEquipment()
+{
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+	if (IsValid(Controller))
+	{
+		ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
+		if (IsValid(LvPlayerController))
+		{
+			UEquipmentBase* EquipmentWidget = LvPlayerController->GetMainHUD()->GetEquipmentWidget();
+			UInventoryBase* InventoryWidget = LvPlayerController->GetMainHUD()->GetInventoryWidget();
+
+			if (IsValid(EquipmentWidget))
+			{
+				InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EquipmentWidget->SetVisibility(ESlateVisibility::Visible);
+			}
 		}
 	}
 }

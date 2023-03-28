@@ -24,6 +24,15 @@ DECLARE_LOG_CATEGORY_EXTERN(LONGVINTER, Log, All);
 void PrintViewport(float Time, const FColor& Color, const FString& Text);
 
 UENUM(BlueprintType)
+enum class EEquipmentType : uint8
+{
+	None,
+	Equipment_Hat,
+	Equipment_Weapon,
+	Equipment_Backpack,
+};
+
+UENUM(BlueprintType)
 enum class EItemType : uint8
 {
 	Normal,
@@ -66,6 +75,9 @@ public:
 	EItemType ItemType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	EEquipmentType EquipmentType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	TArray<int32> BuffList;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
@@ -76,6 +88,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	FString TexturePath;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	FString EquipmentTexturePath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	FString Description;

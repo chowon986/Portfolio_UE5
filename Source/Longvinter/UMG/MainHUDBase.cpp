@@ -7,6 +7,7 @@
 #include "../Character/CampFire.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
+#include "../Component/EquipmentComponent.h"
 
 void UMainHUDBase::NativeConstruct()
 {
@@ -25,6 +26,9 @@ void UMainHUDBase::NativeConstruct()
 
 	mCampFire = Cast<UCampFireBase>(GetWidgetFromName(FName(TEXT("UICampFire"))));
 	mCampFire->SetVisibility(ESlateVisibility::Collapsed);
+
+	mEquipment = Cast<UEquipmentBase>(GetWidgetFromName(FName(TEXT("UIEquipment"))));
+	mEquipment->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -92,11 +96,11 @@ void UMainHUDBase::OnInventoryOnOff()
 	mPrevTime = CurTime;
 
 	if (mInventory->IsVisible())
-	{
 		mInventory->SetVisibility(ESlateVisibility::Collapsed);
-	}
 	else
-	{
 		mInventory->SetVisibility(ESlateVisibility::Visible);
-	}
+
+	if (mEquipment->IsVisible())
+		mEquipment->SetVisibility(ESlateVisibility::Collapsed);
+
 }

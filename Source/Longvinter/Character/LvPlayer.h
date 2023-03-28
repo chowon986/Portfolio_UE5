@@ -4,6 +4,7 @@
 
 #include "PlayerCharacterBase.h"
 #include "FishingSpot.h"
+#include "EquipmentActor.h"
 #include "LvPlayer.generated.h"
 
 UENUM(BlueprintType)
@@ -16,6 +17,7 @@ enum class EPlayerState : uint8
 	SitWave,
 	Aim,
 	Fishing,
+	GetItem,
 	Death
 };
 
@@ -68,6 +70,7 @@ public:
 	bool GetFinishFishing() { return mFinishFishing; }
 	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
 	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
+	class UEquipmentComponent* GetEquipmentComponent() { return mEquipmentComponent; }
 	class UPlaceholder* GetPlaceholder() { return mPlaceholder; }
 
 	UFUNCTION(Client, Reliable)
@@ -84,6 +87,14 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerAttack(AActor* Actor, float Damage);
+
+	UFUNCTION()
+	void Fire();
+
+	int32 GetAmmoCount() { return mAmmoCount; }
+
+	AEquipmentActor* GetHat() { return mHat; }
+	void SetHat(int32 ItemID);
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
@@ -114,9 +125,22 @@ public:
 	class UInventoryBase* InventoryBase;
 	class UInventoryComponent* mInventoryComponent;
 	class UCraftComponent* mCraftComponent;
+	class UEquipmentComponent* mEquipmentComponent;
 	class UPlaceholder* mPlaceholder;
 
 	int32 mPrevTime;
 
 	bool mCanEKeyPressed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	FVector MuzzleOffset;
+
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AProjectile_Bullet> ProjectileClass;
+
+	FRotator mPlayerRotator;
+
+	int32 mAmmoCount;
+
+	class AEquipmentActor* mHat;
 };

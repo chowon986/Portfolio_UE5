@@ -7,13 +7,13 @@
 #include <Components/TextBlock.h>
 #include <Components/Button.h>
 #include "Blueprint/UserWidget.h"
-#include "InventoryBase.generated.h"
+#include "EquipmentBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LONGVINTER_API UInventoryBase : public UUserWidget
+class LONGVINTER_API UEquipmentBase : public UUserWidget
 {
 	GENERATED_BODY()
 	
@@ -21,23 +21,18 @@ public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
+	UFUNCTION()
+	void ClickInventory();
+
 	void OnItemsChanged(TArray<int32> Items);
+	void OnAmmoChanged(int32 AmmoCount);
 	void OnMKChanged(int32 MK);
-
-	UFUNCTION()
-	void OnIsHoveredChanged(UObject* Item, bool bIsHovered);
-
-	UFUNCTION()
-	void ClickEquipment();
-
 	void ItemClick(UObject* Object);
-	// 마우스 우클릭
-
-private:
-	bool OnceCheck;
 
 public:
-	static UTileView* mTileView;
+	UTileView* mTileView;
 	UTextBlock* mMKTxt;
-	UButton* mEquipmentBtn;
+	UTextBlock* mAmmoCount;
+	bool OnceCheck;
+	UButton* mInventoryBtn;
 };

@@ -6,12 +6,13 @@
 #include "../Character/CharacterBase.h"
 #include "../Character/LvPlayerController.h"
 #include "../Character/LvPlayer.h"
-#include "CraftComponent.h"
 #include <Longvinter/Inventory/Inventory.h>
 #include <Longvinter/LongvinterGameModeBase.h>
 #include "../UMG/ItemDataBase.h"
 #include "../UMG/MainHUDBase.h"
 #include "../UMG/InventoryBase.h"
+#include "CraftComponent.h"
+#include "EquipmentComponent.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -99,10 +100,68 @@ void UInventoryComponent::ServerSellItem_Implementation(int32 ItemID)
 void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 {
 	UDataTable* ItemTable = UInventory::GetInst(GetWorld())->GetItemTable();
-	// 아이템 테이블에서 ItemID로 아이템 정보 가져오기
 	FItemTable* ItemInfo = ItemTable->FindRow<FItemTable>(FName(FString::FromInt(ItemID)), nullptr);
 
-	//
+	ACharacterBase* LvCharacter = Cast<ACharacterBase>(GetOwner());
+	ALvPlayer* LvPlayerCharacter = Cast<ALvPlayer>(LvCharacter);
+	if (ItemInfo->ItemType == EItemType::Equipment)
+	{
+		// 장비 칸으로 옮기기
+		LvPlayerCharacter->GetEquipmentComponent()->ServerAddItem(ItemID);
+	}
+	else if (ItemInfo->ItemType == EItemType::MK)
+	{
+		// 돈 입력하고 버리기
+	}
+	
+	int32 BuffCount = ItemInfo->BuffList.Num();
+	UDataTable* BuffTable = UInventory::GetInst(GetWorld())->GetBuffTable();
+
+	for (int32 i = 0; i < BuffCount; i++)
+	{
+		int32 BuffID = ItemInfo->BuffList[i];
+		FBuffTable* BuffInfo = BuffTable->FindRow<FBuffTable>(FName(FString::FromInt(BuffID)), nullptr); 
+
+		if (BuffInfo->BuffType == EBuffType::HP)
+		{
+			LvCharacter->SetCurrentHealth(LvCharacter->GetCurrentHealth() + BuffInfo->Amount);
+		}
+		else if (BuffInfo->BuffType == EBuffType::Speed)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::Offence)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::Defence)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::GunAccuracy)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::ColdResistance)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::FishingSpeed)
+		{
+			int a = 0;
+		}
+		else if (BuffInfo->BuffType == EBuffType::AcquisitionRate)
+		{
+
+		}
+		else if (BuffInfo->BuffType == EBuffType::AttackSpeed)
+		{
+
+		}
+	}
+
+
+
 
 	
 

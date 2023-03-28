@@ -25,7 +25,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(Server, Reliable)
+	void CheckDistanceFromActor();
+
 public:
 	UStaticMeshComponent* mStaticMeshComponent;
-	UCapsuleComponent* mCapsuleComponent;
+	UCapsuleComponent* mCapsuleComponent;	
+	float mElapsedTime;
 };
