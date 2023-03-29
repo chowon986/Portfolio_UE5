@@ -137,35 +137,35 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 		}
 		else if (BuffInfo->BuffType == EBuffType::Speed)
 		{
-
+			LvPlayerCharacter->SetSpeed(LvPlayerCharacter->GetSpeed() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::Offence)
 		{
-
+			LvPlayerCharacter->SetOffence(LvPlayerCharacter->GetOffence() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::Defence)
 		{
-
+			LvPlayerCharacter->SetDefence(LvPlayerCharacter->GetDefence() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::GunAccuracy)
 		{
-
+			LvPlayerCharacter->SetGunAccuracy(LvPlayerCharacter->GetGunAccuracy() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::ColdResistance)
 		{
-
+			LvPlayerCharacter->SetColdResistance(LvPlayerCharacter->GetColdResistance() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::FishingSpeed)
 		{
-			int a = 0;
+			LvPlayerCharacter->SetFishingSpeed(LvPlayerCharacter->GetFishingSpeed() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::AcquisitionRate)
 		{
-
+			LvPlayerCharacter->SetAcquisitionRate(LvPlayerCharacter->GetAcquisitionRate() + BuffInfo->Amount);
 		}
 		else if (BuffInfo->BuffType == EBuffType::AttackSpeed)
 		{
-
+			LvPlayerCharacter->SetAttackSpeed(LvPlayerCharacter->GetAttackSpeed() + BuffInfo->Amount);
 		}
 	}
 

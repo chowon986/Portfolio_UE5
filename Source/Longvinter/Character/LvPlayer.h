@@ -92,6 +92,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnPlaceholder();
 
+	UFUNCTION(Server, Reliable)
+	void SetHat(int32 ItemID);
+
 	UFUNCTION()
 	void OnRep_HP();
 
@@ -102,7 +105,6 @@ public:
 	int32 GetAmmoCount() { return mAmmoCount; }
 
 	AEquipmentActor* GetHat() { return mHat; }
-	void SetHat(int32 ItemID);
 
 	AEquipmentActor* GetWeapon() { return mWeapon; }
 	void SetWeapon(int32 ItemID);
@@ -111,7 +113,25 @@ public:
 
 	void OnHealthUpdate() override;
 
+	float GetSpeed() {return mSpeed;}
+	float GetOffence() {return mOffence;}
+	float GetDefence() {return mDefence;}
+	float GetGunAccuracy() {return mGunAccuracy;}
+	float GetFishingSpeed() {return mFishingSpeed;}
+	float GetAcquisitionRate() {return mAcquisitionRate;}
+	float GetAttackSpeed() { return mAttackSpeed; }
+	float GetColdResistance() { return mColdResistance; }
+
 	int32 GetMaxHealth() { return MaxHealth; }
+
+	void SetSpeed(float Speed) { mSpeed = Speed; }
+	void SetOffence(float Offence) { mOffence = Offence; }
+	void SetDefence(float Defence) { mDefence = Defence; }
+	void SetGunAccuracy(float GunAccuracy) { mGunAccuracy = GunAccuracy; }
+	void SetFishingSpeed(float FishingSpeed) { mFishingSpeed = FishingSpeed; }
+	void SetAcquisitionRate(float AcquisitionRate) { mAcquisitionRate = AcquisitionRate; }
+	void SetAttackSpeed(float AttackSpeed) { mAttackSpeed = AttackSpeed; }
+	void SetColdResistance(float ColdResistance) { mColdResistance = ColdResistance; }
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
@@ -170,4 +190,13 @@ public:
 
 	UPROPERTY(ReplicatedUsing = OnRep_HP)
 	float mPlayerHP;
+
+	float mSpeed;
+	float mOffence;
+	float mDefence;
+	float mGunAccuracy;
+	float mFishingSpeed;
+	float mAcquisitionRate;
+	float mAttackSpeed;
+	float mColdResistance;
 };

@@ -490,19 +490,20 @@ void ALvPlayer::Fire()
 	}
 }
 
-void ALvPlayer::SetHat(int32 ItemID)
+void ALvPlayer::SetHat_Implementation(int32 ItemID)
 {
 	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
 
-	FActorSpawnParameters	SpawnParam;
-	SpawnParam.SpawnCollisionHandlingOverride =
-		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	FActorSpawnParameters SpawnParam;
+	SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	mHat = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), SpawnParam);
+	SpawnParam.Owner = this;
+
+	mHat = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), GetTransform(), SpawnParam);
 
 	mHat->SetMesh(ItemTable->EquipmentTexturePath);
 
-	//mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+	mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
 
 	mHat->ItemID = ItemID;
 }
@@ -511,9 +512,9 @@ void ALvPlayer::SetWeapon(int32 ItemID)
 {
 	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
 
-	FActorSpawnParameters	SpawnParam;
-	SpawnParam.SpawnCollisionHandlingOverride =
-		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	FActorSpawnParameters SpawnParam;
+	SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParam.Owner = this;
 
 	mWeapon = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), SpawnParam);
 
@@ -575,9 +576,9 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 	if (PendingClientResponseTimerHandle.IsValid())
 	{
 		{
-		int ItemID = FMath::RandRange(1, 17);
+		//int ItemID = FMath::RandRange(1, 17);
 			//int ItemID = 1;
-			//int ItemID = 403;
+			int ItemID = 403;
 			ClientOnFishingFinished();
 			GetInventoryComponent()->ServerAddItem(ItemID);
 
