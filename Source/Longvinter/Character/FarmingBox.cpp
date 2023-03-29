@@ -1,15 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlaceholderActor.h"
+#include "FarmingBox.h"
 
-APlaceholderActor::APlaceholderActor()
+AFarmingBox::AFarmingBox()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;
 
 	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Flower_SM_Flower_Poppy_mo.Flower_SM_Flower_Poppy_mo'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Container_SM_Container_mo.Container_SM_Container_mo'"));
 
 	if (finder.Succeeded())
 	{
@@ -26,33 +27,17 @@ APlaceholderActor::APlaceholderActor()
 	mCapsuleComponent->SetCapsuleHalfHeight(300.f);
 	mCapsuleComponent->SetCapsuleRadius(100.f);
 
-	bReplicates = true;
-
-	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
+	mFarmingBoxComponent = CreateDefaultSubobject<UFarmingBoxComponent>(TEXT("FarmingBox"));
 }
 
-void APlaceholderActor::BeginPlay()
+void AFarmingBox::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void APlaceholderActor::Tick(float DeltaTime)
+void AFarmingBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	// 만약 Box가 비었으면 Timer 세팅하고 삭제
 }
-
-void APlaceholderActor::ServerAddAllItems_Implementation(const TArray<int32>& Items)
-{
-	mPlaceholderComponent->ServerAddAllItems(Items);
-}
-
-void APlaceholderActor::ServerAddItem_Implementation(int32 ItemID)
-{
-	mPlaceholderComponent->ServerAddItem(ItemID);
-}
-
-void APlaceholderActor::ServerRemoveItem_Implementation(int32 ItemID)
-{
-	mPlaceholderComponent->ServerRemoveItem(ItemID);
-}
-

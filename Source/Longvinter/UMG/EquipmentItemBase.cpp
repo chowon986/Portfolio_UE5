@@ -1,5 +1,6 @@
 #include "EquipmentItemBase.h"
 #include "ItemDataBase.h"
+#include "../Character/LvPlayer.h"
 
 
 void UEquipmentItemBase::NativeConstruct()
@@ -11,6 +12,16 @@ void UEquipmentItemBase::NativeConstruct()
 void UEquipmentItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
+
+	if (mOnceCheck == false)
+	{
+		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+		if (IsValid(Character))
+		{
+			mOnceCheck = true;
+		}
+	}
 }
 
 void UEquipmentItemBase::InitFromData(UObject* _Data)

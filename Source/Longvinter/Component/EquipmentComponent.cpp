@@ -46,14 +46,13 @@ void UEquipmentComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 			mAmmoCount = CurAmmoCount;
 		}
 	}
-	// ...
 }
 
 void UEquipmentComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME_CONDITION(UEquipmentComponent, mAmmoCount, COND_AutonomousOnly);
+	DOREPLIFETIME(UEquipmentComponent, mAmmoCount);
 	DOREPLIFETIME_CONDITION(UEquipmentComponent, mItems, COND_AutonomousOnly);
 }
 
@@ -65,6 +64,13 @@ void UEquipmentComponent::OnRep_AmmoCount()
 void UEquipmentComponent::OnRep_Items()
 {
 	OnItemsChangedEvent.Broadcast(mItems);
+}
+
+int32 UEquipmentComponent::GetAmmoCount()
+{
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetOwner());
+	
+	return PlayerCharacter->GetAmmoCount();
 }
 
 void UEquipmentComponent::ServerRemoveItem_Implementation(int32 ItemID)

@@ -4,23 +4,23 @@
 
 #include "../GameInfo.h"
 #include "Components/ActorComponent.h"
-#include "EquipmentComponent.generated.h"
+#include "FarmingBoxComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class LONGVINTER_API UEquipmentComponent : public UActorComponent
+class LONGVINTER_API UFarmingBoxComponent : public UActorComponent
 {
 	GENERATED_BODY()
-	DECLARE_EVENT_OneParam(UEquipmentComponent, AmmoCountChangedEvent, int32)
-	DECLARE_EVENT_OneParam(UEquipmentComponent, ItemsChangedEvent, TArray<int32>)
+	DECLARE_EVENT_OneParam(UPlaceholder, ItemsChangedEvent, TArray<int32>)
 
 public:	
 	// Sets default values for this component's properties
-	UEquipmentComponent();
+	UFarmingBoxComponent();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame
@@ -28,27 +28,16 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	UFUNCTION()
-	void OnRep_AmmoCount();	
-	
-	UFUNCTION()
 	void OnRep_Items();
 
-	UFUNCTION(Server, Reliable)
-	void ServerAddItem(int32 ItemID);
+	const TArray<int32>& GetItems() { return mItems; }
 
 	UFUNCTION(Server, Reliable)
 	void ServerRemoveItem(int32 ItemID);
 
-	const TArray<int32>& GetItems() { return mItems; }
-
-	int32 GetAmmoCount();
 public:
-	UPROPERTY(ReplicatedUsing = OnRep_AmmoCount)
-	int32 mAmmoCount;
-
 	UPROPERTY(ReplicatedUsing = OnRep_Items)
-	TArray<int32> mItems;
+	TArray<int32> mItems;		
 
-	AmmoCountChangedEvent OnAmmoCountChangedEvent;
 	ItemsChangedEvent OnItemsChangedEvent;
 };

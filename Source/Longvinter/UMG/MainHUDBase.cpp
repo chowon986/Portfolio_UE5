@@ -8,6 +8,7 @@
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 #include "../Component/EquipmentComponent.h"
+#include "../Component/FarmingBoxComponent.h"
 #include "../Component/Placeholder.h"
 #include "../Character/PlaceholderActor.h"
 
@@ -34,6 +35,9 @@ void UMainHUDBase::NativeConstruct()
 
 	mPlaceholder = Cast<UPlaceholderBase>(GetWidgetFromName(FName(TEXT("UIPlaceholder"))));
 	mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
+
+	mRandomBox = Cast<URandomBoxBase>(GetWidgetFromName(FName(TEXT("UIRandomBox"))));
+	mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

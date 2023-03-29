@@ -29,6 +29,7 @@ class LONGVINTER_API ALvPlayer : public APlayerCharacterBase
 
 	DECLARE_EVENT_OneParam(ALvPlayer, ActorClickedEvent, AActor*)
 	DECLARE_EVENT(ALvPlayer, InventoryOnOffEvent)
+	DECLARE_EVENT_OneParam(ALvPlayer, PlayerHPChangedEvent, float)
 	
 public:
 	ALvPlayer();
@@ -89,6 +90,9 @@ public:
 	void ServerAttack(AActor* Actor, float Damage);
 
 	UFUNCTION()
+	void OnRep_HP();
+
+	UFUNCTION()
 	void Fire();
 
 	int32 GetAmmoCount() { return mAmmoCount; }
@@ -103,10 +107,12 @@ public:
 
 	void OnHealthUpdate() override;
 
+	int32 GetMaxHealth() { return MaxHealth; }
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
 	InventoryOnOffEvent OnInventoryOnOffEvent;
+	PlayerHPChangedEvent OnPlayerHPChangedEvent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
 	USpringArmComponent*	mSpringArm;
@@ -157,4 +163,7 @@ public:
 	TSubclassOf<ANonPlayerActorBase> mItemClass;
 
 	bool mOnceCheck;
+
+	UPROPERTY(ReplicatedUsing = OnRep_HP)
+	float mPlayerHP;
 };

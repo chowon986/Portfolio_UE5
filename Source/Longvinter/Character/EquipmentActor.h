@@ -37,4 +37,10 @@ protected:
 public:
 	int32 ItemID;
 	EEquipmentType EquipmentType;
+	float mOffence;
+	float mDefence;
+	float mGunAccuracy;
+	float mFishingSpeed;
+	float mAcquisitionRate;
+	float mAttackSpeed;
 };

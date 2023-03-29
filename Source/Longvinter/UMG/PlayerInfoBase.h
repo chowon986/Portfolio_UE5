@@ -15,11 +15,15 @@ UCLASS()
 class LONGVINTER_API UPlayerInfoBase : public UUserWidget
 {
 	GENERATED_BODY()
-	
-private:
-	UProgressBar* mHPBar;
 
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
+	
+	void OnHPProgressBarChanged(float Value);
+
+private:
+	UProgressBar* mHPBar;
+	bool mOnceCheck;
+	int32 mMaxHP;
 };

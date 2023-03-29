@@ -26,6 +26,10 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddAllItems(const TArray<int32>& Items);
+	UFUNCTION(Server, Reliable)
+	void ServerAddItem(int32 ItemID);
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveItem(int32 ItemID);
 
 	void SetPlaceholderComponent(UPlaceholder* Component) { mPlaceholderComponent = Component; }
 	UPlaceholder* GetPlaceholderComponent() { return mPlaceholderComponent; }

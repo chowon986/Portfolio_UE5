@@ -38,6 +38,7 @@ void UEquipmentBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			Inventory->OnMKChangedEvent.AddUObject(this, &UEquipmentBase::OnMKChanged);
 			OnItemsChanged(Equipment->GetItems());
 			OnMKChanged(Inventory->GetMK());
+			OnAmmoChanged(Equipment->GetAmmoCount());
 
 			mTileView->OnItemDoubleClicked().AddUObject(this, &UEquipmentBase::ItemClick);
 			OnceCheck = true;

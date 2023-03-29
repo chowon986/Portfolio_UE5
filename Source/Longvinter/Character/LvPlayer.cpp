@@ -3,22 +3,23 @@
 
 #include "LvPlayer.h"
 #include "LvPlayerController.h"
-#include "../UMG/ItemDataBase.h"
 #include "GameFramework/Actor.h"
 #include "Camera/CameraComponent.h"
 #include "LvPlayerAnimInstance.h"
-#include "../Inventory/Inventory.h"
+#include "PlaceholderActor.h"
+#include "Net/UnrealNetwork.h"
+#include "Projectile_Bullet.h"
+#include "../LongvinterGameModeBase.h"
+#include "../UMG/ItemDataBase.h"
 #include "../UMG/CampFireBase.h"
 #include "../UMG/InventoryBase.h"
+#include "../Inventory/Inventory.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
-#include "PlaceholderActor.h"
 #include "../Component/EquipmentComponent.h"
-#include "../LongvinterGameModeBase.h"
-#include "Net/UnrealNetwork.h"
 #include "../Character/ChickenBase.h"
 #include "../Character/TreeBase.h"
-#include "Projectile_Bullet.h"
+#include "../Character/FarmingBox.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -70,6 +71,8 @@ ALvPlayer::ALvPlayer()
 	mWeapon = nullptr;
 
 	mOnceCheck = false;
+
+	mAmmoCount = 10;
 }
 
 void ALvPlayer::BeginPlay()
@@ -203,6 +206,7 @@ void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 
 	DOREPLIFETIME_CONDITION(ALvPlayer, mPlayerState, COND_AutonomousOnly);
 	DOREPLIFETIME_CONDITION(ALvPlayer, mCanFishing, COND_AutonomousOnly);
+	DOREPLIFETIME_CONDITION(ALvPlayer, mPlayerHP, COND_AutonomousOnly);
 }
 
 void ALvPlayer::VerticalMove(float Scale)
@@ -327,6 +331,7 @@ void ALvPlayer::Click()
 	{
 		if (mWeapon->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
 		{
+			--mAmmoCount;
 			// 총알 생성
 		}
 
@@ -373,12 +378,22 @@ void ALvPlayer::Click()
 						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
 					}
 					else
-					{
-						int ItemID = NPA->GetItemID();
-						if (-1 != ItemID)
+					{	
+						AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
+						if (IsValid(FarmingBox))
 						{
-							GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
-							ServerDestroy(NPA);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetRandomBox(FarmingBox);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
+						}
+
+						else
+						{
+							int ItemID = NPA->GetItemID();
+							if (-1 != ItemID)
+							{
+								GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
+								ServerDestroy(NPA);
+							}
 						}
 					}
 				}
@@ -426,6 +441,11 @@ void ALvPlayer::SetState(EPlayerState State)
 		mPlayerState = State;
 		ServerSetState(mPlayerState);
 	}
+}
+
+void ALvPlayer::OnRep_HP()
+{
+	OnPlayerHPChangedEvent.Broadcast(mPlayerHP);
 }
 
 void ALvPlayer::Fire()
@@ -514,6 +534,11 @@ void ALvPlayer::OnHealthUpdate()
 		
 		// 사라지는 애니메이션 보여주고
 		// 레벨 전환
+	}
+
+	if (GetCurrentHealth() != mPlayerHP)
+	{
+		mPlayerHP = GetCurrentHealth();
 	}
 }
 

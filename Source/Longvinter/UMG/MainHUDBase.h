@@ -10,6 +10,7 @@
 #include "../UMG/CampFireBase.h"
 #include "../UMG/EquipmentBase.h"
 #include "../UMG/PlaceholderBase.h"
+#include "../UMG/RandomBoxBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -30,6 +31,7 @@ public:
 	UCampFireBase* GetCampFireWidget() { return mCampFire; }
 	UEquipmentBase* GetEquipmentWidget() { return mEquipment; }
 	UPlaceholderBase* GetPlaceholderWidget() { return mPlaceholder; }
+	URandomBoxBase* GetRandomBoxWidget() { return mRandomBox; }
 
 private:
 	void OnActorClicked(AActor* Actor);
@@ -43,6 +45,7 @@ private:
 	UCampFireBase* mCampFire;
 	UEquipmentBase* mEquipment;
 	UPlaceholderBase* mPlaceholder;
+	URandomBoxBase* mRandomBox;
 
 	bool mOnceCheck;
 	int32 mPrevTime;

@@ -3,7 +3,8 @@
 #pragma once
 
 #include "../GameInfo.h"
-#include <Components\Image.h>
+#include <Components/Image.h>
+#include <Components/TextBlock.h>
 #include "Blueprint/UserWidget.h"
 #include "EquipmentItemBase.generated.h"
 
@@ -25,4 +26,6 @@ public:
 
 private:
 	UImage* mIconImg;
+
+	bool mOnceCheck;
 };

@@ -13,9 +13,9 @@ class LONGVINTER_API ACharacterBase : public ACharacter
 protected:
 	// HP RPC, Replicated 관련 변수
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
-		float MaxHealth;
+	float MaxHealth;
 	UPROPERTY(ReplicatedUsing = OnRep_CurrentHealth)
-		float CurrentHealth;
+	float CurrentHealth;
 
 	float mMoveDir;
 	bool mDeath;
