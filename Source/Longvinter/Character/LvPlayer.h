@@ -117,7 +117,7 @@ public:
 	float GetOffence() {return mOffence;}
 	float GetDefence() {return mDefence;}
 	float GetGunAccuracy() {return mGunAccuracy;}
-	float GetFishingSpeed() {return mFishingSpeed;}
+	float GetFishingSpeedRatio() {return mFishingSpeedRatio;}
 	float GetAcquisitionRate() {return mAcquisitionRate;}
 	float GetAttackSpeed() { return mAttackSpeed; }
 	float GetColdResistance() { return mColdResistance; }
@@ -128,7 +128,7 @@ public:
 	void SetOffence(float Offence) { mOffence = Offence; }
 	void SetDefence(float Defence) { mDefence = Defence; }
 	void SetGunAccuracy(float GunAccuracy) { mGunAccuracy = GunAccuracy; }
-	void SetFishingSpeed(float FishingSpeed) { mFishingSpeed = FishingSpeed; }
+	void SetFishingSpeedRatio(float FishingSpeedRatio) { mFishingSpeedRatio = FishingSpeedRatio; }
 	void SetAcquisitionRate(float AcquisitionRate) { mAcquisitionRate = AcquisitionRate; }
 	void SetAttackSpeed(float AttackSpeed) { mAttackSpeed = AttackSpeed; }
 	void SetColdResistance(float ColdResistance) { mColdResistance = ColdResistance; }
@@ -195,7 +195,7 @@ public:
 	float mOffence;
 	float mDefence;
 	float mGunAccuracy;
-	float mFishingSpeed;
+	float mFishingSpeedRatio;
 	float mAcquisitionRate;
 	float mAttackSpeed;
 	float mColdResistance;

@@ -62,7 +62,6 @@ ALvPlayer::ALvPlayer()
 	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
 	mEquipmentComponent = CreateDefaultSubobject<UEquipmentComponent>(TEXT("Equipment"));
 	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
-	 
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
@@ -73,6 +72,8 @@ ALvPlayer::ALvPlayer()
 	mOnceCheck = false;
 
 	mAmmoCount = 10;
+
+	mFishingSpeedRatio = 1;
 }
 
 void ALvPlayer::BeginPlay()
@@ -104,6 +105,9 @@ void ALvPlayer::ServerSetFishingTimer()
 	if (FishingTimerHandle.IsValid() == false)
 	{
 		mFishingTime = FMath::RandRange(3, 5);
+
+		mFishingTime *= mFishingSpeedRatio;
+
 		GetWorldTimerManager().SetTimer(FishingTimerHandle, FTimerDelegate::CreateUObject(this, &ALvPlayer::ServerOnFishingTimerExpired), mFishingTime, false);
 	}
 }

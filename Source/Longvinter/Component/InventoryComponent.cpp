@@ -157,7 +157,9 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 		}
 		else if (BuffInfo->BuffType == EBuffType::FishingSpeed)
 		{
-			LvPlayerCharacter->SetFishingSpeed(LvPlayerCharacter->GetFishingSpeed() + BuffInfo->Amount);
+			float CurFishingSpeed = LvPlayerCharacter->GetFishingSpeedRatio();
+
+			LvPlayerCharacter->SetFishingSpeedRatio(CurFishingSpeed - (CurFishingSpeed * BuffInfo->Amount / 100));
 		}
 		else if (BuffInfo->BuffType == EBuffType::AcquisitionRate)
 		{
