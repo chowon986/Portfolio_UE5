@@ -89,11 +89,15 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerAttack(AActor* Actor, float Damage);
 
+	UFUNCTION(Server, Reliable)
+	void ServerSpawnPlaceholder();
+
 	UFUNCTION()
 	void OnRep_HP();
 
 	UFUNCTION()
 	void Fire();
+
 
 	int32 GetAmmoCount() { return mAmmoCount; }
 

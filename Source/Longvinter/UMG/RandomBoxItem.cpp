@@ -17,7 +17,6 @@ void URandomBoxItem::NativeConstruct()
 void URandomBoxItem::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
-
 }
 
 void URandomBoxItem::InitFromData(UObject* _Data)

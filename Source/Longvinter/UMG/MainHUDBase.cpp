@@ -115,4 +115,6 @@ void UMainHUDBase::OnInventoryOnOff()
 	if (mEquipment->IsVisible())
 		mEquipment->SetVisibility(ESlateVisibility::Collapsed);
 
+	if (mRandomBox->IsVisible())
+		mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
 }

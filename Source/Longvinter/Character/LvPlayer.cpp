@@ -443,6 +443,17 @@ void ALvPlayer::SetState(EPlayerState State)
 	}
 }
 
+void ALvPlayer::ServerSpawnPlaceholder_Implementation()
+{
+	TArray<int32> AllItems = mInventoryComponent->GetItems();
+
+	FActorSpawnParameters Param;
+	Param.Owner = this;
+
+	APlaceholderActor* Items = GetWorld()->SpawnActor<APlaceholderActor>(mItemClass, GetTransform(), Param);
+	Items->ServerAddAllItems(AllItems);
+}
+
 void ALvPlayer::OnRep_HP()
 {
 	OnPlayerHPChangedEvent.Broadcast(mPlayerHP);
@@ -517,9 +528,6 @@ void ALvPlayer::DeleteAllItems()
 {
 	TArray<int32> AllItems = mInventoryComponent->GetItems();
 
-	APlaceholderActor* Items = Cast<APlaceholderActor>(GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClass, GetTransform()));
-	Items->ServerAddAllItems(AllItems);
-
 	mInventoryComponent->ServerRemoveAllItems(AllItems);
 }
 
@@ -528,6 +536,9 @@ void ALvPlayer::OnHealthUpdate()
 	if (GetCurrentHealth() <= 0 && !mOnceCheck)
 	{	
 		mOnceCheck = true;
+
+		ServerSpawnPlaceholder();
+
 		DeleteAllItems();
 
 		//Destroy();

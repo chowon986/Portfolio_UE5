@@ -12,13 +12,6 @@ UFarmingBoxComponent::UFarmingBoxComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	SetIsReplicated(true);
-}
-
-
-// Called when the game starts
-void UFarmingBoxComponent::BeginPlay()
-{
-	Super::BeginPlay();
 
 	int ItemCount = FMath::RandRange(1, 5);
 
@@ -26,6 +19,13 @@ void UFarmingBoxComponent::BeginPlay()
 	{
 		mItems.Add(FMath::RandRange(1, 17));
 	}
+}
+
+
+// Called when the game starts
+void UFarmingBoxComponent::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void UFarmingBoxComponent::OnRep_Items()
