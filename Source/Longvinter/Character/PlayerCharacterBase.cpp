@@ -70,6 +70,7 @@ void APlayerCharacterBase::ServerNormalAttackTest_Implementation()
 
 			if (IsValid(Character))
 			{
+				if(Character->GetCurrentHealth() > 0)
 				Character->TakeDamage(1.f, FDamageEvent(), GetController(), this);
 			}
 		}

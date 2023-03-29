@@ -71,7 +71,7 @@ public:
 	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
 	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
 	class UEquipmentComponent* GetEquipmentComponent() { return mEquipmentComponent; }
-	class UPlaceholder* GetPlaceholder() { return mPlaceholder; }
+	class UPlaceholder* GetPlaceholder() { return mPlaceholderComponent; }
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnFishingFinished();
@@ -98,6 +98,11 @@ public:
 
 	AEquipmentActor* GetWeapon() { return mWeapon; }
 	void SetWeapon(int32 ItemID);
+
+	void DeleteAllItems();
+
+	void OnHealthUpdate() override;
+
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
@@ -129,7 +134,7 @@ public:
 	class UInventoryComponent* mInventoryComponent;
 	class UCraftComponent* mCraftComponent;
 	class UEquipmentComponent* mEquipmentComponent;
-	class UPlaceholder* mPlaceholder;
+	class UPlaceholder* mPlaceholderComponent;
 
 	int32 mPrevTime;
 
@@ -147,4 +152,9 @@ public:
 
 	class AEquipmentActor* mHat;
 	class AEquipmentActor* mWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	TSubclassOf<ANonPlayerActorBase> mItemClass;
+
+	bool mOnceCheck;
 };

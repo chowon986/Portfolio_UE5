@@ -12,7 +12,7 @@
 #include "../UMG/InventoryBase.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
-#include "../Component/Placeholder.h"
+#include "PlaceholderActor.h"
 #include "../Component/EquipmentComponent.h"
 #include "../LongvinterGameModeBase.h"
 #include "Net/UnrealNetwork.h"
@@ -59,14 +59,17 @@ ALvPlayer::ALvPlayer()
 
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
 	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
-	mPlaceholder = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
 	mEquipmentComponent = CreateDefaultSubobject<UEquipmentComponent>(TEXT("Equipment"));
+	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
+	 
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
 
 	mHat = nullptr;
 	mWeapon = nullptr;
+
+	mOnceCheck = false;
 }
 
 void ALvPlayer::BeginPlay()
@@ -156,18 +159,21 @@ void ALvPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UCharacterMovementComponent* Movement = GetCharacterMovement();
-	if (Movement)
+	if (IsValid(this))
 	{
-		bool isMoving = Movement->Velocity.Size() != 0;
-		if (isMoving)
+		UCharacterMovementComponent* Movement = GetCharacterMovement();
+		if (Movement)
 		{
-			if (GetState() != EPlayerState::Aim)
-				SetState(EPlayerState::Idle);
-		}
-		else if (Movement->IsSwimming())
-		{
-			SetState(EPlayerState::SwimmingIdle);
+			bool isMoving = Movement->Velocity.Size() != 0;
+			if (isMoving)
+			{
+				if (GetState() != EPlayerState::Aim)
+					SetState(EPlayerState::Idle);
+			}
+			else if (Movement->IsSwimming())
+			{
+				SetState(EPlayerState::SwimmingIdle);
+			}
 		}
 	}
 }
@@ -279,10 +285,10 @@ void ALvPlayer::Aim(float Scale)
 	{
 		if (GetState() == EPlayerState::Idle)
 		{
-			if (!mWeapon)
+			if (mWeapon)
 			{
 				if(mWeapon->EquipmentType != EEquipmentType::Equipment_Weapon_Rod)
-				SetState(EPlayerState::Aim);
+					SetState(EPlayerState::Aim);
 			}
 		}
 	}
@@ -359,11 +365,21 @@ void ALvPlayer::Click()
 				ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
 				if (IsValid(NPA))
 				{
-					int ItemID = NPA->GetItemID();
-					if (-1 != ItemID)
+					APlaceholderActor* Items = Cast<APlaceholderActor>(NPA);
+					if (IsValid(Items))
 					{
-						GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
-						ServerDestroy(NPA);
+						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items);
+						//PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items->GetPlaceholderComponent());
+						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
+					}
+					else
+					{
+						int ItemID = NPA->GetItemID();
+						if (-1 != ItemID)
+						{
+							GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
+							ServerDestroy(NPA);
+						}
 					}
 				}
 			}
@@ -477,6 +493,30 @@ void ALvPlayer::SetWeapon(int32 ItemID)
 	mWeapon->EquipmentType = ItemTable->EquipmentType;
 }
 
+void ALvPlayer::DeleteAllItems()
+{
+	TArray<int32> AllItems = mInventoryComponent->GetItems();
+
+	APlaceholderActor* Items = Cast<APlaceholderActor>(GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClass, GetTransform()));
+	Items->ServerAddAllItems(AllItems);
+
+	mInventoryComponent->ServerRemoveAllItems(AllItems);
+}
+
+void ALvPlayer::OnHealthUpdate()
+{
+	if (GetCurrentHealth() <= 0 && !mOnceCheck)
+	{	
+		mOnceCheck = true;
+		DeleteAllItems();
+
+		//Destroy();
+		
+		// 사라지는 애니메이션 보여주고
+		// 레벨 전환
+	}
+}
+
 void ALvPlayer::ServerAttack_Implementation(AActor* Actor, float Damage)
 {
 	Actor->TakeDamage(Damage, FDamageEvent(), GetController(), this);
@@ -498,10 +538,10 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 {
 	if (PendingClientResponseTimerHandle.IsValid())
 	{
-		//int ItemID = FMath::RandRange(1, 17);
 		{
+		int ItemID = FMath::RandRange(1, 17);
 			//int ItemID = 1;
-			int ItemID = 403;
+			//int ItemID = 403;
 			ClientOnFishingFinished();
 			GetInventoryComponent()->ServerAddItem(ItemID);
 

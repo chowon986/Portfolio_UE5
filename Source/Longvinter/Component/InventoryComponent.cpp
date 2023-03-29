@@ -60,7 +60,6 @@ void UInventoryComponent::ServerRemoveItem_Implementation(int32 ItemID)
 	mItems.RemoveSingle(ItemID);
 }
 
-
 void UInventoryComponent::OnRep_Items()
 {
 	OnItemsChangedEvent.Broadcast(mItems);
@@ -69,6 +68,16 @@ void UInventoryComponent::OnRep_Items()
 void UInventoryComponent::OnRep_MK()
 {
 	OnMKChangedEvent.Broadcast(mMK);
+}
+
+void UInventoryComponent::ServerRemoveAllItems_Implementation(const TArray<int32>& ItemIDs)
+{
+	int32 Count = ItemIDs.Num();
+	
+	for (int i = 0; i < Count; i++)
+	{
+		ServerRemoveItem(ItemIDs[i]);
+	}
 }
 
 void UInventoryComponent::ServerBuyItem_Implementation(int32 ItemID)

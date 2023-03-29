@@ -89,7 +89,8 @@ void ACampFire::CheckDistanceFromActor_Implementation()
 			ALvPlayer* Player = Cast<ALvPlayer>(ResultMinusHPArray[i].GetActor());
 			if (IsValid(Player))
 			{
-				Player->ServerAttack(Player, 1.f);
+				if(Player->GetCurrentHealth() > 0)
+					Player->ServerAttack(Player, 1.f);
 			}
 		}
 	}

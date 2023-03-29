@@ -29,8 +29,10 @@ ABasicVendor::ABasicVendor()
 
 void ABasicVendor::BeginPlay()
 {
+	Super::BeginPlay();
 }
 
 void ABasicVendor::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 }

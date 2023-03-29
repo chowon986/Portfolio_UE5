@@ -44,7 +44,7 @@ void ACharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 
 void ACharacterBase::OnRep_CurrentHealth()
 {
-	OnHealthUpdate();
+	//OnHealthUpdate();
 }
 
 void ACharacterBase::OnHealthUpdate()

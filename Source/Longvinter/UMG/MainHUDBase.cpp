@@ -8,6 +8,8 @@
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 #include "../Component/EquipmentComponent.h"
+#include "../Component/Placeholder.h"
+#include "../Character/PlaceholderActor.h"
 
 void UMainHUDBase::NativeConstruct()
 {
@@ -29,6 +31,9 @@ void UMainHUDBase::NativeConstruct()
 
 	mEquipment = Cast<UEquipmentBase>(GetWidgetFromName(FName(TEXT("UIEquipment"))));
 	mEquipment->SetVisibility(ESlateVisibility::Collapsed);
+
+	mPlaceholder = Cast<UPlaceholderBase>(GetWidgetFromName(FName(TEXT("UIPlaceholder"))));
+	mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -44,25 +49,28 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 		mOnceCheck = true;
 	}
 
-	UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
-	bool isMoving = MovementComponent->Velocity.Size() > 0;
-	if (isMoving)
+	if (IsValid(Character))
 	{
-		if (mCampFire->IsVisible())
+		UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
+		bool isMoving = MovementComponent->Velocity.Size() > 0;
+		if (isMoving)
 		{
-			TArray<int32> AllItems = Character->GetCraftComponent()->GetCraftItems();
-			for (int32 Item : AllItems)
+			if (mCampFire->IsVisible())
 			{
-				Character->GetInventoryComponent()->ServerAddItem(Item);
+				TArray<int32> AllItems = Character->GetCraftComponent()->GetCraftItems();
+				for (int32 Item : AllItems)
+				{
+					Character->GetInventoryComponent()->ServerAddItem(Item);
+				}
+				Character->GetCraftComponent()->ServerClear();
+				mCampFire->SetVisibility(ESlateVisibility::Collapsed);
+				mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
 			}
-			Character->GetCraftComponent()->ServerClear();
-			mCampFire->SetVisibility(ESlateVisibility::Collapsed);
-			mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
-		}
 
-		{
-		if (mSgtLakeVendor->IsVisible())
-			mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
+			{
+				if (mSgtLakeVendor->IsVisible())
+					mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
+			}
 		}
 	}
 }

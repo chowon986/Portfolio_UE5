@@ -22,7 +22,6 @@ ULvGameInstance::ULvGameInstance()
 		UInventory::GetInst(this)->SetBuffTable(mBuffTable);
 	}
 
-
 	static ConstructorHelpers::FObjectFinder<UDataTable> CraftTable(TEXT("DataTable'/Game/DataTable/TCraftTable.TCraftTable'"));
 	if (CraftTable.Succeeded())
 	{

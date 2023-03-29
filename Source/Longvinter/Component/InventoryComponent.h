@@ -49,6 +49,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerBuyItem(int32 ItemID);
 
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveAllItems(const TArray<int32>& ItemIDs);
+
 	int32 GetMK() { return mMK; }
 	void ServerSetMK(int32 MK) { mMK = MK; }
 

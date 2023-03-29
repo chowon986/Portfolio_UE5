@@ -9,6 +9,7 @@
 #include "../UMG/InventoryItemBase.h"
 #include "../UMG/CampFireBase.h"
 #include "../UMG/EquipmentBase.h"
+#include "../UMG/PlaceholderBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -28,6 +29,7 @@ public:
 	USgtLakeVenderBase* GetVendorWidget() { return mSgtLakeVendor; }
 	UCampFireBase* GetCampFireWidget() { return mCampFire; }
 	UEquipmentBase* GetEquipmentWidget() { return mEquipment; }
+	UPlaceholderBase* GetPlaceholderWidget() { return mPlaceholder; }
 
 private:
 	void OnActorClicked(AActor* Actor);
@@ -40,6 +42,7 @@ private:
 	UInventoryItemBase* mItemIcon;
 	UCampFireBase* mCampFire;
 	UEquipmentBase* mEquipment;
+	UPlaceholderBase* mPlaceholder;
 
 	bool mOnceCheck;
 	int32 mPrevTime;
