@@ -36,3 +36,23 @@ void AFishingSpot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+int32 AFishingSpot::GetRandomFish()
+{
+	if (mFishType.Num() < 1)
+		return -1;
+	
+	int32 MaxNum = mFishType.Num() - 1;
+	int32 RandomIndex = FMath::RandRange(0, MaxNum);
+
+	return mFishType[RandomIndex];
+}
+
+void AFishingSpot::ServerSetFish_Implementation(const TArray<int32>& FishArray)
+{
+	for (auto Fish : FishArray)
+	{
+		mFishType.Add(Fish);
+	}
+
+}

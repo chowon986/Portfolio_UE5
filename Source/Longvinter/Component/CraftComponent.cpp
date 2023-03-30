@@ -16,8 +16,6 @@ UCraftComponent::UCraftComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	// ...
 
-	SetIsReplicated(true);
-
 	mCookingTime = 0.f;
 }
 

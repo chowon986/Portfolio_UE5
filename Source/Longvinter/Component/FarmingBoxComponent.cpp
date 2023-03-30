@@ -11,8 +11,6 @@ UFarmingBoxComponent::UFarmingBoxComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	SetIsReplicated(true);
-
 	int ItemCount = FMath::RandRange(1, 5);
 
 	for (int i = 0; i < ItemCount; i++)

@@ -29,7 +29,7 @@ public:
 	UFarmingBoxComponent* GetRandomBoxComponent(); 
 
 	UFUNCTION(Server, Reliable)
-	void SetServerDestroyTimer();
+	void ServerSetDestroyTimer();
 
 	UFUNCTION(Server, Reliable)
 	void ServerOnDestroyTimerExpired();

@@ -14,8 +14,6 @@ UEquipmentComponent::UEquipmentComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	SetIsReplicated(true);
-
 	// ...
 }
 
@@ -64,6 +62,8 @@ void UEquipmentComponent::OnRep_AmmoCount()
 void UEquipmentComponent::OnRep_Items()
 {
 	OnItemsChangedEvent.Broadcast(mItems);
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetOwner());
+	PlayerCharacter->OnEquipmentItemChanged();
 }
 
 int32 UEquipmentComponent::GetAmmoCount()
@@ -110,9 +110,6 @@ void UEquipmentComponent::ServerAddItem_Implementation(int32 ItemID)
 				}
 			}
 		}
-
-		// 货肺款 葛磊 积己
-		PlayerCharacter->SetHat(ItemID);
 	}
 
 	mItems.Add(ItemID);

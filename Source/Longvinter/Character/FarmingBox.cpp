@@ -31,7 +31,7 @@ AFarmingBox::AFarmingBox()
 	mCapsuleComponent->SetCapsuleRadius(100.f);
 
 	mFarmingBoxComponent = CreateDefaultSubobject<UFarmingBoxComponent>(TEXT("FarmingBox"));
-
+	mFarmingBoxComponent->SetIsReplicated(true);
 	mOnceCheck = false;
 }
 
@@ -59,7 +59,7 @@ void AFarmingBox::Tick(float DeltaTime)
 				if (false == RandomBoxWidget->IsVisible() && mFarmingBoxComponent->GetItems().Num() <= 0 && false == mOnceCheck)
 				{
 					mOnceCheck = true;
-					SetServerDestroyTimer();
+					ServerSetDestroyTimer();
 				}
 			}
 		}
@@ -78,7 +78,7 @@ void AFarmingBox::ServerOnDestroyTimerExpired_Implementation()
 	DestroyTimerHandle.Invalidate();
 }
 
-void AFarmingBox::SetServerDestroyTimer_Implementation()
+void AFarmingBox::ServerSetDestroyTimer_Implementation()
 {
 	if (DestroyTimerHandle.IsValid() == false)
 	{

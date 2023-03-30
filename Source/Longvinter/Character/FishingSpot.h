@@ -25,8 +25,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int32 GetRandomFish();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetFish(const TArray<int32>& FishArray);
+
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* mStaticMeshComponent;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UCapsuleComponent* mCapsuleComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	TArray<int32> mFishType;
 };

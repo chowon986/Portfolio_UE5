@@ -30,6 +30,8 @@ AChickenBase::AChickenBase()
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	AIControllerClass = AMonsterAIController::StaticClass();
+
+	mPitch = 0;
 }
 
 void AChickenBase::BeginPlay()
@@ -93,6 +95,25 @@ void AChickenBase::Idle()
 void AChickenBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
+	if (0 == GetMovementComponent()->Velocity.Size())
+	{
+		mElapsedTime = 0.f;
+		mFootStaticMesh->SetStaticMesh(mIdleMesh);
+	}
+	else
+	{
+		mElapsedTime += DeltaTime;
+		mFootStaticMesh->SetStaticMesh(mRunMesh);
+		if (mElapsedTime > mIntervalTime)
+		{
+			mElapsedTime = 0.f;
+		
+			mPitch = mPitch == 180 ? 0 : 180;
+			mFootStaticMesh->SetRelativeRotation(FRotator(mPitch, 0.0, 0.0));
+		}
+	}
 }
 
 void AChickenBase::OnHealthUpdate()

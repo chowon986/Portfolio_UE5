@@ -10,11 +10,8 @@ AEquipmentActor::AEquipmentActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	mMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	mBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 
-	SetRootComponent(mBox);
-
-	mMesh->SetupAttachment(mBox);
+	SetRootComponent(mMesh);
 }
 
 // Called when the game starts or when spawned

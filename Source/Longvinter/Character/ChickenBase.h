@@ -45,4 +45,12 @@ private:
 	UStaticMeshComponent* mFootStaticMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	TSubclassOf<ANonPlayerActorBase> mItemClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	UStaticMesh* mRunMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	UStaticMesh* mIdleMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	float mIntervalTime;
+	float mElapsedTime;
+	int32 mPitch;
 };

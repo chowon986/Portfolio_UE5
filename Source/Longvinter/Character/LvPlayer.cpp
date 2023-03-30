@@ -37,15 +37,10 @@ ALvPlayer::ALvPlayer()
 	if (AnimClass.Succeeded())
 		GetMesh()->SetAnimClass(AnimClass.Class);
 
-	mSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
-	mSpringArm->SetupAttachment(GetCapsuleComponent());
-	mCamera->SetupAttachment(mSpringArm);
+	mCamera->SetupAttachment(GetCapsuleComponent());
 
-	mSpringArm->TargetArmLength = 1000.f;
-
-	mSpringArm->SetRelativeLocation(FVector(0.0, 0.0, 100.0));
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
@@ -59,14 +54,19 @@ ALvPlayer::ALvPlayer()
 	mFinishFishing = true;
 
 	mInventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+	mInventoryComponent->SetIsReplicated(true);
 	mCraftComponent = CreateDefaultSubobject<UCraftComponent>(TEXT("Craft"));
+	mCraftComponent->SetIsReplicated(true);
 	mEquipmentComponent = CreateDefaultSubobject<UEquipmentComponent>(TEXT("Equipment"));
+	mEquipmentComponent->SetIsReplicated(true);
 	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
+	mPlaceholderComponent->SetIsReplicated(true);
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
 
-	mHat = nullptr;
+	mHat = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hat"));
+
 	mWeapon = nullptr;
 
 	mOnceCheck = false;
@@ -96,6 +96,8 @@ void ALvPlayer::ServerSetState_Implementation(EPlayerState State)
 			GetWorldTimerManager().ClearTimer(FishingTimerHandle);
 			FishingTimerHandle.Invalidate();
 			ServerSetBanFishingTimer();
+			
+			mFishingSpot = nullptr;
 		}
 	}
 }
@@ -366,6 +368,7 @@ void ALvPlayer::Click()
 			AFishingSpot* FishingSpot = Cast<AFishingSpot>(Result.GetActor());
 			if (IsValid(FishingSpot))
 			{
+				ServerSetFishingSpot(FishingSpot);
 				if (GetCanFishing() == true)
 					Fishing();
 			}
@@ -495,22 +498,57 @@ void ALvPlayer::Fire()
 	}
 }
 
-void ALvPlayer::SetHat_Implementation(int32 ItemID)
+void ALvPlayer::OnEquipmentItemChanged()
 {
-	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+	TArray<int32> Items = GetEquipmentComponent()->GetItems();
 
-	FActorSpawnParameters SpawnParam;
-	SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	if (IsValid(mHat))
+	{
+		mHat->SetStaticMesh(nullptr);
+	}
 
-	SpawnParam.Owner = this;
+	for (int32 Item : Items)
+	{
+		FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
 
-	mHat = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), GetTransform(), SpawnParam);
+		FActorSpawnParameters SpawnParam;
+		SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	mHat->SetMesh(ItemTable->EquipmentTexturePath);
+		SpawnParam.Owner = this;
 
-	mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+		if (ItemTable->EquipmentType == EEquipmentType::Equipment_Hat)
+		{
+			mHat->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 
-	mHat->ItemID = ItemID;
+			mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+		}
+		else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		{
+			//mWeapon = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), GetTransform(), SpawnParam);
+
+			//mWeapon->SetMesh(ItemTable->EquipmentTexturePath);
+
+			//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+
+			//mWeapon->ItemID = Item;
+		}
+		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		{
+		}
+		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+		{
+
+		}
+		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+		{
+
+		}
+	}
+}
+
+void ALvPlayer::ServerSetFishingSpot_Implementation(AFishingSpot* Spot)
+{
+	mFishingSpot = Spot;
 }
 
 void ALvPlayer::SetWeapon(int32 ItemID)
@@ -580,25 +618,30 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 {
 	if (PendingClientResponseTimerHandle.IsValid())
 	{
+		if (mFishingSpot != nullptr)
 		{
-		//int ItemID = FMath::RandRange(1, 17);
-			//int ItemID = 1;
-			int ItemID = 403;
-			ClientOnFishingFinished();
-			GetInventoryComponent()->ServerAddItem(ItemID);
+			int32 ItemID = mFishingSpot->GetRandomFish();
+			mFishingSpot = nullptr;
 
-			GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
-				[this]()
-				{
-					if (IsValid(this))
+			ItemID = 403;
+			if (ItemID != -1)
+			{
+				ClientOnFishingFinished();
+				GetInventoryComponent()->ServerAddItem(ItemID);
+
+				GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
+					[this]()
 					{
-						this->SetState(EPlayerState::Idle);
-						SetIdleStateTimerHandle.Invalidate();
-					}
-				}), 1, false);
+						if (IsValid(this))
+						{
+							this->SetState(EPlayerState::Idle);
+							SetIdleStateTimerHandle.Invalidate();
+						}
+					}), 1, false);
 
-			GetWorldTimerManager().ClearTimer(PendingClientResponseTimerHandle);
-			PendingClientResponseTimerHandle.Invalidate();
+				GetWorldTimerManager().ClearTimer(PendingClientResponseTimerHandle);
+				PendingClientResponseTimerHandle.Invalidate();
+			}
 		}
 	}
 }

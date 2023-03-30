@@ -32,12 +32,6 @@ protected:
 	virtual void OnUnPossess() override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	TSubclassOf<UUserWidget> m_StartHUDClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	UUserWidget* m_StartHUD;
-
 	UPROPERTY()
 	UMainHUDBase* m_MainHUD;
 private:

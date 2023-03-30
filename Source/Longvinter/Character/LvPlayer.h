@@ -92,19 +92,20 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnPlaceholder();
 
-	UFUNCTION(Server, Reliable)
-	void SetHat(int32 ItemID);
-
 	UFUNCTION()
 	void OnRep_HP();
 
 	UFUNCTION()
 	void Fire();
 
+	UFUNCTION(Server, Reliable)
+	void ServerSetFishingSpot(AFishingSpot* Spot);
+
+	void OnEquipmentItemChanged();
 
 	int32 GetAmmoCount() { return mAmmoCount; }
 
-	AEquipmentActor* GetHat() { return mHat; }
+	UStaticMeshComponent* GetHat() { return mHat; }
 
 	AEquipmentActor* GetWeapon() { return mWeapon; }
 	void SetWeapon(int32 ItemID);
@@ -137,9 +138,6 @@ public:
 	ActorClickedEvent OnActorClickedEvent;
 	InventoryOnOffEvent OnInventoryOnOffEvent;
 	PlayerHPChangedEvent OnPlayerHPChangedEvent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	USpringArmComponent*	mSpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
 	UCameraComponent*		mCamera;
@@ -180,8 +178,8 @@ public:
 
 	int32 mAmmoCount;
 
-	class AEquipmentActor* mHat;
-	class AEquipmentActor* mWeapon;
+	UStaticMeshComponent* mHat;
+	class AEquipmentActor* mWeapon; // 나중에 확인하기
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	TSubclassOf<ANonPlayerActorBase> mItemClass;
@@ -199,4 +197,6 @@ public:
 	float mAcquisitionRate;
 	float mAttackSpeed;
 	float mColdResistance;
+
+	AFishingSpot* mFishingSpot;
 };

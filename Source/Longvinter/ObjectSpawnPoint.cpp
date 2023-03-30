@@ -70,10 +70,9 @@ void AObjectSpawnPoint::SpawnNPA(AActor* OwnerActor)
 {
 	if (IsValid(mSpawnClass))
 	{
-		FActorSpawnParameters	SpawnParam;
+		FActorSpawnParameters SpawnParam;
 
-		SpawnParam.SpawnCollisionHandlingOverride =
-			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 		SpawnParam.Owner = OwnerActor;
 
 		ANonPlayerActorBase* NPA =
@@ -82,6 +81,8 @@ void AObjectSpawnPoint::SpawnNPA(AActor* OwnerActor)
 				GetActorLocation(), GetActorRotation(),
 				SpawnParam
 				);
+
+		AFishingSpot* FishingSpot = Cast<AFishingSpot>(NPA);
 
 		NPA->OnEndPlay.AddDynamic(this, &AObjectSpawnPoint::OnNPAEndPlay);
 	}

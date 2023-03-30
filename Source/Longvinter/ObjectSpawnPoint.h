@@ -37,8 +37,10 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	TSubclassOf<class ANonPlayerActorBase>		mSpawnClass;
+	TSubclassOf<class ANonPlayerActorBase> mSpawnClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	float	mSpawnIntervalTime;
+	float mSpawnIntervalTime;
+
 	bool mOnceCheck;
 };
