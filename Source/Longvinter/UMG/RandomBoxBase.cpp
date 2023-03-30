@@ -102,3 +102,8 @@ void URandomBoxBase::OnInventoryItemsChanged(TArray<int32> Items)
 	}
 }
 
+void URandomBoxBase::ServerSetRandomBox_Implementation(AFarmingBox* Box)
+{
+	mRandomBox = Box;
+}
+

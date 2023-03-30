@@ -26,13 +26,20 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFarmingBoxComponent* GetRandomBoxComponent() { return mFarmingBoxComponent;}
+	UFarmingBoxComponent* GetRandomBoxComponent(); 
+
+	UFUNCTION(Server, Reliable)
+	void SetServerDestroyTimer();
+
+	UFUNCTION(Server, Reliable)
+	void ServerOnDestroyTimerExpired();
 
 public:
-	UStaticMeshComponent* mStaticMeshComponent;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UCapsuleComponent* mCapsuleComponent;
 
+	UStaticMeshComponent* mStaticMeshComponent;
 	UFarmingBoxComponent* mFarmingBoxComponent;
+	FTimerHandle DestroyTimerHandle;
+	bool mOnceCheck;
 };

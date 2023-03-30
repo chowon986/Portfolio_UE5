@@ -21,18 +21,18 @@ public:
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
 	UFUNCTION()
-		void ItemClick(UObject* Object);
+	void ItemClick(UObject* Object);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetRandomBox(AFarmingBox* Box);
 
 	void OnRandomBoxItemsChanged(TArray<int32> Items);
 	void OnInventoryItemsChanged(TArray<int32> Items);
 
-	void SetRandomBox(AFarmingBox* Box) { mRandomBox = Box; }
-
+	void SetOnceCheck(bool Value) { mOnceCheck = Value; }
 public:
 	static UTileView* mRandomBoxTileView;
 	static UTileView* mInventoryTileView;
 	bool mOnceCheck;
-
-	//UPlaceholder* mPlaceholderComponent;
 	AFarmingBox* mRandomBox;
 };

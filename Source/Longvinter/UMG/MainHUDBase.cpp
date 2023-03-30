@@ -20,12 +20,12 @@ void UMainHUDBase::NativeConstruct()
 	mPlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
 
 	mInventory = Cast<UInventoryBase>(GetWidgetFromName(FName(TEXT("UIInventory"))));
-	mInventory->SetVisibility(ESlateVisibility::Hidden);
+	mInventory->SetVisibility(ESlateVisibility::Collapsed);
 	
 	//mItemIcon = Cast<UInventoryItemBase>(GetWidgetFromName(FName(TEXT("InventoryItemIcon"))));
 
-	mSgtLakeVendor = Cast< USgtLakeVenderBase>(GetWidgetFromName(FName(TEXT("SgtLakesKitchenVendor"))));
-	mSgtLakeVendor->SetVisibility(ESlateVisibility::Hidden);
+	mSgtLakeVendor = Cast<USgtLakeVenderBase>(GetWidgetFromName(FName(TEXT("SgtLakesKitchenVendor"))));
+	mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
 
 	mCampFire = Cast<UCampFireBase>(GetWidgetFromName(FName(TEXT("UICampFire"))));
 	mCampFire->SetVisibility(ESlateVisibility::Collapsed);
@@ -71,10 +71,17 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 				mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
 			}
 
-			{
-				if (mSgtLakeVendor->IsVisible())
-					mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
-			}
+			if (mSgtLakeVendor->IsVisible())
+				mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
+
+			if(mEquipment->IsVisible())
+				mEquipment->SetVisibility(ESlateVisibility::Collapsed);
+
+			if (mPlaceholder->IsVisible())
+				mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
+
+			if (mRandomBox->IsVisible())
+				mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
 }
@@ -117,4 +124,7 @@ void UMainHUDBase::OnInventoryOnOff()
 
 	if (mRandomBox->IsVisible())
 		mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
+
+	if(mPlaceholder->IsVisible())
+		mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
 }

@@ -24,17 +24,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	UFUNCTION()
 	void OnNPAEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason);
 	void OnSpawnNPATimerExpired();
-	void SpawnNPA();
+
+	UFUNCTION()
+	void SpawnNPA(AActor* OwnerActor);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		USceneComponent* mRoot;
+	USceneComponent* mRoot;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		TSubclassOf<class ANonPlayerActorBase>		mSpawnClass;
+	TSubclassOf<class ANonPlayerActorBase>		mSpawnClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		float	mSpawnIntervalTime;
+	float	mSpawnIntervalTime;
+	bool mOnceCheck;
 };

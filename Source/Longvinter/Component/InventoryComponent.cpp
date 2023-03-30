@@ -138,6 +138,8 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 		else if (BuffInfo->BuffType == EBuffType::Speed)
 		{
 			LvPlayerCharacter->SetSpeed(LvPlayerCharacter->GetSpeed() + BuffInfo->Amount);
+			// Player의 MaxSpeed에다가 곱하고 싶다..
+			// LvPlayerCharacter->GetMovementComponent()->GetMaxSpeed();
 		}
 		else if (BuffInfo->BuffType == EBuffType::Offence)
 		{

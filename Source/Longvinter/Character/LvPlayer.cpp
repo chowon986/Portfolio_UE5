@@ -386,7 +386,8 @@ void ALvPlayer::Click()
 						AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
 						if (IsValid(FarmingBox))
 						{
-							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetRandomBox(FarmingBox);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetOnceCheck(false);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->ServerSetRandomBox(FarmingBox);
 							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
 						}
 

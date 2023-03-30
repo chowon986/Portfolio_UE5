@@ -7,6 +7,8 @@ ANonPlayerActorBase::ANonPlayerActorBase()
 	: mItemID(-1)
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	bReplicates = true;
 }
 
 void ANonPlayerActorBase::BeginPlay()

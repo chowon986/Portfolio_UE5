@@ -2,6 +2,9 @@
 
 
 #include "FarmingBox.h"
+#include "../LvGameInstance.h"
+#include "LvPlayer.h"
+#include "LvPlayerController.h"
 
 AFarmingBox::AFarmingBox()
 {
@@ -28,6 +31,8 @@ AFarmingBox::AFarmingBox()
 	mCapsuleComponent->SetCapsuleRadius(100.f);
 
 	mFarmingBoxComponent = CreateDefaultSubobject<UFarmingBoxComponent>(TEXT("FarmingBox"));
+
+	mOnceCheck = false;
 }
 
 void AFarmingBox::BeginPlay()
@@ -38,6 +43,46 @@ void AFarmingBox::BeginPlay()
 void AFarmingBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	// 만약 Box가 비었으면 Timer 세팅하고 삭제
+
+	ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	if (IsValid(PlayerController))
+	{
+		UMainHUDBase* MainHUD = Cast<UMainHUDBase>(PlayerController->GetMainHUD());
+
+		if (IsValid(MainHUD))
+		{
+			URandomBoxBase* RandomBoxWidget = Cast<URandomBoxBase>(MainHUD->GetRandomBoxWidget());
+			
+			if (IsValid(RandomBoxWidget))
+			{
+				if (false == RandomBoxWidget->IsVisible() && mFarmingBoxComponent->GetItems().Num() <= 0 && false == mOnceCheck)
+				{
+					mOnceCheck = true;
+					SetServerDestroyTimer();
+				}
+			}
+		}
+	}
+}
+
+UFarmingBoxComponent* AFarmingBox::GetRandomBoxComponent()
+{
+	return mFarmingBoxComponent;
+}
+
+void AFarmingBox::ServerOnDestroyTimerExpired_Implementation()
+{
+	Destroy();
+	GetWorldTimerManager().ClearTimer(DestroyTimerHandle);
+	DestroyTimerHandle.Invalidate();
+}
+
+void AFarmingBox::SetServerDestroyTimer_Implementation()
+{
+	if (DestroyTimerHandle.IsValid() == false)
+	{
+		int32 Time = 2;
+		GetWorldTimerManager().SetTimer(DestroyTimerHandle, FTimerDelegate::CreateUObject(this, &AFarmingBox::ServerOnDestroyTimerExpired), Time, false);
+	}
 }

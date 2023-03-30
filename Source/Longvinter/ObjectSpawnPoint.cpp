@@ -3,6 +3,10 @@
 
 #include "ObjectSpawnPoint.h"
 #include "Character/NonPlayerActorBase.h"
+#include "Inventory/Inventory.h"
+#include "LvGameInstance.h"
+#include "Character/LvPlayer.h"
+#include "Character/LvPlayerController.h"
 
 // Sets default values
 AObjectSpawnPoint::AObjectSpawnPoint()
@@ -13,16 +17,13 @@ AObjectSpawnPoint::AObjectSpawnPoint()
 	mRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(mRoot);
 	mRoot->bVisualizeComponent = true;
+	mOnceCheck = false;
 }
 
 // Called when the game starts or when spawned
 void AObjectSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	if (GetNetMode() == NM_DedicatedServer ||
-		GetNetMode() == NM_ListenServer)
-		SpawnNPA();
 }
 
 // Called every frame
@@ -30,6 +31,19 @@ void AObjectSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (mOnceCheck == false) 
+	{
+		ALvPlayerController* Controller = Cast<ALvPlayerController>(GetWorld()->GetFirstPlayerController());
+
+		if (IsValid(Controller))
+		{
+			if (GetNetMode() == NM_DedicatedServer || GetNetMode() == NM_ListenServer)
+			{
+				mOnceCheck = true;
+				SpawnNPA(Controller);
+			}
+		}
+	}
 }
 
 void AObjectSpawnPoint::OnNPAEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason)
@@ -40,10 +54,19 @@ void AObjectSpawnPoint::OnNPAEndPlay(AActor* Actor, EEndPlayReason::Type EndPlay
 
 void AObjectSpawnPoint::OnSpawnNPATimerExpired()
 {
-	SpawnNPA();
+	ALvPlayerController* Controller = Cast<ALvPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	if (IsValid(Controller))
+	{
+		if (GetNetMode() == NM_DedicatedServer || GetNetMode() == NM_ListenServer)
+		{
+			mOnceCheck = true;
+			SpawnNPA(Controller);
+		}
+	}
 }
 
-void AObjectSpawnPoint::SpawnNPA()
+void AObjectSpawnPoint::SpawnNPA(AActor* OwnerActor)
 {
 	if (IsValid(mSpawnClass))
 	{
@@ -51,6 +74,7 @@ void AObjectSpawnPoint::SpawnNPA()
 
 		SpawnParam.SpawnCollisionHandlingOverride =
 			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		SpawnParam.Owner = OwnerActor;
 
 		ANonPlayerActorBase* NPA =
 			GetWorld()->SpawnActor<ANonPlayerActorBase>(
