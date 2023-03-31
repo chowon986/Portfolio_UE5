@@ -38,14 +38,17 @@ ALvPlayer::ALvPlayer()
 	if (AnimClass.Succeeded())
 		GetMesh()->SetAnimClass(AnimClass.Class);
 
-	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-
-	mCamera->SetupAttachment(GetCapsuleComponent());
-
-
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
+
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
+	// Configure character movement
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
+
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
@@ -225,7 +228,7 @@ void ALvPlayer::VerticalMove(float Scale)
 	if (Scale == 0.f)
 		return;
 
-	AddMovementInput(GetActorForwardVector(), Scale);
+	AddMovementInput(FVector::ForwardVector, Scale);
 }
 
 void ALvPlayer::HorizontalMove(float Scale)
@@ -236,18 +239,15 @@ void ALvPlayer::HorizontalMove(float Scale)
 	{
 		if (Scale == 0.f)
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -90.0, 0.0);
 		}
 		else if (Scale == 1.f)
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -45.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -45.0, 0.0);
 
 		}
 		else
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -135.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -135.0, 0.0);
 		}
 	}
@@ -259,12 +259,10 @@ void ALvPlayer::HorizontalMove(float Scale)
 		}
 		else if (Scale == 1.f)
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, 0.0, 0.0));
 			mPlayerRotator = FRotator(0.0, 0.0, 0.0);
 		}
 		else
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -180.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -180.0, 0.0);
 		}
 	}
@@ -272,26 +270,24 @@ void ALvPlayer::HorizontalMove(float Scale)
 	{
 		if (Scale == 0.f)
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -270.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -270.0, 0.0);
 		}
 		else if (Scale == 1.f)
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -315, 0.0));
 			mPlayerRotator = FRotator(0.0, -315.0, 0.0);
 		}
 		else
 		{
-			GetMesh()->SetRelativeRotation(FRotator(0.0, -225, 0.0));
 			mPlayerRotator = FRotator(0.0, -225.0, 0.0);
 		}
 	}
 
-			//FaceRotation(mPlayerRotator);
+	AddControllerYawInput(mPlayerRotator.Yaw);
+
 	if (Scale == 0.f)
 		return;
 
-	AddMovementInput(GetActorRightVector(), Scale);
+	AddMovementInput(FVector::RightVector, Scale);
 }
 
 void ALvPlayer::Aim(float Scale)

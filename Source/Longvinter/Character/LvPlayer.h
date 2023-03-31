@@ -56,6 +56,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	void VerticalMove(float Scale);
+
 	void HorizontalMove(float Scale);
 	void Aim(float Scale);
 
@@ -139,9 +140,6 @@ public:
 	ActorClickedEvent OnActorClickedEvent;
 	InventoryOnOffEvent OnInventoryOnOffEvent;
 	PlayerHPChangedEvent OnPlayerHPChangedEvent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Component, meta = (AllowPrivateAccess = true))
-	UCameraComponent*		mCamera;
 
 	float mVerticalDir;
 
