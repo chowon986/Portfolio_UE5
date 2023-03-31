@@ -10,6 +10,15 @@
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum class EChickenState : uint8
+{
+	Idle,
+	Walk,
+	RunAway
+};
+
 UCLASS()
 class LONGVINTER_API AChickenBase : public ANonPlayerCharacterBase
 {
@@ -36,6 +45,11 @@ public:
 
 	void RunAway();
 	void Idle();
+	void Walk();
+	void PlayFootAnimation();
+
+	EChickenState GetState() { return mCurState; }
+	void SetState(EChickenState State);
 
 private:
 
@@ -53,4 +67,10 @@ private:
 	float mIntervalTime;
 	float mElapsedTime;
 	int32 mPitch;
+
+	EChickenState mCurState;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	float mChangeDirectionIntervalTime;
+	float mChangeDirectionElapsedTime;
 };

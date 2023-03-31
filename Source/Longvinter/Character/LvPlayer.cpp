@@ -243,6 +243,7 @@ void ALvPlayer::HorizontalMove(float Scale)
 		{
 			GetMesh()->SetRelativeRotation(FRotator(0.0, -45.0, 0.0));
 			mPlayerRotator = FRotator(0.0, -45.0, 0.0);
+
 		}
 		else
 		{
@@ -286,6 +287,7 @@ void ALvPlayer::HorizontalMove(float Scale)
 		}
 	}
 
+			//FaceRotation(mPlayerRotator);
 	if (Scale == 0.f)
 		return;
 

@@ -1,18 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTaskNode_RunAway.h"
+#include "BTTaskNode_Walk.h"
 #include "MonsterAIController.h"
 #include "ChickenBase.h"
 
-UBTTaskNode_RunAway::UBTTaskNode_RunAway()
+UBTTaskNode_Walk::UBTTaskNode_Walk()
 {
-	NodeName = TEXT("RunAway");
+	NodeName = TEXT("Walk");
 	bNotifyTick = true;
 	bNotifyTaskFinished = true;
 }
 
-EBTNodeResult::Type UBTTaskNode_RunAway::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTaskNode_Walk::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type result = Super::ExecuteTask(OwnerComp,
 		NodeMemory);
@@ -30,19 +30,26 @@ EBTNodeResult::Type UBTTaskNode_RunAway::ExecuteTask(UBehaviorTreeComponent& Own
 
 	AActor* Target = Cast<AActor>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 
-	if (!IsValid(Target))
+	if (IsValid(Target))
 	{
 		AIController->StopMovement();
 
 		return EBTNodeResult::Failed;
 	}
 
-	Chicken->SetState(EChickenState::RunAway);
+	if (false == AIController->GetBlackboardComponent()->GetValueAsBool(TEXT("IsWalking")))
+	{
+		AIController->StopMovement();
+
+		return EBTNodeResult::Failed;
+	}
+
+	Chicken->SetState(EChickenState::Walk);
 
 	return EBTNodeResult::InProgress;
 }
 
-EBTNodeResult::Type UBTTaskNode_RunAway::AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTaskNode_Walk::AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type result = Super::AbortTask(OwnerComp,
 		NodeMemory);
@@ -50,7 +57,7 @@ EBTNodeResult::Type UBTTaskNode_RunAway::AbortTask(UBehaviorTreeComponent& Owner
 	return result;
 }
 
-void UBTTaskNode_RunAway::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTTaskNode_Walk::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 
@@ -73,7 +80,7 @@ void UBTTaskNode_RunAway::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 
 	ACharacter* Target = Cast<ACharacter>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 
-	if (!IsValid(Target))
+	if (IsValid(Target))
 	{
 		AIController->StopMovement();
 
@@ -81,10 +88,18 @@ void UBTTaskNode_RunAway::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 		return;
 	}
 
-	Chicken->SetState(EChickenState::RunAway);
+	if (false == AIController->GetBlackboardComponent()->GetValueAsBool(TEXT("IsWalking")))
+	{
+		AIController->StopMovement();
+
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		return;
+	}
+
+	Chicken->SetState(EChickenState::Walk);
 }
 
-void UBTTaskNode_RunAway::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult)
+void UBTTaskNode_Walk::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult)
 {
 	Super::OnTaskFinished(OwnerComp, NodeMemory, TaskResult);
 }

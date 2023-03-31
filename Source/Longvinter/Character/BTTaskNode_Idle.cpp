@@ -37,7 +37,14 @@ EBTNodeResult::Type UBTTaskNode_Idle::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		return EBTNodeResult::Failed;
 	}
 
-	Chicken->Idle();
+	if (true == AIController->GetBlackboardComponent()->GetValueAsBool(TEXT("IsWalking")))
+	{
+		AIController->StopMovement();
+
+		return EBTNodeResult::Failed;
+	}
+
+	Chicken->SetState(EChickenState::Idle);
 
 	return EBTNodeResult::InProgress;
 }
@@ -81,7 +88,15 @@ void UBTTaskNode_Idle::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 		return;
 	}
 
-	Chicken->Idle();
+	if (true == AIController->GetBlackboardComponent()->GetValueAsBool(TEXT("IsWalking")))
+	{
+		AIController->StopMovement();
+
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		return;
+	}
+
+	Chicken->SetState(EChickenState::Idle);
 }
 
 void UBTTaskNode_Idle::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult)

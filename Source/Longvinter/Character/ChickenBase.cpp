@@ -2,6 +2,7 @@
 
 
 #include "ChickenBase.h"
+#include "LvPlayer.h"
 #include "Net/UnrealNetwork.h"
 #include "MonsterAIController.h"
 
@@ -32,6 +33,9 @@ AChickenBase::AChickenBase()
 	AIControllerClass = AMonsterAIController::StaticClass();
 
 	mPitch = 0;
+
+	mChangeDirectionIntervalTime = 1.f;
+	mChangeDirectionElapsedTime = 0.f;
 }
 
 void AChickenBase::BeginPlay()
@@ -57,8 +61,7 @@ void AChickenBase::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	AMonsterAIController* AIController =
-		Cast<AMonsterAIController>(NewController);
+	AMonsterAIController* AIController = Cast<AMonsterAIController>(NewController);
 
 	if (IsValid(AIController))
 	{
@@ -74,55 +77,91 @@ void AChickenBase::UnPossessed()
 
 void AChickenBase::RunAway()
 {
-	int RandomDirection = FMath::RandRange(1, 120);
-	TArray<float> DirectionArray = { -90.f, -45.0f, -135, 0.f, -180.f, -270.f, -315.f, -225.f };
 
-
-	if (RandomDirection == 50)
+	if (GetLocalRole() == ROLE_Authority)
 	{
-		int i = FMath::RandRange(0, 6);
-		GetCapsuleComponent()->SetRelativeRotation(FRotator(0.0, DirectionArray[i], 0.0));
+		AMonsterAIController* AIController = Cast<AMonsterAIController>(GetController());
+		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+
+		if (IsValid(PlayerCharacter))
+		{
+			FVector Direction = GetActorLocation() - PlayerCharacter->GetActorLocation();
+			Direction.Normalize();
+
+			AddMovementInput(Direction, 2.0f);
+			FaceRotation(Direction.Rotation());
+		}
 	}
 
-	AddMovementInput(GetActorForwardVector(), 1.5f);
+	else
+		PlayFootAnimation();
 }
 
 void AChickenBase::Idle()
 {
-	int RandomDirection = FMath::RandRange(1, 120);
-	TArray<float> DirectionArray = { -90.f, -45.0f, -135, 0.f, -180.f, -270.f, -315.f, -225.f};
+	mElapsedTime = 0.f;
+	mFootStaticMesh->SetStaticMesh(mIdleMesh);
+}
 
-
-	if (RandomDirection == 50)
+void AChickenBase::Walk()
+{
+	if (GetLocalRole() == ROLE_Authority)
 	{
-		int i = FMath::RandRange(0, 6);
-		GetCapsuleComponent()->SetRelativeRotation(FRotator(0.0, DirectionArray[i], 0.0));
-	}
+		mChangeDirectionElapsedTime += GetWorld()->GetDeltaSeconds();
 
-	AddMovementInput(GetActorForwardVector(), 0.5f);
+		if (mChangeDirectionElapsedTime > mChangeDirectionIntervalTime)
+		{
+			mChangeDirectionElapsedTime = 0.f;
+			int RandomDirection = FMath::RandRange(1, 360);
+			FRotator Direction = FRotator(0, RandomDirection, 0);
+			FaceRotation(Direction);
+		}
+	}
+	else
+	PlayFootAnimation();
+
+	AddMovementInput(GetActorForwardVector(), 0.3f);
+}
+
+void AChickenBase::PlayFootAnimation()
+{
+	mElapsedTime += GetWorld()->GetDeltaSeconds();
+	mFootStaticMesh->SetStaticMesh(mRunMesh);
+	if (mElapsedTime > mIntervalTime)
+	{
+		mElapsedTime = 0.f;
+
+		mPitch = mPitch == 180 ? 0 : 180;
+		mFootStaticMesh->SetRelativeRotation(FRotator(mPitch, 0.0, 0.0));
+	}
+}
+
+void AChickenBase::SetState(EChickenState State)
+{
+	if (mCurState != State)
+	{
+		mCurState = State;
+		mChangeDirectionElapsedTime = 0.f;
+	}
 }
 
 void AChickenBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
-	if (0 == GetMovementComponent()->Velocity.Size())
+	switch (mCurState)
 	{
-		mElapsedTime = 0.f;
-		mFootStaticMesh->SetStaticMesh(mIdleMesh);
-	}
-	else
-	{
-		mElapsedTime += DeltaTime;
-		mFootStaticMesh->SetStaticMesh(mRunMesh);
-		if (mElapsedTime > mIntervalTime)
-		{
-			mElapsedTime = 0.f;
-		
-			mPitch = mPitch == 180 ? 0 : 180;
-			mFootStaticMesh->SetRelativeRotation(FRotator(mPitch, 0.0, 0.0));
-		}
+	case EChickenState::Idle:
+		Idle();
+		break;
+	case EChickenState::Walk:
+		Walk();
+		break;
+	case EChickenState::RunAway:
+		RunAway();
+		break;
+	default:
+		break;
 	}
 }
 
