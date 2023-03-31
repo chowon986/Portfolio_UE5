@@ -73,6 +73,7 @@ public:
 	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
 	class UEquipmentComponent* GetEquipmentComponent() { return mEquipmentComponent; }
 	class UPlaceholder* GetPlaceholder() { return mPlaceholderComponent; }
+	class UEncyclopediaComponent* GetEncyclopediaComponent() { return mEncyclopediaComponent; }
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnFishingFinished();
@@ -163,6 +164,7 @@ public:
 	class UCraftComponent* mCraftComponent;
 	class UEquipmentComponent* mEquipmentComponent;
 	class UPlaceholder* mPlaceholderComponent;
+	class UEncyclopediaComponent* mEncyclopediaComponent;
 
 	int32 mPrevTime;
 

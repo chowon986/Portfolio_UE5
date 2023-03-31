@@ -74,12 +74,22 @@ void AChickenBase::UnPossessed()
 
 void AChickenBase::RunAway()
 {
+	int RandomDirection = FMath::RandRange(1, 120);
+	TArray<float> DirectionArray = { -90.f, -45.0f, -135, 0.f, -180.f, -270.f, -315.f, -225.f };
+
+
+	if (RandomDirection == 50)
+	{
+		int i = FMath::RandRange(0, 6);
+		GetCapsuleComponent()->SetRelativeRotation(FRotator(0.0, DirectionArray[i], 0.0));
+	}
+
 	AddMovementInput(GetActorForwardVector(), 1.5f);
 }
 
 void AChickenBase::Idle()
 {
-	int RandomDirection = FMath::RandRange(1, 100);
+	int RandomDirection = FMath::RandRange(1, 120);
 	TArray<float> DirectionArray = { -90.f, -45.0f, -135, 0.f, -180.f, -270.f, -315.f, -225.f};
 
 

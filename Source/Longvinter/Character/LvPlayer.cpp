@@ -17,6 +17,7 @@
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 #include "../Component/EquipmentComponent.h"
+#include "../Component/EncyclopediaComponent.h"
 #include "../Character/ChickenBase.h"
 #include "../Character/TreeBase.h"
 #include "../Character/FarmingBox.h"
@@ -61,6 +62,8 @@ ALvPlayer::ALvPlayer()
 	mEquipmentComponent->SetIsReplicated(true);
 	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
 	mPlaceholderComponent->SetIsReplicated(true);
+	mEncyclopediaComponent = CreateDefaultSubobject<UEncyclopediaComponent>(TEXT("EncyclopediaComponent"));
+	mEncyclopediaComponent->SetIsReplicated(true);
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
@@ -399,7 +402,8 @@ void ALvPlayer::Click()
 							int ItemID = NPA->GetItemID();
 							if (-1 != ItemID)
 							{
-								GetInventoryComponent()->ServerAddItem(NPA->GetItemID());
+								GetInventoryComponent()->ServerAddItem(ItemID);
+								GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
 								ServerDestroy(NPA);
 							}
 						}
@@ -623,11 +627,12 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			ItemID = 403;
+			//ItemID = 403; FishingHat 테스트 코드
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();
 				GetInventoryComponent()->ServerAddItem(ItemID);
+				GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
 
 				GetWorldTimerManager().SetTimer(SetIdleStateTimerHandle, FTimerDelegate::CreateLambda(
 					[this]()

@@ -11,6 +11,7 @@
 #include "../UMG/EquipmentBase.h"
 #include "../UMG/PlaceholderBase.h"
 #include "../UMG/RandomBoxBase.h"
+#include "../UMG/EncyclopediaBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -32,6 +33,7 @@ public:
 	UEquipmentBase* GetEquipmentWidget() { return mEquipment; }
 	UPlaceholderBase* GetPlaceholderWidget() { return mPlaceholder; }
 	URandomBoxBase* GetRandomBoxWidget() { return mRandomBox; }
+	UEncyclopediaBase* GetEncyclopediaWidget() { return mEncyclopedia; }
 
 private:
 	void OnActorClicked(AActor* Actor);
@@ -46,6 +48,7 @@ private:
 	UEquipmentBase* mEquipment;
 	UPlaceholderBase* mPlaceholder;
 	URandomBoxBase* mRandomBox;
+	UEncyclopediaBase* mEncyclopedia;
 
 	bool mOnceCheck;
 	int32 mPrevTime;

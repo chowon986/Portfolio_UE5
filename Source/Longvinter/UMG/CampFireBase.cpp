@@ -5,6 +5,7 @@
 #include "../Inventory/Inventory.h"
 #include "../Component/CraftComponent.h"
 #include "../Component/InventoryComponent.h"
+#include "../Component/EncyclopediaComponent.h"
 #include "ItemDataBase.h"
 #include "../Character/LvPlayer.h"
 
@@ -64,7 +65,9 @@ void UCampFireBase::OnItemsChanged(TArray<int32> Items)
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
-		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemType(Table->ItemType);		
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		mCampFireTileView->AddItem(pNewData);
 	}
@@ -110,6 +113,7 @@ void UCampFireBase::OnClickedCraftItem()
 		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
 		Character->GetInventoryComponent()->ServerAddItem(mItemID);
+		Character->GetEncyclopediaComponent()->ServerUpdateItem(mItemID);
 		Character->GetCraftComponent()->ServerClear();
 		mEatImg->SetVisibility(ESlateVisibility::Collapsed);
 	}

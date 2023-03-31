@@ -27,6 +27,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft(Table->Description);
 		pNewData->SetItemID(412);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -41,6 +43,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(1);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -54,6 +58,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(2);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -67,6 +73,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(3);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -80,6 +88,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(4);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -93,6 +103,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(9);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -106,6 +118,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(5);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -119,6 +133,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(6);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -132,6 +148,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(7);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}
@@ -145,6 +163,8 @@ void USgtLakeVenderBase::NativeConstruct()
 		pNewData->SetItemDescriptionLeft("0");
 		pNewData->SetItemID(8);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		m_ListView->AddItem(pNewData);
 	}

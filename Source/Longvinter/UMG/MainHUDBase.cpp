@@ -38,6 +38,9 @@ void UMainHUDBase::NativeConstruct()
 
 	mRandomBox = Cast<URandomBoxBase>(GetWidgetFromName(FName(TEXT("UIRandomBox"))));
 	mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
+
+	mEncyclopedia = Cast<UEncyclopediaBase>(GetWidgetFromName(FName(TEXT("UIEncyclopedia"))));
+	//mEncyclopedia->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

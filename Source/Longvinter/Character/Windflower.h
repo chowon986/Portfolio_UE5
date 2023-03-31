@@ -25,9 +25,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-public:
-	UStaticMeshComponent* mStaticMeshComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-		UCapsuleComponent* mCapsuleComponent;
 };

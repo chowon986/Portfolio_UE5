@@ -35,11 +35,5 @@ public:
 	UPlaceholder* GetPlaceholderComponent() { return mPlaceholderComponent; }
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	UStaticMeshComponent* mStaticMeshComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	UCapsuleComponent* mCapsuleComponent;
-
 	UPlaceholder* mPlaceholderComponent;
 };

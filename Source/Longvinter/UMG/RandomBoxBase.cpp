@@ -6,6 +6,7 @@
 #include "../Character/LvPlayerController.h"
 #include "../Component/Placeholder.h"
 #include "../Component/InventoryComponent.h"
+#include "../Component/EncyclopediaComponent.h"
 #include "ItemDataBase.h"
 #include "../Inventory/Inventory.h"
 
@@ -64,6 +65,7 @@ void URandomBoxBase::ItemClick(UObject* Object)
 				int ItemID = pData->GetItemID();
 
 				Character->GetInventoryComponent()->ServerAddItem(ItemID);
+				Character->GetEncyclopediaComponent()->ServerAddItem(ItemID);
 				mRandomBox->GetRandomBoxComponent()->ServerRemoveItem(ItemID);
 			}
 		}
@@ -81,6 +83,8 @@ void URandomBoxBase::OnRandomBoxItemsChanged(TArray<int32> Items)
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		mRandomBoxTileView->AddItem(pNewData);
 	}
@@ -97,6 +101,8 @@ void URandomBoxBase::OnInventoryItemsChanged(TArray<int32> Items)
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		mInventoryTileView->AddItem(pNewData);
 	}

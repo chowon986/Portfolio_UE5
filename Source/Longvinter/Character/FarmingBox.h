@@ -35,9 +35,6 @@ public:
 	void ServerOnDestroyTimerExpired();
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	UCapsuleComponent* mCapsuleComponent;
-
 	UStaticMeshComponent* mStaticMeshComponent;
 	UFarmingBoxComponent* mFarmingBoxComponent;
 	FTimerHandle DestroyTimerHandle;

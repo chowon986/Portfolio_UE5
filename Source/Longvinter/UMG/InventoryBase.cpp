@@ -53,6 +53,8 @@ void UInventoryBase::OnItemsChanged(TArray<int32> Items)
 		pNewData->SetItemIconPath(Table->TexturePath);
 		pNewData->SetItemID(Item);
 		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
 
 		mTileView->AddItem(pNewData);
 	}

@@ -25,11 +25,17 @@ public:
 	void SetItemIconPathRight(const FString& Path) { mItemIconPathRight = Path; }
 	const FString& GetItemIconPathRight() { return mItemIconPathRight; }
 
-	void SetItemDescription(const FString& _Desc) { mItemDescription = _Desc; }
+	void SetItemDescription(const FString& Desc) { mItemDescription = Desc; }
 	const FString& GetItemDescription() { return mItemDescription; }
 
-	void SetItemDescriptionLeft(const FString& _Desc) { mItemDescriptionLeft = _Desc; }
+	void SetItemDescriptionLeft(const FString& Desc) { mItemDescriptionLeft = Desc; }
 	const FString& GetItemDescriptionLeft() { return mItemDescriptionLeft; }
+
+	void SetItemName(const FString& Name) { mItemName = Name; }
+	const FString& GetItemName() { return mItemName; }
+
+	void SetItemDesc(const FString& Desc) { mItemTextDescription = Desc; }
+	const FString& GetItemDesc() { return mItemTextDescription; }
 
 	void SetItemID(int ID) { mItemID = ID; }
 	int GetItemID() { return mItemID; }
@@ -42,6 +48,8 @@ private:
 	FString mItemIconPathRight;
 	FString mItemDescription;
 	FString mItemDescriptionLeft;
+	FString mItemName;
+	FString mItemTextDescription;
 	int mItemID;
 	EItemType mItemType;
 };
