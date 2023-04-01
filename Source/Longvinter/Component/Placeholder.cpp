@@ -28,8 +28,6 @@ void UPlaceholder::BeginPlay()
 void UPlaceholder::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UPlaceholder::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
