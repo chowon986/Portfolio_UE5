@@ -367,12 +367,7 @@ void ALvPlayer::Click()
 	{
 		if (mWeapon)
 		{
-			ServerFire();
-		}
-		//if (mWeapon->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
-		{
-			//--mAmmoCount;
-			// 총알 생성
+			ServerUseWeapon();
 		}
 
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
@@ -522,7 +517,7 @@ void ALvPlayer::Fire()
 	}
 }
 
-void ALvPlayer::ServerFire_Implementation()
+void ALvPlayer::ServerUseWeapon_Implementation()
 {
 	TArray<int32> Items = GetEquipmentComponent()->GetItems();
 	for (int32 Item : Items)
@@ -531,11 +526,40 @@ void ALvPlayer::ServerFire_Implementation()
 
 		if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
 		{
-			Fire();
+			if (mAmmoCount > 0)
+			{
+				--mAmmoCount;
+				Fire();
+			}
 		}
-		else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
 		{
-			
+			FVector	StartLocation = GetActorLocation() +
+				GetActorForwardVector() * 30.f;
+			FVector	EndLocation = StartLocation +
+				GetActorForwardVector() * 50.f;
+
+			FCollisionQueryParams	param(NAME_None, false, this);
+
+			TArray<FHitResult>	Result;
+			bool Hit = GetWorld()->SweepMultiByChannel(
+				Result, StartLocation,
+				EndLocation, FQuat::Identity,
+				ECollisionChannel::ECC_GameTraceChannel3,
+				FCollisionShape::MakeSphere(20.f),
+				param);
+
+			if (Result.Num() > 0)
+			{
+				for (auto Character : Result)
+				{
+					ACharacterBase* CharacterBase = Cast<ACharacterBase>(Character.GetActor());
+					if (IsValid(CharacterBase))
+					{
+						CharacterBase->TakeDamage(6.0, FDamageEvent(), GetController(), this);
+					}
+				}
+			}
 		}
 	}
 }
@@ -548,7 +572,8 @@ void ALvPlayer::OnEquipmentItemChanged()
 		mHat->SetStaticMesh(nullptr);
 	if (IsValid(mWeapon))
 		mWeapon->SetStaticMesh(nullptr);
-	if (IsValid(mRod))
+
+	if(IsValid(mRod))
 		mRod->SetStaticMesh(nullptr);
 
 	for (int32 Item : Items)
@@ -579,6 +604,7 @@ void ALvPlayer::OnEquipmentItemChanged()
 		}
 		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
 		{
+			mWeapon->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 			mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
 		}
 	}
@@ -606,7 +632,7 @@ void ALvPlayer::OnHealthUpdate()
 
 		DeleteAllItems();
 
-		//Destroy();
+		Destroy();
 		
 		// 사라지는 애니메이션 보여주고
 		// 레벨 전환

@@ -16,15 +16,16 @@ APlaceholderActor::APlaceholderActor()
 		mStaticMeshComponent->SetStaticMesh(finder.Object);
 	}
 
-	SetRootComponent(mStaticMeshComponent);
 
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	mCapsuleComponent->SetupAttachment(mStaticMeshComponent);
 	mCapsuleComponent->SetCollisionProfileName(TEXT("NPA"));
 	mCapsuleComponent->SetGenerateOverlapEvents(true);
 	mCapsuleComponent->SetNotifyRigidBodyCollision(true);
-	mCapsuleComponent->SetCapsuleHalfHeight(300.f);
-	mCapsuleComponent->SetCapsuleRadius(100.f);
+	mCapsuleComponent->SetCapsuleHalfHeight(80.f);
+	mCapsuleComponent->SetCapsuleRadius(80.f);
+
+	mStaticMeshComponent->SetupAttachment(mCapsuleComponent);
+	SetRootComponent(mCapsuleComponent);
 
 	bReplicates = true;
 

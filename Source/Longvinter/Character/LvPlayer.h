@@ -100,7 +100,7 @@ public:
 	void Fire();
 
 	UFUNCTION(Server, Reliable)
-	void ServerFire();
+	void ServerUseWeapon();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetFishingSpot(AFishingSpot* Spot);
