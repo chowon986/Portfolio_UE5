@@ -109,6 +109,70 @@ void UEquipmentComponent::ServerAddItem_Implementation(int32 ItemID)
 					ServerRemoveItem(Item);
 				}
 			}
+			
+		}
+	}
+	else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+	{
+		for (auto Item : mItems)
+		{
+			FItemTable* ItemInfo = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+			// 이미 모자를 끼고 있다면
+			if (ItemInfo->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+			{
+				if (IsValid(PlayerCharacter))
+				{
+					// 기존에 끼고 있던 아이템은 인벤토리에 보내고
+					PlayerCharacter->GetInventoryComponent()->ServerAddItem(Item);
+
+					// 장비창에서는 제거한다.
+					ServerRemoveItem(Item);
+				}
+			}
+
+		}
+	}
+	else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+	{
+		for (auto Item : mItems)
+		{
+			FItemTable* ItemInfo = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+			// 이미 모자를 끼고 있다면
+			if (ItemInfo->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+			{
+				if (IsValid(PlayerCharacter))
+				{
+					// 기존에 끼고 있던 아이템은 인벤토리에 보내고
+					PlayerCharacter->GetInventoryComponent()->ServerAddItem(Item);
+
+					// 장비창에서는 제거한다.
+					ServerRemoveItem(Item);
+				}
+			}
+
+		}
+	}
+	else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+	{
+		for (auto Item : mItems)
+		{
+			FItemTable* ItemInfo = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+			// 이미 모자를 끼고 있다면
+			if (ItemInfo->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+			{
+				if (IsValid(PlayerCharacter))
+				{
+					// 기존에 끼고 있던 아이템은 인벤토리에 보내고
+					PlayerCharacter->GetInventoryComponent()->ServerAddItem(Item);
+
+					// 장비창에서는 제거한다.
+					ServerRemoveItem(Item);
+				}
+			}
+
 		}
 	}
 

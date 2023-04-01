@@ -72,8 +72,9 @@ ALvPlayer::ALvPlayer()
 	mCanEKeyPressed = false;
 
 	mHat = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hat"));
-
-	mWeapon = nullptr;
+	mWeapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));
+	mBackpack = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BackPack"));
+	mBackpack->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("BackpackSocket"));
 
 	mOnceCheck = false;
 
@@ -298,14 +299,42 @@ void ALvPlayer::Aim(float Scale)
 		{
 			if (mWeapon)
 			{
-				if(mWeapon->EquipmentType != EEquipmentType::Equipment_Weapon_Rod)
-					SetState(EPlayerState::Aim);
+				TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+				for (int32 Item : Items)
+				{
+					FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+					if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
+						ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+					{
+						mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+						SetState(EPlayerState::Aim);
+					}
+				}
+
 			}
 		}
 	}
 	else if (Scale == 0 && GetState() != EPlayerState::Fishing)
 	{
 		SetState(EPlayerState::Idle);
+
+		if (mWeapon)
+		{
+			TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+			for (int32 Item : Items)
+			{
+				FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+				if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
+					ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+				{
+					mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+				}
+			}
+		}
 	}
 }
 
@@ -336,9 +365,13 @@ void ALvPlayer::Click()
 	bool Hit = PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, Result);
 	if (GetState() == EPlayerState::Aim) // 낚시대 제외 무기를 끼고 Aim하면 Aim 상태임
 	{
-		if (mWeapon->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		if (mWeapon)
 		{
-			--mAmmoCount;
+			ServerFire();
+		}
+		//if (mWeapon->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		{
+			//--mAmmoCount;
 			// 총알 생성
 		}
 
@@ -473,15 +506,6 @@ void ALvPlayer::Fire()
 {
 	if (ProjectileClass)
 	{
-		FVector Location;
-		FRotator Rotation;
-		GetActorEyesViewPoint(Location, Rotation);
-
-		FVector MuzzleLocation = Location + FTransform(Rotation).TransformVector(MuzzleOffset);
-		FRotator MuzzleRotation = mPlayerRotator + FRotator(0.f, 90.f, 0.f);
-
-		MuzzleLocation.Z -= 30.0f;
-
 		UWorld* World = GetWorld();
 		if (World)
 		{
@@ -489,13 +513,29 @@ void ALvPlayer::Fire()
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = GetInstigator();
 
-			AProjectile_Bullet* Projectile = World->SpawnActor<AProjectile_Bullet>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
-			if (Projectile)
-			{
-				// 발사 방향을 알아냅니다.
-				FVector LaunchDirection = MuzzleRotation.Vector();
-				Projectile->FireInDirection(LaunchDirection);
-			}
+			AProjectile_Bullet* Projectile =
+				GetWorld()->SpawnActor<AProjectile_Bullet>(ProjectileClass,
+					GetActorLocation() + GetActorForwardVector() * 50.f,
+					GetActorRotation(),
+					SpawnParams);
+		}
+	}
+}
+
+void ALvPlayer::ServerFire_Implementation()
+{
+	TArray<int32> Items = GetEquipmentComponent()->GetItems();
+	for (int32 Item : Items)
+	{
+		FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+		if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
+		{
+			Fire();
+		}
+		else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+		{
+			
 		}
 	}
 }
@@ -505,9 +545,11 @@ void ALvPlayer::OnEquipmentItemChanged()
 	TArray<int32> Items = GetEquipmentComponent()->GetItems();
 
 	if (IsValid(mHat))
-	{
 		mHat->SetStaticMesh(nullptr);
-	}
+	if (IsValid(mWeapon))
+		mWeapon->SetStaticMesh(nullptr);
+	if (IsValid(mRod))
+		mRod->SetStaticMesh(nullptr);
 
 	for (int32 Item : Items)
 	{
@@ -522,28 +564,22 @@ void ALvPlayer::OnEquipmentItemChanged()
 		{
 			mHat->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 
-			mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
+			mHat->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
 		}
 		else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
 		{
-			//mWeapon = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), GetTransform(), SpawnParam);
+			mWeapon->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 
-			//mWeapon->SetMesh(ItemTable->EquipmentTexturePath);
-
-			//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
-
-			//mWeapon->ItemID = Item;
-		}
-		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun)
-		{
+			mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+			//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("DEF-hand_R_end_socket"));
 		}
 		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
 		{
-
+			//mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
 		}
 		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
 		{
-
+			mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
 		}
 	}
 }
@@ -551,23 +587,6 @@ void ALvPlayer::OnEquipmentItemChanged()
 void ALvPlayer::ServerSetFishingSpot_Implementation(AFishingSpot* Spot)
 {
 	mFishingSpot = Spot;
-}
-
-void ALvPlayer::SetWeapon(int32 ItemID)
-{
-	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
-
-	FActorSpawnParameters SpawnParam;
-	SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	SpawnParam.Owner = this;
-
-	mWeapon = GetWorld()->SpawnActor<AEquipmentActor>(AEquipmentActor::StaticClass(), SpawnParam);
-
-	mWeapon->SetMesh(ItemTable->EquipmentTexturePath);
-
-	//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("head_end_end_socket"));
-
-	mWeapon->EquipmentType = ItemTable->EquipmentType;
 }
 
 void ALvPlayer::DeleteAllItems()
@@ -625,7 +644,7 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			//ItemID = 403; FishingHat 테스트 코드
+			ItemID = 406; // 테스트 코드
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();

@@ -97,8 +97,10 @@ public:
 	UFUNCTION()
 	void OnRep_HP();
 
-	UFUNCTION()
 	void Fire();
+
+	UFUNCTION(Server, Reliable)
+	void ServerFire();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetFishingSpot(AFishingSpot* Spot);
@@ -109,8 +111,7 @@ public:
 
 	UStaticMeshComponent* GetHat() { return mHat; }
 
-	AEquipmentActor* GetWeapon() { return mWeapon; }
-	void SetWeapon(int32 ItemID);
+	UStaticMeshComponent* GetWeapon() { return mWeapon; }
 
 	void DeleteAllItems();
 
@@ -178,8 +179,16 @@ public:
 
 	int32 mAmmoCount;
 
+	UPROPERTY()
 	UStaticMeshComponent* mHat;
-	class AEquipmentActor* mWeapon; // 나중에 확인하기
+	UPROPERTY()
+	UStaticMeshComponent* mWeapon;
+	UPROPERTY()
+	UStaticMeshComponent* mRod;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	UStaticMeshComponent* mBackpack;
+
+	//class AEquipmentActor* mWeapon; // 나중에 확인하기
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	TSubclassOf<ANonPlayerActorBase> mItemClass;

@@ -33,6 +33,8 @@ private:
 	UStaticMeshComponent* mMesh;
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	int32 ItemID;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	EEquipmentType EquipmentType;
 };

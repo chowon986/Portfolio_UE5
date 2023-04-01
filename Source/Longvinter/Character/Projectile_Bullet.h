@@ -25,10 +25,20 @@ public:
 
 	void FireInDirection(const FVector& ShootDirection);
 
+	void OnDestroyTimerExpired();
+
+	UFUNCTION()
+	void OnCollision(const FHitResult& Hit);
+
 public:
 	UPROPERTY(VisibleDefaultsOnly)
-	USphereComponent* CollisionComponent;
+	USphereComponent* mCollisionComponent;
 	
 	UPROPERTY(VisibleAnywhere, Category = Movement)
-	UProjectileMovementComponent* ProjectileMovementComponent;
+	UProjectileMovementComponent* mProjectileMovementComponent;
+
+	FTimerHandle mDestroyTimerHandle;
+
+	UPROPERTY(EditAnywhere, Category = Movement)
+	float mDamage;
 };
