@@ -31,8 +31,8 @@ public:
 
 	void SetOnceCheck(bool Value) { mOnceCheck = Value; }
 public:
-	static UTileView* mRandomBoxTileView;
-	static UTileView* mInventoryTileView;
+	UTileView* mRandomBoxTileView;
+	UTileView* mInventoryTileView;
 	bool mOnceCheck;
 	AFarmingBox* mRandomBox;
 };

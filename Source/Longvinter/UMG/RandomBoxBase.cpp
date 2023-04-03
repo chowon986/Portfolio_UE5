@@ -10,10 +10,6 @@
 #include "ItemDataBase.h"
 #include "../Inventory/Inventory.h"
 
-UTileView* URandomBoxBase::mRandomBoxTileView = nullptr;
-UTileView* URandomBoxBase::mInventoryTileView = nullptr;
-
-
 void URandomBoxBase::NativeConstruct()
 {
 	Super::NativeConstruct();

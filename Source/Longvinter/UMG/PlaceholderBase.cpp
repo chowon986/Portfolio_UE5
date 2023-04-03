@@ -10,10 +10,6 @@
 #include "ItemDataBase.h"
 #include "../Inventory/Inventory.h"
 
-UTileView* UPlaceholderBase::mPlaceholderTileView = nullptr;
-UTileView* UPlaceholderBase::mInventoryTileView = nullptr;
-
-
 void UPlaceholderBase::NativeConstruct()
 {
 	Super::NativeConstruct();

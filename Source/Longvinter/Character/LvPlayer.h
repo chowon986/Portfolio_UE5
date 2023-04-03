@@ -65,6 +65,7 @@ public:
 	void Click();
 	void Fishing();
 	void InventoryOnOff();
+	void Test(float Scale);
 
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }

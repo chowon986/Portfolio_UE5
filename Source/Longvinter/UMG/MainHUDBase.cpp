@@ -40,7 +40,10 @@ void UMainHUDBase::NativeConstruct()
 	mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
 
 	mEncyclopedia = Cast<UEncyclopediaBase>(GetWidgetFromName(FName(TEXT("UIEncyclopedia"))));
-	//mEncyclopedia->SetVisibility(ESlateVisibility::Collapsed);
+	mEncyclopedia->SetVisibility(ESlateVisibility::Collapsed);
+
+	mCraftTable = Cast<UCraftTableBase>(GetWidgetFromName(FName(TEXT("UICraftTable"))));
+	mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)

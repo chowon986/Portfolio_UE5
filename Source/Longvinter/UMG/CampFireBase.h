@@ -32,7 +32,7 @@ public:
 	void OnCancelCraftItem(UObject* Object);
 
 public:
-	static UTileView* mCampFireTileView;
+	UTileView* mCampFireTileView;
 
 	UImage* GetResultImage() { return mResultImg; }
 

@@ -8,8 +8,6 @@
 #include "Net/UnrealNetwork.h"
 #include "ItemDataBase.h"
 
-UListView* UEncyclopediaBase::mListView = nullptr;
-
 void UEncyclopediaBase::NativeConstruct()
 {
 	Super::NativeConstruct();

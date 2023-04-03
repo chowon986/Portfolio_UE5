@@ -31,8 +31,8 @@ public:
 	void SetPlaceholder(APlaceholderActor* Placeholder) { mPlaceholder = Placeholder; }
 
 public:
-	static UTileView* mPlaceholderTileView;
-	static UTileView* mInventoryTileView;
+	UTileView* mPlaceholderTileView;
+	UTileView* mInventoryTileView;
 	bool mOnceCheck;
 
 	//UPlaceholder* mPlaceholderComponent;

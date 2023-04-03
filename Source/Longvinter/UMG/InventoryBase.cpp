@@ -9,9 +9,6 @@
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
 
-UTileView* UInventoryBase::mTileView = nullptr;
-
-
 void UInventoryBase::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -38,7 +35,7 @@ void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 		OnItemsChanged(Component->GetItems());
 		OnMKChanged(Component->GetMK());
 		OnceCheck = true;
-		mTileView->OnItemDoubleClicked().AddUObject(this, &UInventoryBase::ItemClick);
+		mTileView->OnItemDoubleClicked().AddUObject(this, &UInventoryBase::ItemClick);	
 	}
 }
 

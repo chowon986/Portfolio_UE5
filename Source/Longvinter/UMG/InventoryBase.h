@@ -37,7 +37,7 @@ private:
 	bool OnceCheck;
 
 public:
-	static UTileView* mTileView;
+	UTileView* mTileView;
 	UTextBlock* mMKTxt;
 	UButton* mEquipmentBtn;
 };

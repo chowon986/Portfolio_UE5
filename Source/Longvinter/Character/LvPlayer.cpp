@@ -205,6 +205,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 마우스
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Click"), EInputEvent::IE_Pressed, this, &ALvPlayer::Click);
+	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Test"), this, &ALvPlayer::Test);
 
 	// 키
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
@@ -217,7 +218,7 @@ void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME_CONDITION(ALvPlayer, mPlayerState, COND_AutonomousOnly);
+	DOREPLIFETIME(ALvPlayer, mPlayerState);
 	DOREPLIFETIME_CONDITION(ALvPlayer, mCanFishing, COND_AutonomousOnly);
 	DOREPLIFETIME_CONDITION(ALvPlayer, mPlayerHP, COND_AutonomousOnly);
 }
@@ -472,6 +473,12 @@ void ALvPlayer::InventoryOnOff()
 	OnInventoryOnOffEvent.Broadcast();
 }
 
+void ALvPlayer::Test(float Scale)
+{
+	float A = Scale;
+
+}
+
 void ALvPlayer::SetState(EPlayerState State)
 {
 	if (mPlayerState != State)
@@ -670,7 +677,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			ItemID = 406; // 테스트 코드
+			//ItemID = 406; // 테스트 코드 : 총
+			ItemID = 411; // 테스트 코드 : 톱
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();

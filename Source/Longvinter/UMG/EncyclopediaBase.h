@@ -22,6 +22,6 @@ public:
 	void OnItemsChanged(TArray<int32> Items);
 
 public:
-	static UListView* mListView;
+	UListView* mListView;
 	bool mOnceCheck;
 };

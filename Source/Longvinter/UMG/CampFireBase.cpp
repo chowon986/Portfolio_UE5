@@ -9,8 +9,6 @@
 #include "ItemDataBase.h"
 #include "../Character/LvPlayer.h"
 
-UTileView* UCampFireBase::mCampFireTileView = nullptr;
-
 void UCampFireBase::NativeConstruct()
 {
 	Super::NativeConstruct();
