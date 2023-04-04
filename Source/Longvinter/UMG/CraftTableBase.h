@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <Components/ListView.h>
+#include <Components/TextBlock.h>
+#include <Components/Button.h>
+#include <Components/Image.h>
 #include "Blueprint/UserWidget.h"
 #include "CraftTableBase.generated.h"
 
@@ -19,7 +21,24 @@ public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
+	UFUNCTION()
+		void OnClickedDepositBtn();
+
+	UFUNCTION()
+		void OnClickedUpgradeBtn();
+
+
 public:
-	UListView* mListView;
-	bool mOnceCheck;
+	UTextBlock* mItemName;
+	UTextBlock* mCurCount;
+	UTextBlock* mTotalCount;
+	UButton* mDepositBtn;
+	UTextBlock* mInputTxt;
+	UTextBlock* mReadyTxt;
+	UTextBlock* mUpgradeTxt;
+	UButton* mReadyBtn;
+	UButton* mUpgradeBtn;
+
+	UPROPERTY()
+	int32 mCurWoodCount;
 };

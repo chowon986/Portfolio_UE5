@@ -44,8 +44,6 @@ void AProjectile_Bullet::FireInDirection(const FVector& ShootDirection)
 {
 	mProjectileMovementComponent->Velocity = ShootDirection * mProjectileMovementComponent->InitialSpeed;
 
-	//FaceRotation(ShootDirection.Rotation());
-
 	GetWorld()->GetTimerManager().SetTimer(mDestroyTimerHandle, FTimerDelegate::CreateUObject(this, &AProjectile_Bullet::OnDestroyTimerExpired), 5.0f, false);
 }
 

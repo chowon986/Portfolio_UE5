@@ -45,6 +45,9 @@ void UInventoryBase::OnItemsChanged(TArray<int32> Items)
 
 	for (int32 Item : Items)
 	{
+		if (Item == -1)
+			return;
+
 		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(Item);
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);
@@ -69,7 +72,7 @@ void UInventoryBase::OnMKChanged(int32 MK)
 void UInventoryBase::ItemClick(UObject* Object)
 {
 	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
-	
+
 	if (IsValid(Controller))
 	{
 		//ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetLocalPlayer());
@@ -81,6 +84,13 @@ void UInventoryBase::ItemClick(UObject* Object)
 			if (IsValid(pData))
 			{
 				int ItemID = pData->GetItemID();
+				if (true == Character->GetCanThrow())
+				{
+					Character->ServerThrowAwayItem(ItemID);
+					Character->GetInventoryComponent()->ServerRemoveItem(ItemID);
+					return;
+				}
+
 				ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
 				UCampFireBase* CampFireWidget = LvPlayerController->GetMainHUD()->GetCampFireWidget();
 				if (true == CampFireWidget->IsVisible())
@@ -90,8 +100,9 @@ void UInventoryBase::ItemClick(UObject* Object)
 				}
 
 				else
-				Character->GetInventoryComponent()->ServerUseItem(ItemID);
+					Character->GetInventoryComponent()->ServerUseItem(ItemID);
 			}
+
 		}
 	}
 }

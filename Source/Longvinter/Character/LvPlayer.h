@@ -65,7 +65,9 @@ public:
 	void Click();
 	void Fishing();
 	void InventoryOnOff();
+	void AddWood();
 	void Test(float Scale);
+	void ThrowItem(float Scale);
 
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
@@ -107,6 +109,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetFishingSpot(AFishingSpot* Spot);
 
+	UFUNCTION(Server, Reliable)
+	void ServerThrowAwayItem(int32 ItemID);
+
 	void OnEquipmentItemChanged();
 
 	int32 GetAmmoCount() { return mAmmoCount; }
@@ -138,6 +143,8 @@ public:
 	void SetAcquisitionRate(float AcquisitionRate) { mAcquisitionRate = AcquisitionRate; }
 	void SetAttackSpeed(float AttackSpeed) { mAttackSpeed = AttackSpeed; }
 	void SetColdResistance(float ColdResistance) { mColdResistance = ColdResistance; }
+
+	bool GetCanThrow() { return mCanThrow; }
 
 public:
 	ActorClickedEvent OnActorClickedEvent;
@@ -212,4 +219,5 @@ public:
 	AFishingSpot* mFishingSpot;
 
 	bool mIsSetting;
+	bool mCanThrow;
 };

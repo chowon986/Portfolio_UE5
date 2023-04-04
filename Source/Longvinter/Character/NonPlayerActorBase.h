@@ -17,7 +17,6 @@ class LONGVINTER_API ANonPlayerActorBase : public AActorBase
 public:
 	ANonPlayerActorBase();
 
-	int GetItemID() const { return mItemID; }
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -25,6 +24,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	int32 GetItemID() const { return mItemID; }
+	void SetItemID(int32 ItemID) { mItemID = ItemID; }
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))

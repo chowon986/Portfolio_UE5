@@ -22,6 +22,7 @@
 #include "TreeBase.h"
 #include "FarmingBox.h"
 #include "Beach.h"
+#include "Bundle.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -85,6 +86,7 @@ ALvPlayer::ALvPlayer()
 	mFishingSpeedRatio = 1;
 
 	mIsSetting = false;
+	mCanThrow = false;
 }
 
 void ALvPlayer::BeginPlay()
@@ -292,6 +294,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 방향키
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("VerticalMove"), this, &ALvPlayer::VerticalMove);
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("HorizontalMove"), this, &ALvPlayer::HorizontalMove);
+	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("ThrowItem"), this, &ALvPlayer::ThrowItem);
 
 	// 마우스
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
@@ -303,6 +306,7 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Wave"), EInputEvent::IE_Pressed, this, &ALvPlayer::Wave);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Inventory"), EInputEvent::IE_Pressed, this, &ALvPlayer::InventoryOnOff);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("FinishFishing"), EInputEvent::IE_Pressed, this, &ALvPlayer::CheckSuccessedFishing);
+	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("AddWood"), EInputEvent::IE_Pressed, this, &ALvPlayer::AddWood);
 }
 
 void ALvPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -503,31 +507,40 @@ void ALvPlayer::Click()
 			ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
 			if (IsValid(NPA))
 			{
-				APlaceholderActor* Items = Cast<APlaceholderActor>(NPA);
-				if (IsValid(Items))
+				ABundle* BundleItem = Cast<ABundle>(NPA);
+				if (IsValid(BundleItem))
 				{
-					PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items);
-					//PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items->GetPlaceholderComponent());
-					PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
+					mInventoryComponent->ServerAddItem(BundleItem->GetItemID());
+					ServerDestroy(BundleItem);
 				}
 				else
 				{
-					AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
-					if (IsValid(FarmingBox))
+					APlaceholderActor* Items = Cast<APlaceholderActor>(NPA);
+					if (IsValid(Items))
 					{
-						PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetOnceCheck(false);
-						PlayerController->GetMainHUD()->GetRandomBoxWidget()->ServerSetRandomBox(FarmingBox);
-						PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
+						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items);
+						//PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items->GetPlaceholderComponent());
+						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
 					}
-
 					else
 					{
-						int ItemID = NPA->GetItemID();
-						if (-1 != ItemID)
+						AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
+						if (IsValid(FarmingBox))
 						{
-							GetInventoryComponent()->ServerAddItem(ItemID);
-							GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
-							ServerDestroy(NPA);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetOnceCheck(false);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->ServerSetRandomBox(FarmingBox);
+							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
+						}
+
+						else
+						{
+							int ItemID = NPA->GetItemID();
+							if (-1 != ItemID)
+							{
+								GetInventoryComponent()->ServerAddItem(ItemID);
+								GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
+								ServerDestroy(NPA);
+							}
 						}
 					}
 				}
@@ -578,10 +591,26 @@ void ALvPlayer::InventoryOnOff()
 	OnInventoryOnOffEvent.Broadcast();
 }
 
+void ALvPlayer::AddWood()
+{
+	if (IsValid(mInventoryComponent))
+	{
+		mInventoryComponent->ServerAddItem(104);
+	}
+}
+
 void ALvPlayer::Test(float Scale)
 {
 	float A = Scale;
 
+}
+
+void ALvPlayer::ThrowItem(float Scale)
+{
+	if (Scale == 1)
+		mCanThrow = true;
+	else
+		mCanThrow = false;
 }
 
 void ALvPlayer::SetState(EPlayerState State)
@@ -677,6 +706,15 @@ void ALvPlayer::ServerUseWeapon_Implementation()
 			}
 		}
 	}
+}
+
+void ALvPlayer::ServerThrowAwayItem_Implementation(int32 ItemID)
+{
+	FActorSpawnParameters Param;
+	Param.Owner = this;
+
+	ABundle* Items = GetWorld()->SpawnActor<ABundle>(ABundle::StaticClass(), GetTransform(), Param);
+	Items->SetItemID(ItemID);
 }
 
 void ALvPlayer::OnEquipmentItemChanged()
