@@ -4,6 +4,7 @@
 #include "BTService_TargetDetect.h"
 #include "MonsterAIController.h"
 #include "ChickenBase.h"
+#include "Terret.h"
 
 UBTService_TargetDetect::UBTService_TargetDetect()
 {
@@ -27,8 +28,42 @@ void UBTService_TargetDetect::TickNode(
 	AChickenBase* Chicken = Cast<AChickenBase>(AIController->GetPawn());
 
 	if (!IsValid(Chicken))
-		return;
+	{
+		ATerret* Terret = Cast<ATerret>(AIController->GetPawn());
 
+		if (IsValid(Terret))
+		{
+			FCollisionQueryParams	param(NAME_None, false, Terret);
+
+			TArray<FOverlapResult>	ResultArray;
+
+			bool CollisionEnable = GetWorld()->OverlapMultiByChannel(ResultArray,
+				Terret->GetActorLocation(), FQuat::Identity,
+				ECollisionChannel::ECC_GameTraceChannel8,
+				FCollisionShape::MakeSphere(800),
+				param);
+
+#if ENABLE_DRAW_DEBUG
+			FColor	DrawColor = CollisionEnable ? FColor::Red : FColor::Green;
+
+			DrawDebugSphere(GetWorld(), Terret->GetActorLocation(),
+				800, 20,
+				DrawColor, false, 0.3f);
+
+#endif
+
+			if (CollisionEnable)
+				AIController->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), ResultArray[0].GetActor());
+
+			else
+			{
+				AIController->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+			}
+		}
+
+		return;
+	}
+	
 	FCollisionQueryParams	param(NAME_None, false, Chicken);
 
 	TArray<FOverlapResult>	ResultArray;
@@ -40,13 +75,7 @@ void UBTService_TargetDetect::TickNode(
 		param);
 
 #if ENABLE_DRAW_DEBUG
-
-	// CollisionEnable 가 true이면 Red, false이면 Green을 저장한다.
 	FColor	DrawColor = CollisionEnable ? FColor::Red : FColor::Green;
-
-	// FRotationMatrix::MakeFromZ(GetActorForwardVector()) : 앞쪽을
-	// 바라보는 회전행렬을 만들어서 .ToQuat() 함수를 이용하여 회전행렬을
-	// 회전값으로 변환해준다.
 	DrawDebugSphere(GetWorld(), Chicken->GetActorLocation(),
 		800, 20,
 		DrawColor, false, 0.3f);
@@ -61,4 +90,3 @@ void UBTService_TargetDetect::TickNode(
 		AIController->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 	}
 }
-

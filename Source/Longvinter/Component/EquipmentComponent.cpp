@@ -51,7 +51,7 @@ void UEquipmentComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UEquipmentComponent, mAmmoCount);
-	DOREPLIFETIME_CONDITION(UEquipmentComponent, mItems, COND_AutonomousOnly);
+	DOREPLIFETIME(UEquipmentComponent, mItems);
 }
 
 void UEquipmentComponent::OnRep_AmmoCount()
@@ -64,6 +64,14 @@ void UEquipmentComponent::OnRep_Items()
 	OnItemsChangedEvent.Broadcast(mItems);
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(GetOwner());
 	PlayerCharacter->OnEquipmentItemChanged();
+}
+
+void UEquipmentComponent::ServerRemoveAllItems_Implementation(const TArray<int32>& ItemIDs)
+{
+	for (int32 Item : ItemIDs)
+	{
+		ServerRemoveItem(Item);
+	}
 }
 
 int32 UEquipmentComponent::GetAmmoCount()

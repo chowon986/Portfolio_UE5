@@ -35,5 +35,6 @@ public:
 	UPlaceholder* GetPlaceholderComponent() { return mPlaceholderComponent; }
 
 public:
+	UPROPERTY()
 	UPlaceholder* mPlaceholderComponent;
 };

@@ -70,6 +70,7 @@ public:
 	void SetState(EPlayerState State);
 	EPlayerState GetState() { return mPlayerState; }
 	bool GetCanFishing() { return mCanFishing; }
+	void IsSettingHouse(bool Value) {mIsSetting = Value; }
 	bool GetFinishFishing() { return mFinishFishing; }
 	class UInventoryComponent* GetInventoryComponent() { return mInventoryComponent; }
 	class UCraftComponent* GetCraftComponent() { return mCraftComponent; }
@@ -209,4 +210,6 @@ public:
 	float mColdResistance;
 
 	AFishingSpot* mFishingSpot;
+
+	bool mIsSetting;
 };

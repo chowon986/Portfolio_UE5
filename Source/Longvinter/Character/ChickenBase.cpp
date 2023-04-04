@@ -65,8 +65,8 @@ void AChickenBase::PossessedBy(AController* NewController)
 
 	if (IsValid(AIController))
 	{
-		AIController->SetBehaviorTree(TEXT("BehaviorTree'/Game/Monster/BTMonster.BTMonster'"));
-		AIController->SetBlackboard(TEXT("BlackboardData'/Game/Monster/BBMonster.BBMonster'"));
+		AIController->SetBehaviorTree(TEXT("BehaviorTree'/Game/NPC/BTMonster.BTMonster'"));
+		AIController->SetBlackboard(TEXT("BlackboardData'/Game/NPC/BBMonster.BBMonster'"));
 	}
 }
 
@@ -77,7 +77,6 @@ void AChickenBase::UnPossessed()
 
 void AChickenBase::RunAway()
 {
-
 	if (GetLocalRole() == ROLE_Authority)
 	{
 		AMonsterAIController* AIController = Cast<AMonsterAIController>(GetController());
@@ -170,6 +169,9 @@ void AChickenBase::OnHealthUpdate()
 	if (GetCurrentHealth() <= 0)
 	{
 		Destroy();
-		GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClass, GetTransform()); //아이템 생성하기 -> 이 아이템도 replicates 확인하기
+		FActorSpawnParameters Param;
+		Param.Owner = this;
+
+		GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClass, GetTransform(), Param); //아이템 생성하기 -> 이 아이템도 replicates 확인하기
 	}
 }

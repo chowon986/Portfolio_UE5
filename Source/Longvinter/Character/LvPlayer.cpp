@@ -18,9 +18,10 @@
 #include "../Component/CraftComponent.h"
 #include "../Component/EquipmentComponent.h"
 #include "../Component/EncyclopediaComponent.h"
-#include "../Character/ChickenBase.h"
-#include "../Character/TreeBase.h"
-#include "../Character/FarmingBox.h"
+#include "ChickenBase.h"
+#include "TreeBase.h"
+#include "FarmingBox.h"
+#include "Beach.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -72,6 +73,7 @@ ALvPlayer::ALvPlayer()
 	mCanEKeyPressed = false;
 
 	mHat = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hat"));
+	mRod = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Rod"));
 	mWeapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));
 	mBackpack = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BackPack"));
 	mBackpack->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("BackpackSocket"));
@@ -81,6 +83,8 @@ ALvPlayer::ALvPlayer()
 	mAmmoCount = 10;
 
 	mFishingSpeedRatio = 1;
+
+	mIsSetting = false;
 }
 
 void ALvPlayer::BeginPlay()
@@ -165,6 +169,16 @@ void ALvPlayer::ServerOnPendingClientResponseTimerExpired()
 			{
 				this->SetState(EPlayerState::Idle);
 				SetIdleStateTimerHandle.Invalidate();
+
+				TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+				for (int32 Item : Items)
+				{
+					FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+					if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+						mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+				}
 			}
 		}), 1.0f, false);
 
@@ -183,16 +197,135 @@ void ALvPlayer::Tick(float DeltaTime)
 			bool isMoving = Movement->Velocity.Size() != 0;
 			if (isMoving)
 			{
-				if (GetState() != EPlayerState::Aim)
+				if (GetState() != EPlayerState::Aim &&
+					GetState() != EPlayerState::SwimmingIdle)
+				{
 					SetState(EPlayerState::Idle);
+
+					TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+					for (int32 Item : Items)
+					{
+						FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+						if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+							mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+
+						else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
+							ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+							mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+					}
+				}
 			}
-			else if (Movement->IsSwimming())
+			else if (GetState() == EPlayerState::SwimmingIdle)
 			{
-				SetState(EPlayerState::SwimmingIdle);
+				TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+				for (int32 Item : Items)
+				{
+					FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+					if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+						mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+					
+					else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
+						ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+						mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+				}
 			}
 		}
 	}
+
+	FCollisionQueryParams	param(NAME_None, false, this);
+
+	TArray<FOverlapResult>	ResultArray;
+
+	bool CollisionEnable = GetWorld()->OverlapMultiByChannel(ResultArray,
+		GetActorLocation(), FQuat::Identity,
+		ECollisionChannel::ECC_GameTraceChannel1,
+		FCollisionShape::MakeSphere(100),
+		param);
+
+	if (GetState() != EPlayerState::SwimmingIdle)
+	{
+		if (CollisionEnable)
+		{
+			for (auto Result : ResultArray)
+			{
+				if (ABeach* Beach = Cast<ABeach>(Result.GetActor()))
+					SetState(EPlayerState::SwimmingIdle);
+			}
+		}
+	}
+	else
+	{
+		if (CollisionEnable)
+		{
+			int Count = 0;
+
+			for (auto Result : ResultArray)
+			{
+				ABeach* Beach = Cast<ABeach>(Result.GetActor());
+				if (!IsValid(Beach))
+					++Count;
+			}
+
+			if (Count == ResultArray.Num())
+				SetState(EPlayerState::Idle);
+		}
+		else
+				SetState(EPlayerState::Idle);
+	}
+
+
+	/*if (mIsSetting)
+	{
+		ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
+
+		if (IsValid(PlayerController))
+		{
+			FVector WorldLocation;
+			FVector WorldDirection;
+			PlayerController->DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
+
+			FVector BoxExtent = FVector(50.f, 50.f, 50.f); 
+			float TraceDistance = 500.f;
+
+			FCollisionQueryParams QueryParams;
+			QueryParams.bTraceComplex = true;
+			QueryParams.bReturnPhysicalMaterial = false;
+			FHitResult HitResult;
+			bool CollisionEnable = GetWorld()->SweepSingleByChannel(
+				HitResult,
+				WorldLocation,
+				WorldLocation + WorldDirection * TraceDistance,
+				FQuat::Identity,
+				ECC_Visibility,
+				FCollisionShape::MakeBox(BoxExtent),
+				QueryParams
+			);
+
+#if ENABLE_DRAW_DEBUG
+
+			FColor	DrawColor = CollisionEnable ? FColor::Red : FColor::Green;
+		
+			DrawDebugBox(GetWorld(), (WorldLocation + (WorldLocation + WorldDirection * TraceDistance)) / 2.f, BoxExtent, DrawColor, true, -1.f, 0, 1.f);
+
+#endif
+			if (!CollisionEnable)
+			{
+
+			}
+			else
+			{
+			AActor* TestActor = HitResult.GetActor();
+			int a = 0;
+
+			}
+		}
+	}*/
 }
+
 
 void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -317,7 +450,7 @@ void ALvPlayer::Aim(float Scale)
 			}
 		}
 	}
-	else if (Scale == 0 && GetState() != EPlayerState::Fishing)
+	else if (Scale == 0 && GetState() != EPlayerState::Fishing && GetState() != EPlayerState::SwimmingIdle)
 	{
 		SetState(EPlayerState::Idle);
 
@@ -331,9 +464,11 @@ void ALvPlayer::Aim(float Scale)
 
 				if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
 					ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
-				{
 					mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
-				}
+
+				else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+					mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+
 			}
 		}
 	}
@@ -465,6 +600,16 @@ void ALvPlayer::Fishing()
 	{
 		SetState(EPlayerState::Fishing);
 		mFinishFishing = false;
+
+		TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+		for (int32 Item : Items)
+		{
+			FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+			if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+			mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+		}
 	}
 }
 
@@ -496,6 +641,9 @@ void ALvPlayer::ServerSpawnPlaceholder_Implementation()
 	Param.Owner = this;
 
 	APlaceholderActor* Items = GetWorld()->SpawnActor<APlaceholderActor>(mItemClass, GetTransform(), Param);
+	Items->ServerAddAllItems(AllItems);
+
+	AllItems = mEquipmentComponent->GetItems();
 	Items->ServerAddAllItems(AllItems);
 }
 
@@ -603,11 +751,11 @@ void ALvPlayer::OnEquipmentItemChanged()
 			mWeapon->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 
 			mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
-			//mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("DEF-hand_R_end_socket"));
 		}
 		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
 		{
-			//mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+			mRod->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
+			mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
 		}
 		else if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
 		{
@@ -627,6 +775,9 @@ void ALvPlayer::DeleteAllItems()
 	TArray<int32> AllItems = mInventoryComponent->GetItems();
 
 	mInventoryComponent->ServerRemoveAllItems(AllItems);
+
+	AllItems = mEquipmentComponent->GetItems();
+	mEquipmentComponent->ServerRemoveAllItems(AllItems);
 }
 
 void ALvPlayer::OnHealthUpdate()
@@ -639,7 +790,7 @@ void ALvPlayer::OnHealthUpdate()
 
 		DeleteAllItems();
 
-		Destroy();
+		//Destroy();
 		
 		// 사라지는 애니메이션 보여주고
 		// 레벨 전환
@@ -678,7 +829,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			mFishingSpot = nullptr;
 
 			//ItemID = 406; // 테스트 코드 : 총
-			ItemID = 411; // 테스트 코드 : 톱
+			//ItemID = 411; // 테스트 코드 : 톱
+			ItemID = 502; // 테스트 코드 : 텐트
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();
@@ -691,7 +843,18 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 						if (IsValid(this))
 						{
 							this->SetState(EPlayerState::Idle);
+
 							SetIdleStateTimerHandle.Invalidate();
+
+							TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+							for (int32 Item : Items)
+							{
+								FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+								if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+									mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+							}
 						}
 					}), 1, false);
 

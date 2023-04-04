@@ -4,6 +4,7 @@
 #include "BTTaskNode_Idle.h"
 #include "MonsterAIController.h"
 #include "ChickenBase.h"
+#include "Terret.h"
 
 UBTTaskNode_Idle::UBTTaskNode_Idle()
 {
@@ -26,8 +27,29 @@ EBTNodeResult::Type UBTTaskNode_Idle::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	AChickenBase* Chicken = Cast<AChickenBase>(AIController->GetPawn());
 
 	if (!IsValid(Chicken))
-		return EBTNodeResult::Failed;
+	{
+		// 치킨이 없는데 Terret은 있는 경우
+		ATerret* Terret = Cast<ATerret>(AIController->GetPawn());
 
+		if (IsValid(Terret))
+		{
+			AActor* Target = Cast<AActor>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+
+			if (IsValid(Target))
+			{
+				AIController->StopMovement();
+
+				return EBTNodeResult::Failed;
+			}
+
+			Terret->SetState(ETerretState::Idle);
+
+			return EBTNodeResult::InProgress;
+		}
+
+		// 치킨이 없는 경우, 치킨과 터렛이 모두 없는 경우
+		return EBTNodeResult::Failed;
+	}
 	AActor* Target = Cast<AActor>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 
 	if (IsValid(Target))
@@ -74,6 +96,24 @@ void UBTTaskNode_Idle::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 
 	if (!IsValid(Chicken))
 	{
+		ATerret* Terret = Cast<ATerret>(AIController->GetPawn());
+
+		if (IsValid(Terret))
+		{
+			ACharacter* Target = Cast<ACharacter>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+
+			if (IsValid(Target))
+			{
+				AIController->StopMovement();
+
+				FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+				return;
+			}
+
+			Terret->SetState(ETerretState::Idle);
+			return;
+		}
+
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 		return;
 	}

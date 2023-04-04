@@ -114,6 +114,12 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 
 	ACharacterBase* LvCharacter = Cast<ACharacterBase>(GetOwner());
 	ALvPlayer* LvPlayerCharacter = Cast<ALvPlayer>(LvCharacter);
+
+	if(ItemInfo->ItemType == EItemType::Normal)
+	{
+		return;
+	}
+	
 	if (ItemInfo->ItemType == EItemType::Equipment)
 	{
 		// 장비 칸으로 옮기기
@@ -123,7 +129,14 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 	{
 		// 돈 입력하고 버리기
 	}
-	
+	else if (ItemInfo->ItemType == EItemType::Decorative)
+	{
+		if (ItemID == 502)
+		{
+			LvPlayerCharacter->IsSettingHouse(true);
+		}
+	}
+
 	int32 BuffCount = ItemInfo->BuffList.Num();
 	UDataTable* BuffTable = UInventory::GetInst(GetWorld())->GetBuffTable();
 
@@ -139,7 +152,7 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 		else if (BuffInfo->BuffType == EBuffType::Speed)
 		{
 			LvPlayerCharacter->SetSpeed(LvPlayerCharacter->GetSpeed() + BuffInfo->Amount);
-			// Player의 MaxSpeed에다가 곱하고 싶다..
+			// Player의 MaxSpeed에다가 곱하고 싶다..ㅠ
 			// LvPlayerCharacter->GetMovementComponent()->GetMaxSpeed();
 		}
 		else if (BuffInfo->BuffType == EBuffType::Offence)
@@ -173,63 +186,6 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 			LvPlayerCharacter->SetAttackSpeed(LvPlayerCharacter->GetAttackSpeed() + BuffInfo->Amount);
 		}
 	}
-
-
-
-
-	
-
-	//{
-	//	UItemDataBase* pNewData = NewObject<UItemDataBase>();
-	//	FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
-
-	//	pNewData->SetItemIconPath(Table->TexturePath);
-	//	pNewData->SetItemID(ItemID);
-	//	Ca//mpFireWidget->mCampFireTileView->AddItem(pNewData);
-	//	
-	//	//ALvPlayer* PlayerCharacter = Cast<ALvPlayer>();
-
-	//	if (IsValid(PlayerCharacter))
-	//	{
-	//		PlayerCharacter->GetCraftComponent()->ServerAddItem(ItemID);
-	//	}
-	//}
-	
-	//else
-	//{
-	//	if (ItemInfo->ItemType == EItemType::Normal)
-	//		return;
-	//	else if (ItemInfo->ItemType == EItemType::Food)
-	//	{
-	//		// 아이템의 버프 리스트의 개수를 통해 버프 개수 알아내기
-	//		int32 BuffCount = ItemInfo->BuffList.Num();
-
-	//		// 버프 개수만큼 반복 돌리기
-	//		if (0 != BuffCount)
-	//		{
-	//			for (int i = 0; i < BuffCount; i++)
-	//			{
-	//				int32 BuffID = ItemInfo->BuffList[i]; // 버프테이블에서 찾을 ID값 알아내기
-	//				UDataTable* BuffTable = UInventory::GetInst(GetWorld())->GetBuffTable(); // 버프 테이블 가져오기
-	//				FBuffTable* BuffInfo = BuffTable->FindRow<FBuffTable>(FName(FString::FromInt(BuffID)), nullptr); // 버프 테이블에 BuffID값 넣어서 정보 가져오기
-
-	//				if (BuffInfo->BuffType == EBuffType::HP)
-	//				{
-	//					ACharacterBase* LvCharacter = Cast<ACharacterBase>(GetOwner());
-	//					LvCharacter->SetCurrentHealth(LvCharacter->GetCurrentHealth() + BuffInfo->Amount);
-	//				}
-	//				else if (ItemInfo->ItemType == EItemType::Equipment)
-	//				{
-
-	//				}
-	//				else if (ItemInfo->ItemType == EItemType::Decorative)
-	//				{
-
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
 
 	mItems.RemoveSingle(ItemID);
 }

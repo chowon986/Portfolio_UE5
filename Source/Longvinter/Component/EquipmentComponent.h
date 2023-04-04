@@ -39,6 +39,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerRemoveItem(int32 ItemID);
 
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveAllItems(const TArray<int32>& ItemIDs);
+
 	const TArray<int32>& GetItems() { return mItems; }
 
 	int32 GetAmmoCount();
