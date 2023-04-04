@@ -37,6 +37,8 @@ public:
 		void AnimNotify_SittingEnd();
 	UFUNCTION()
 		void AnimNotify_SitWaveEnd();
+	UFUNCTION()
+		void AnimNotify_GetItemEnd();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))

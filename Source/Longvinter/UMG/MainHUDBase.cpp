@@ -11,6 +11,7 @@
 #include "../Component/FarmingBoxComponent.h"
 #include "../Component/Placeholder.h"
 #include "../Character/PlaceholderActor.h"
+#include "../Character/Workbench.h"
 
 void UMainHUDBase::NativeConstruct()
 {
@@ -88,6 +89,9 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 			if (mRandomBox->IsVisible())
 				mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
+
+			if (mCraftTable->IsVisible())
+				mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
 }
@@ -105,6 +109,11 @@ void UMainHUDBase::OnActorClicked(AActor* Actor)
 	else if (Actor->IsA<ACampFire>())
 	{
 		mCampFire->SetVisibility(ESlateVisibility::Visible);
+		mInventory->SetVisibility(ESlateVisibility::Visible);
+	}
+	else if (Actor->IsA<AWorkbench>())
+	{
+		mCraftTable->SetVisibility(ESlateVisibility::Visible);
 		mInventory->SetVisibility(ESlateVisibility::Visible);
 	}
 }
@@ -133,4 +142,7 @@ void UMainHUDBase::OnInventoryOnOff()
 
 	if(mPlaceholder->IsVisible())
 		mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
+
+	if (mCraftTable->IsVisible())
+		mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
 }

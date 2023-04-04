@@ -32,4 +32,7 @@ public:
 	UTextBlock* mTotalCount;
 	UImage* mItemImg;
 	UButton* mDepositBtn;
+
+	UPROPERTY()
+	int32 mCurWoodCount;
 };

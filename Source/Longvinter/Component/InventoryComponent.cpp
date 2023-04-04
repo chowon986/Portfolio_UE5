@@ -115,8 +115,31 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 	ACharacterBase* LvCharacter = Cast<ACharacterBase>(GetOwner());
 	ALvPlayer* LvPlayerCharacter = Cast<ALvPlayer>(LvCharacter);
 
-	if(ItemInfo->ItemType == EItemType::Normal)
+	if (ItemInfo->ItemType == EItemType::Normal)
 	{
+		ALvPlayerController* PlayerController = Cast<ALvPlayerController>(LvPlayerCharacter->GetController());
+		if (IsValid(PlayerController))
+		{
+			UMainHUDBase* MainHUD = PlayerController->GetMainHUD();
+			if (IsValid(MainHUD))
+			{
+				UCraftTableBase* CraftTable = MainHUD->GetCraftTableWidget();
+
+				if (IsValid(CraftTable))
+				{
+					if (CraftTable->IsVisible())
+					{
+						if (ItemID == 104 || ItemID == 127) // ³ª¹«¸é
+						{
+							mItems.RemoveSingle(ItemID);
+							return;
+						}
+					}
+				}
+
+			 }
+		}
+		else
 		return;
 	}
 	

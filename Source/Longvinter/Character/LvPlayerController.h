@@ -18,7 +18,6 @@ class LONGVINTER_API ALvPlayerController : public APlayerController
 public:
 	ALvPlayerController();
 
-	UMainHUDBase* GetMainHUD() const { return m_MainHUD; }
 protected:
 	virtual void BeginPlay() override;
 
@@ -27,6 +26,8 @@ public:
 	virtual void SetupInputComponent();
 	virtual void PostInitializeComponents() override;
 
+	UMainHUDBase* GetMainHUD() const { return m_MainHUD; }
+
 protected:
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
@@ -34,6 +35,7 @@ protected:
 public:
 	UPROPERTY()
 	UMainHUDBase* m_MainHUD;
+
 private:
-	TSubclassOf<UUserWidget>	m_MainHUDClass;
+	TSubclassOf<UUserWidget> m_MainHUDClass;
 };

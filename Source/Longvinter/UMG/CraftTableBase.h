@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <Components/ListView.h>
 #include "Blueprint/UserWidget.h"
 #include "CraftTableBase.generated.h"
 
@@ -18,5 +19,7 @@ public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
-
+public:
+	UListView* mListView;
+	bool mOnceCheck;
 };

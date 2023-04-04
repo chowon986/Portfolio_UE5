@@ -3,6 +3,8 @@
 
 #include "CraftTableItemBase.h"
 #include "ItemDataBase.h"
+#include "../Character/LvPlayer.h"
+#include "../Component/InventoryComponent.h"
 
 void UCraftTableItemBase::NativeConstruct()
 {
@@ -17,6 +19,8 @@ void UCraftTableItemBase::NativeConstruct()
 	mItemImg = Cast<UImage>(GetWidgetFromName(TEXT("ItemImg")));
 	mDepositBtn = Cast<UButton>(GetWidgetFromName(TEXT("DepositBtn")));
 	mDepositBtn->OnClicked.AddDynamic(this, &UCraftTableItemBase::OnClickedDepositBtn);
+	 
+	mCurWoodCount = 0;
 }
 
 void UCraftTableItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -26,7 +30,26 @@ void UCraftTableItemBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 void UCraftTableItemBase::OnClickedDepositBtn()
 {
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+	if (IsValid(Controller))
+	{
+		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(Controller->GetCharacter());
 
+		if (IsValid(PlayerCharacter))
+		{
+			TArray<int32> Items = PlayerCharacter->GetInventoryComponent()->GetItems();
+
+			for (int32 Item : Items)
+			{
+				if (Item == 104 || Item == 127) // ³ª¹«¸é
+				{
+					PlayerCharacter->GetInventoryComponent()->ServerRemoveItem(Item);
+					++mCurWoodCount;
+					mCurCount->SetText(FText::FromString(FString::FromInt(mCurWoodCount)));
+				}
+			}
+		}
+	}
 }
 
 void UCraftTableItemBase::InitFromData(UObject* _Data)

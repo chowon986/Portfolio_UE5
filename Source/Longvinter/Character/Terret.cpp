@@ -28,7 +28,7 @@ ATerret::ATerret()
 	AIControllerClass = AMonsterAIController::StaticClass();
 
 	mElapsedTime = 0.f;
-	mIntervalTime = 1.5f;
+	mIntervalTime = 0.f;
 
 	mAttackElapsedTime = 0.f;
 	mAttackIntervalTime = 1.5f;
@@ -89,7 +89,10 @@ void ATerret::Idle()
 			mElapsedTime = 0.f;
 
 			FRotator CurRotator = GetCapsuleComponent()->GetRelativeRotation();
-			GetCapsuleComponent()->SetRelativeRotation(FRotator(CurRotator.Pitch, CurRotator.Yaw + 90.f, CurRotator.Roll));
+			FRotator TargetRotator = FRotator(CurRotator.Pitch, CurRotator.Yaw + 90.f, CurRotator.Roll);
+
+			GetCapsuleComponent()->SetRelativeRotation(FMath::RInterpTo(GetActorRotation(), TargetRotator, GetWorld()->GetDeltaSeconds(), 1.f));
+			
 		}
 	}
 }
@@ -113,7 +116,7 @@ void ATerret::Attack()
 				FVector Direction = PlayerCharacter->GetActorLocation() - GetActorLocation();
 				Direction.Normalize();
 
-				GetCapsuleComponent()->SetRelativeRotation(Direction.Rotation());
+				GetCapsuleComponent()->SetRelativeRotation(FMath::RInterpTo(GetActorRotation(), Direction.Rotation(), GetWorld()->GetDeltaSeconds(), 3.f)); // 테스트 필요
 
 				if (ProjectileClass)
 				{

@@ -155,3 +155,10 @@ void ULvPlayerAnimInstance::AnimNotify_SitWaveEnd()
 
 	PlayerCharacter->SetState(EPlayerState::SitIdle);
 }
+
+void ULvPlayerAnimInstance::AnimNotify_GetItemEnd()
+{
+	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
+
+	PlayerCharacter->SetState(EPlayerState::Idle);
+}

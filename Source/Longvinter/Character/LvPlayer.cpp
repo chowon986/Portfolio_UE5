@@ -278,52 +278,10 @@ void ALvPlayer::Tick(float DeltaTime)
 	}
 
 
-	/*if (mIsSetting)
+	if (mIsSetting)
 	{
-		ALvPlayerController* PlayerController = Cast<ALvPlayerController>(GetController());
-
-		if (IsValid(PlayerController))
-		{
-			FVector WorldLocation;
-			FVector WorldDirection;
-			PlayerController->DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
-
-			FVector BoxExtent = FVector(50.f, 50.f, 50.f); 
-			float TraceDistance = 500.f;
-
-			FCollisionQueryParams QueryParams;
-			QueryParams.bTraceComplex = true;
-			QueryParams.bReturnPhysicalMaterial = false;
-			FHitResult HitResult;
-			bool CollisionEnable = GetWorld()->SweepSingleByChannel(
-				HitResult,
-				WorldLocation,
-				WorldLocation + WorldDirection * TraceDistance,
-				FQuat::Identity,
-				ECC_Visibility,
-				FCollisionShape::MakeBox(BoxExtent),
-				QueryParams
-			);
-
-#if ENABLE_DRAW_DEBUG
-
-			FColor	DrawColor = CollisionEnable ? FColor::Red : FColor::Green;
 		
-			DrawDebugBox(GetWorld(), (WorldLocation + (WorldLocation + WorldDirection * TraceDistance)) / 2.f, BoxExtent, DrawColor, true, -1.f, 0, 1.f);
-
-#endif
-			if (!CollisionEnable)
-			{
-
-			}
-			else
-			{
-			AActor* TestActor = HitResult.GetActor();
-			int a = 0;
-
-			}
-		}
-	}*/
+	}
 }
 
 
@@ -450,7 +408,14 @@ void ALvPlayer::Aim(float Scale)
 			}
 		}
 	}
-	else if (Scale == 0 && GetState() != EPlayerState::Fishing && GetState() != EPlayerState::SwimmingIdle)
+	else if (Scale == 0 && 
+		GetState() != EPlayerState::Fishing 
+		&& GetState() != EPlayerState::SwimmingIdle
+		&& GetState() != EPlayerState::Sit
+		&& GetState() != EPlayerState::SitIdle
+		&& GetState() != EPlayerState::SitWave
+		&& GetState() != EPlayerState::GetItem
+		&& GetState() != EPlayerState::Death)
 	{
 		SetState(EPlayerState::Idle);
 
@@ -493,12 +458,10 @@ void ALvPlayer::Sit()
 
 void ALvPlayer::Click()
 {
-	if (GetState() != EPlayerState::Aim)
-		SetState(EPlayerState::GetItem);
-
 	FHitResult Result;
 	ALvPlayerController* PlayerController = GetController<ALvPlayerController>();
 	bool Hit = PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel3, false, Result);
+
 	if (GetState() == EPlayerState::Aim) // 낚시대 제외 무기를 끼고 Aim하면 Aim 상태임
 	{
 		if (mWeapon)
@@ -507,15 +470,12 @@ void ALvPlayer::Click()
 		}
 
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
-		//Chicken->ServerTakeDamage(1, FDamageEvent(), PlayerController, this);
 		if (IsValid(Chicken))
 		{
 			ServerAttack(Chicken, 3.f);
-			//Chicken->ServerTakeDamage(3.f, FDamageEvent(), GetController(), this);
 		}
 		else
 		{
-			//mWeapon
 			ATreeBase* Tree = Cast<ATreeBase>(Result.GetActor());
 			if (IsValid(Tree))
 			{
@@ -523,58 +483,58 @@ void ALvPlayer::Click()
 			}
 		}
 	}
-	else
+
+	if (Hit)
 	{
+		if (GetState() != EPlayerState::Aim)
+			SetState(EPlayerState::GetItem);
 		// 총
 		//Fire();
 
-		if (Hit)
+		AFishingSpot* FishingSpot = Cast<AFishingSpot>(Result.GetActor());
+		if (IsValid(FishingSpot))
 		{
-			AFishingSpot* FishingSpot = Cast<AFishingSpot>(Result.GetActor());
-			if (IsValid(FishingSpot))
+			ServerSetFishingSpot(FishingSpot);
+			if (GetCanFishing() == true)
+				Fishing();
+		}
+		else
+		{
+			ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
+			if (IsValid(NPA))
 			{
-				ServerSetFishingSpot(FishingSpot);
-				if (GetCanFishing() == true)
-					Fishing();
-			}
-			else
-			{
-				ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
-				if (IsValid(NPA))
+				APlaceholderActor* Items = Cast<APlaceholderActor>(NPA);
+				if (IsValid(Items))
 				{
-					APlaceholderActor* Items = Cast<APlaceholderActor>(NPA);
-					if (IsValid(Items))
+					PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items);
+					//PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items->GetPlaceholderComponent());
+					PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
+				}
+				else
+				{
+					AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
+					if (IsValid(FarmingBox))
 					{
-						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items);
-						//PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetPlaceholder(Items->GetPlaceholderComponent());
-						PlayerController->GetMainHUD()->GetPlaceholderWidget()->SetVisibility(ESlateVisibility::Visible);
+						PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetOnceCheck(false);
+						PlayerController->GetMainHUD()->GetRandomBoxWidget()->ServerSetRandomBox(FarmingBox);
+						PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
 					}
-					else
-					{	
-						AFarmingBox* FarmingBox = Cast<AFarmingBox>(NPA);
-						if (IsValid(FarmingBox))
-						{
-							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetOnceCheck(false);
-							PlayerController->GetMainHUD()->GetRandomBoxWidget()->ServerSetRandomBox(FarmingBox);
-							PlayerController->GetMainHUD()->GetRandomBoxWidget()->SetVisibility(ESlateVisibility::Visible);
-						}
 
-						else
+					else
+					{
+						int ItemID = NPA->GetItemID();
+						if (-1 != ItemID)
 						{
-							int ItemID = NPA->GetItemID();
-							if (-1 != ItemID)
-							{
-								GetInventoryComponent()->ServerAddItem(ItemID);
-								GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
-								ServerDestroy(NPA);
-							}
+							GetInventoryComponent()->ServerAddItem(ItemID);
+							GetEncyclopediaComponent()->ServerUpdateItem(ItemID);
+							ServerDestroy(NPA);
 						}
 					}
 				}
 			}
-
-			OnActorClickedEvent.Broadcast(Result.GetActor());
 		}
+
+		OnActorClickedEvent.Broadcast(Result.GetActor());
 	}
 }
 
@@ -830,7 +790,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 
 			//ItemID = 406; // 테스트 코드 : 총
 			//ItemID = 411; // 테스트 코드 : 톱
-			ItemID = 502; // 테스트 코드 : 텐트
+			//ItemID = 502; // 테스트 코드 : 텐트
+			ItemID = 104; // 테스트 코드 : 나무
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();
