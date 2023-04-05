@@ -39,8 +39,6 @@ void UEncyclopediaBase::OnItemsChanged(TArray<int32> Items)
 	if (LastIndex == -1)
 		return;
 
-	// 가장 마지막 아이템을 가져온다.
-
 	int LastItemID = Items[LastIndex];
 
 	FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(LastItemID);
@@ -49,5 +47,22 @@ void UEncyclopediaBase::OnItemsChanged(TArray<int32> Items)
 	pNewData->SetItemName(Table->ItemName.ToString());
 	pNewData->SetItemDesc(Table->TextDescription);
 
+	TArray<UObject*> AllItems = mListView->GetListItems();
+	mListView->ClearListItems();
 	mListView->AddItem(pNewData);
+
+	for (auto* Item : AllItems)
+	{
+		mListView->AddItem(Item);
+	}
+
+	FTimerHandle DestroyTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, FTimerDelegate::CreateUObject(this, &UEncyclopediaBase::OnDestroyTimerExpired), 2.f, false);
+}
+
+void UEncyclopediaBase::OnDestroyTimerExpired()
+{
+	int32 Index = mListView->GetNumItems() - 1;
+	UObject* Item = mListView->GetItemAt(Index);
+	mListView->RemoveItem(Item);
 }

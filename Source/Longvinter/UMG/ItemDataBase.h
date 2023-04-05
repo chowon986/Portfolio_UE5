@@ -43,6 +43,9 @@ public:
 	void SetItemType(EItemType Type) { mItemType = Type; }
 	EItemType GetItemType() { return mItemType; }
 
+	void AddItem(int32 ItemID) { mItemList.Add(ItemID); }
+	TArray<int32> GetItemList() { return mItemList; }
+
 private:
 	FString mItemIconPath;
 	FString mItemIconPathRight;
@@ -52,4 +55,5 @@ private:
 	FString mItemTextDescription;
 	int mItemID;
 	EItemType mItemType;
+	TArray<int32> mItemList;
 };

@@ -48,11 +48,7 @@ void UPlaceholderBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			mOnceCheck = true;
 		}
 
-		//if (0 == mPlaceholderComponent->GetItems().Num())
-		{
-			// Timer 세팅
-			// 시간이 일정시간 이상 흐르면 삭제
-		}
+
 	}
 }
 
@@ -111,6 +107,6 @@ void UPlaceholderBase::OnInventoryItemsChanged(TArray<int32> Items)
 		pNewData->SetItemName(Table->ItemName.ToString());
 		pNewData->SetItemDesc(Table->TextDescription);
 
-		mInventoryTileView->AddItem(pNewData);
+		mInventoryTileView->AddItem(pNewData);	
 	}
 }

@@ -3,27 +3,25 @@
 #pragma once
 
 #include "../GameInfo.h"
-#include <Components/ListView.h>
+#include <Components/Image.h>
 #include "Blueprint/UserWidget.h"
-#include "EncyclopediaBase.generated.h"
+#include "EncyclopediaBookItemBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LONGVINTER_API UEncyclopediaBase : public UUserWidget
+class LONGVINTER_API UEncyclopediaBookItemBase : public UUserWidget
 {
 	GENERATED_BODY()
-
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& _geo, float _DeltaTime) override;
 
-	UFUNCTION()
-	void OnItemsChanged(TArray<int32> Items);
-	
-	void OnDestroyTimerExpired();
 public:
-	UListView* mListView;
-	bool mOnceCheck;
+	UFUNCTION(BlueprintCallable)
+		void InitFromData(UObject* _Data);
+
+private:
+	UImage* mIconImg;
 };

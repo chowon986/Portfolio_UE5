@@ -5,6 +5,8 @@
 #include "MonsterAIController.h"
 #include "Terret.h"
 #include "LvPlayer.h"
+#include "../Component/EquipmentComponent.h"
+#include "../Inventory/Inventory.h"
 
 UBTService_CheckWeapon::UBTService_CheckWeapon()
 {
@@ -29,9 +31,23 @@ void UBTService_CheckWeapon::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	{
 		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(AIController->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 
-		if (IsValid(PlayerCharacter) && IsValid(PlayerCharacter->mWeapon->GetStaticMesh()))
-			AIController->GetBlackboardComponent()->SetValueAsBool(TEXT("WithWeapon"), true);
-		else
+		if (IsValid(PlayerCharacter))
+		{
+			TArray<int32> EquippedItems = PlayerCharacter->GetEquipmentComponent()->GetItems();
+
+			for (int32 Item : EquippedItems)
+			{
+				FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+				if (Table->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
+					Table->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
+				{
+					AIController->GetBlackboardComponent()->SetValueAsBool(TEXT("WithWeapon"), true);
+					return;
+				}
+			}
+
 			AIController->GetBlackboardComponent()->SetValueAsBool(TEXT("WithWeapon"), false);
+		}
 	}
 }

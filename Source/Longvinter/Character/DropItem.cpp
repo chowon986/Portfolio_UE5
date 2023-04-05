@@ -23,10 +23,10 @@ ADropItem::ADropItem()
 
 void ADropItem::BeginPlay()
 {
-	BeginPlay();
+	Super::BeginPlay();
 }
 
 void ADropItem::Tick(float DeltaTime)
 {
-	Tick(DeltaTime);
+	Super::Tick(DeltaTime);
 }

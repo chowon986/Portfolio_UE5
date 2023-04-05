@@ -19,6 +19,8 @@ void UEquipmentBase::NativeConstruct()
 
 	mInventoryBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("InventoryBtn"))));
 	mInventoryBtn->OnClicked.AddDynamic(this, &UEquipmentBase::ClickInventory);
+	mEncyclopediaBookBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("EncyclopediaBookBtn"))));
+	mEncyclopediaBookBtn->OnClicked.AddDynamic(this, &UEquipmentBase::ClickEncyclopediaBook);
 }
 
 void UEquipmentBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -52,19 +54,45 @@ void UEquipmentBase::ClickInventory()
 	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	if (IsValid(Controller))
 	{
-		ALvPlayerController* PlayerController = Cast<ALvPlayerController>(Controller);
-		if (IsValid(PlayerController))
+		ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
+		if (IsValid(LvPlayerController))
 		{
-			UInventoryBase* InventoryWidget = PlayerController->GetMainHUD()->GetInventoryWidget();
-			if (IsValid(InventoryWidget))
-				InventoryWidget->SetVisibility(ESlateVisibility::Visible);
+			UEquipmentBase* EquipmentWidget = LvPlayerController->GetMainHUD()->GetEquipmentWidget();
+			UInventoryBase* InventoryWidget = LvPlayerController->GetMainHUD()->GetInventoryWidget();
+			UEncyclopediaBookBase* EncyclopediaBookWidget = LvPlayerController->GetMainHUD()->GetEncyclopediaBookWidget();
 
-			UEquipmentBase* EquipmentWidget = PlayerController->GetMainHUD()->GetEquipmentWidget();
-			if (IsValid(EquipmentWidget))
+			if (IsValid(InventoryWidget))
+			{
+				InventoryWidget->SetVisibility(ESlateVisibility::Visible);
 				EquipmentWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EncyclopediaBookWidget->SetVisibility(ESlateVisibility::Collapsed);
+			}
 		}
 	}
 }
+
+void UEquipmentBase::ClickEncyclopediaBook()
+{
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+	if (IsValid(Controller))
+	{
+		ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
+		if (IsValid(LvPlayerController))
+		{
+			UEquipmentBase* EquipmentWidget = LvPlayerController->GetMainHUD()->GetEquipmentWidget();
+			UInventoryBase* InventoryWidget = LvPlayerController->GetMainHUD()->GetInventoryWidget();
+			UEncyclopediaBookBase* EncyclopediaBookWidget = LvPlayerController->GetMainHUD()->GetEncyclopediaBookWidget();
+
+			if (IsValid(EncyclopediaBookWidget))
+			{
+				InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EquipmentWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EncyclopediaBookWidget->SetVisibility(ESlateVisibility::Visible);
+			}
+		}
+	}
+}
+
 
 void UEquipmentBase::OnItemsChanged(TArray<int32> Items)
 {

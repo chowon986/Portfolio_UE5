@@ -13,6 +13,7 @@
 #include "../UMG/RandomBoxBase.h"
 #include "../UMG/EncyclopediaBase.h"
 #include "../UMG/CraftTableBase.h"
+#include "../UMG/EncyclopediaBookBase.h"
 #include "Blueprint/UserWidget.h"
 #include "MainHUDBase.generated.h"
 
@@ -36,6 +37,7 @@ public:
 	URandomBoxBase* GetRandomBoxWidget() { return mRandomBox; }
 	UEncyclopediaBase* GetEncyclopediaWidget() { return mEncyclopedia; }
 	UCraftTableBase* GetCraftTableWidget() { return mCraftTable; }
+	UEncyclopediaBookBase* GetEncyclopediaBookWidget() { return mEncyclopediaBook; }
 
 private:
 	void OnActorClicked(AActor* Actor);
@@ -52,6 +54,7 @@ private:
 	URandomBoxBase* mRandomBox;
 	UEncyclopediaBase* mEncyclopedia;
 	UCraftTableBase* mCraftTable;
+	UEncyclopediaBookBase* mEncyclopediaBook;
 
 	bool mOnceCheck;
 	int32 mPrevTime;

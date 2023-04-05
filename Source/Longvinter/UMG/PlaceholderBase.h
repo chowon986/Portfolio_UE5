@@ -35,6 +35,5 @@ public:
 	UTileView* mInventoryTileView;
 	bool mOnceCheck;
 
-	//UPlaceholder* mPlaceholderComponent;
 	APlaceholderActor* mPlaceholder;
 };

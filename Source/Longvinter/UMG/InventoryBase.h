@@ -30,6 +30,9 @@ public:
 	UFUNCTION()
 	void ClickEquipment();
 
+	UFUNCTION()
+	void ClickEncyclopediaBook();
+
 	void ItemClick(UObject* Object);
 	// 마우스 우클릭
 
@@ -40,4 +43,5 @@ public:
 	UTileView* mTileView;
 	UTextBlock* mMKTxt;
 	UButton* mEquipmentBtn;
+	UButton* mEncyclopediaBookBtn;
 };

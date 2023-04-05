@@ -39,6 +39,8 @@ void ATerret::SetState(ETerretState State)
 	if (mCurState != State)
 	{
 		mCurState = State;
+		if (mCurState == ETerretState::Attack)
+			mAttackElapsedTime = mAttackIntervalTime;
 	}
 }
 
@@ -116,7 +118,7 @@ void ATerret::Attack()
 				FVector Direction = PlayerCharacter->GetActorLocation() - GetActorLocation();
 				Direction.Normalize();
 
-				GetCapsuleComponent()->SetRelativeRotation(FMath::RInterpTo(GetActorRotation(), Direction.Rotation(), GetWorld()->GetDeltaSeconds(), 3.f)); // 테스트 필요
+				GetCapsuleComponent()->SetRelativeRotation(Direction.Rotation());
 
 				if (ProjectileClass)
 				{

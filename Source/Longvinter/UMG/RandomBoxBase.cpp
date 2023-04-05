@@ -92,6 +92,9 @@ void URandomBoxBase::OnInventoryItemsChanged(TArray<int32> Items)
 
 	for (int32 Item : Items)
 	{
+		if (Item == -1)
+			return;
+
 		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(Item);
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 		pNewData->SetItemIconPath(Table->TexturePath);

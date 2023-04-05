@@ -30,7 +30,11 @@ float ATreeBase::TakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, 
 	SetCurrentHealth(damageApplied);
 
 	int Max = mItemClassArray.Num() - 1;
+	if (Max == -1)
+		return damageApplied;
+
 	int RandomItemIndex = FMath::RandRange(0, Max);
+
 	GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClassArray[RandomItemIndex], GetTransform());
 
 	return damageApplied;
@@ -44,7 +48,12 @@ void ATreeBase::OnHealthUpdate()
 
 		int Max = mItemClassArray.Num() - 1;
 		int RandomItemIndex = FMath::RandRange(0, Max);
-		GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClassArray[RandomItemIndex], GetTransform());
+
+		FActorSpawnParameters Param;
+		Param.Owner = GetController();
+		Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClassArray[RandomItemIndex], GetActorLocation(), GetActorRotation(), Param);
 	}
 }
 

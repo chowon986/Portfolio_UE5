@@ -19,6 +19,8 @@ void UInventoryBase::NativeConstruct()
 
 	mEquipmentBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("EquipmentBtn"))));
 	mEquipmentBtn->OnClicked.AddDynamic(this, &UInventoryBase::ClickEquipment);
+	mEncyclopediaBookBtn = Cast<UButton>(GetWidgetFromName(FName(TEXT("EncyclopediaBookBtn"))));
+	mEncyclopediaBookBtn->OnClicked.AddDynamic(this, &UInventoryBase::ClickEncyclopediaBook);
 }
 
 void UInventoryBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -133,11 +135,35 @@ void UInventoryBase::ClickEquipment()
 		{
 			UEquipmentBase* EquipmentWidget = LvPlayerController->GetMainHUD()->GetEquipmentWidget();
 			UInventoryBase* InventoryWidget = LvPlayerController->GetMainHUD()->GetInventoryWidget();
+			UEncyclopediaBookBase* EncyclopediaBookWidget = LvPlayerController->GetMainHUD()->GetEncyclopediaBookWidget();
 
 			if (IsValid(EquipmentWidget))
 			{
 				InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
 				EquipmentWidget->SetVisibility(ESlateVisibility::Visible);
+				EncyclopediaBookWidget->SetVisibility(ESlateVisibility::Collapsed);
+			}
+		}
+	}
+}
+
+void UInventoryBase::ClickEncyclopediaBook()
+{
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+	if (IsValid(Controller))
+	{
+		ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
+		if (IsValid(LvPlayerController))
+		{
+			UEquipmentBase* EquipmentWidget = LvPlayerController->GetMainHUD()->GetEquipmentWidget();
+			UInventoryBase* InventoryWidget = LvPlayerController->GetMainHUD()->GetInventoryWidget();
+			UEncyclopediaBookBase* EncyclopediaBookWidget = LvPlayerController->GetMainHUD()->GetEncyclopediaBookWidget();
+
+			if (IsValid(EncyclopediaBookWidget))
+			{
+				InventoryWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EquipmentWidget->SetVisibility(ESlateVisibility::Collapsed);
+				EncyclopediaBookWidget->SetVisibility(ESlateVisibility::Visible);
 			}
 		}
 	}

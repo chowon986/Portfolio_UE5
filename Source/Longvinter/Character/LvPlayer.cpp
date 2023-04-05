@@ -733,11 +733,6 @@ void ALvPlayer::OnEquipmentItemChanged()
 	{
 		FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
 
-		FActorSpawnParameters SpawnParam;
-		SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		SpawnParam.Owner = this;
-
 		if (ItemTable->EquipmentType == EEquipmentType::Equipment_Hat)
 		{
 			mHat->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
@@ -802,6 +797,9 @@ void ALvPlayer::OnHealthUpdate()
 
 void ALvPlayer::ServerAttack_Implementation(AActor* Actor, float Damage)
 {
+	if (Actor == nullptr)
+		return;
+
 	Actor->TakeDamage(Damage, FDamageEvent(), GetController(), this);
 }
 
@@ -827,9 +825,9 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			mFishingSpot = nullptr;
 
 			//ItemID = 406; // 테스트 코드 : 총
-			//ItemID = 411; // 테스트 코드 : 톱
+			ItemID = 411; // 테스트 코드 : 톱
 			//ItemID = 502; // 테스트 코드 : 텐트
-			ItemID = 104; // 테스트 코드 : 나무
+			//ItemID = 104; // 테스트 코드 : 나무
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();

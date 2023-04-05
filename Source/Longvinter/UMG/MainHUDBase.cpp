@@ -41,10 +41,13 @@ void UMainHUDBase::NativeConstruct()
 	mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
 
 	mEncyclopedia = Cast<UEncyclopediaBase>(GetWidgetFromName(FName(TEXT("UIEncyclopedia"))));
-	mEncyclopedia->SetVisibility(ESlateVisibility::Collapsed);
+	//mEncyclopedia->SetVisibility(ESlateVisibility::Collapsed);
 
 	mCraftTable = Cast<UCraftTableBase>(GetWidgetFromName(FName(TEXT("UICraftTable"))));
 	mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
+
+	mEncyclopediaBook = Cast<UEncyclopediaBookBase>(GetWidgetFromName(FName(TEXT("UIEncyclopediaBook"))));
+	mEncyclopediaBook->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
@@ -81,7 +84,7 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			if (mSgtLakeVendor->IsVisible())
 				mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
 
-			if(mEquipment->IsVisible())
+			if (mEquipment->IsVisible())
 				mEquipment->SetVisibility(ESlateVisibility::Collapsed);
 
 			if (mPlaceholder->IsVisible())
@@ -130,19 +133,24 @@ void UMainHUDBase::OnInventoryOnOff()
 	mPrevTime = CurTime;
 
 	if (mInventory->IsVisible())
+	{
 		mInventory->SetVisibility(ESlateVisibility::Collapsed);
+
+		if (mEquipment->IsVisible())
+			mEquipment->SetVisibility(ESlateVisibility::Collapsed);
+
+		if (mRandomBox->IsVisible())
+			mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
+
+		if (mPlaceholder->IsVisible())
+			mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
+
+		if (mCraftTable->IsVisible())
+			mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
+
+		if (mEncyclopediaBook->IsVisible())
+			mEncyclopediaBook->SetVisibility(ESlateVisibility::Collapsed);
+	}
 	else
 		mInventory->SetVisibility(ESlateVisibility::Visible);
-
-	if (mEquipment->IsVisible())
-		mEquipment->SetVisibility(ESlateVisibility::Collapsed);
-
-	if (mRandomBox->IsVisible())
-		mRandomBox->SetVisibility(ESlateVisibility::Collapsed);
-
-	if(mPlaceholder->IsVisible())
-		mPlaceholder->SetVisibility(ESlateVisibility::Collapsed);
-
-	if (mCraftTable->IsVisible())
-		mCraftTable->SetVisibility(ESlateVisibility::Collapsed);
 }

@@ -24,6 +24,9 @@ public:
 	UFUNCTION()
 	void ClickInventory();
 
+	UFUNCTION()
+	void ClickEncyclopediaBook();
+
 	void OnItemsChanged(TArray<int32> Items);
 	void OnAmmoChanged(int32 AmmoCount);
 	void OnMKChanged(int32 MK);
@@ -35,4 +38,5 @@ public:
 	UTextBlock* mAmmoCount;
 	bool OnceCheck;
 	UButton* mInventoryBtn;
+	UButton* mEncyclopediaBookBtn;
 };
