@@ -26,4 +26,7 @@ public:
 public:
 	UListView* mListView;
 	bool mOnceCheck;
+
+	UPROPERTY()
+	TArray<int32> mItems;
 };

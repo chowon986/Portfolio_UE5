@@ -69,11 +69,5 @@ void UEncyclopediaComponent::ServerUpdateItem_Implementation(int32 ItemID)
 	if (AlreadyHave == false)
 	{
 		ServerAddItem(ItemID);
-		ServerAddItem(1000);
-	}
-	else
-	{
-		// 이미 있는거면
-		ServerAddItem(ItemID);
 	}
 }

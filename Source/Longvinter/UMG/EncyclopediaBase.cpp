@@ -40,6 +40,13 @@ void UEncyclopediaBase::OnItemsChanged(TArray<int32> Items)
 		return;
 
 	int LastItemID = Items[LastIndex];
+	for (int32 CurItem : mItems)
+	{
+		if (CurItem == LastItemID)
+			return;
+	}
+
+	mItems.Add(LastItemID);
 
 	FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(LastItemID);
 	UItemDataBase* pNewData = NewObject<UItemDataBase>();

@@ -24,8 +24,8 @@ AHepatica::AHepatica()
 	mCapsuleComponent->SetCollisionProfileName(TEXT("NPA"));
 	mCapsuleComponent->SetGenerateOverlapEvents(true);
 	mCapsuleComponent->SetNotifyRigidBodyCollision(true);
-	mCapsuleComponent->SetCapsuleHalfHeight(300.f);
-	mCapsuleComponent->SetCapsuleRadius(100.f);
+	mCapsuleComponent->SetCapsuleHalfHeight(50.f);
+	mCapsuleComponent->SetCapsuleRadius(50.f);
 
 	bReplicates = true;
 }
