@@ -23,6 +23,7 @@
 #include "FarmingBox.h"
 #include "Beach.h"
 #include "Bundle.h"
+#include "GroundBase.h"
 
 ALvPlayer::ALvPlayer()
 {
@@ -87,6 +88,9 @@ ALvPlayer::ALvPlayer()
 
 	mIsSetting = false;
 	mCanThrow = false;
+
+	mCanTakeDamageElapsedTime = 0.f;
+	mCanTakeDamageIntervalTime = 3.f;
 }
 
 void ALvPlayer::BeginPlay()
@@ -191,6 +195,8 @@ void ALvPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	mCanTakeDamageElapsedTime += DeltaTime;
+
 	if (IsValid(this))
 	{
 		UCharacterMovementComponent* Movement = GetCharacterMovement();
@@ -256,6 +262,22 @@ void ALvPlayer::Tick(float DeltaTime)
 			{
 				if (ABeach* Beach = Cast<ABeach>(Result.GetActor()))
 					SetState(EPlayerState::SwimmingIdle);
+
+				if (mCanTakeDamageElapsedTime > mCanTakeDamageIntervalTime)
+				{
+					mCanTakeDamageElapsedTime = 0.f;
+
+					if (AGroundBase* Ground = Cast<AGroundBase>(Result.GetActor()))
+					{
+						if (Ground->GetGroundType() == EGroundType::Green)
+						{
+							if (GetCurrentHealth() <= 1.f)
+								return;
+						}
+
+						TakeDamage(Ground->GetDamage(), FDamageEvent(), GetController(), Ground);
+					}
+				}
 			}
 		}
 	}
@@ -270,6 +292,14 @@ void ALvPlayer::Tick(float DeltaTime)
 				ABeach* Beach = Cast<ABeach>(Result.GetActor());
 				if (!IsValid(Beach))
 					++Count;
+				else
+				{
+					if (mCanTakeDamageElapsedTime > mCanTakeDamageIntervalTime)
+					{
+						mCanTakeDamageElapsedTime = 0.f;
+						TakeDamage(1.f, FDamageEvent(), GetController(), Beach);
+					}
+				}
 			}
 
 			if (Count == ResultArray.Num())

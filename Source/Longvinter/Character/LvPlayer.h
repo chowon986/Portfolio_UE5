@@ -220,4 +220,7 @@ public:
 
 	bool mIsSetting;
 	bool mCanThrow;
+
+	float mCanTakeDamageElapsedTime;
+	float mCanTakeDamageIntervalTime;
 };
