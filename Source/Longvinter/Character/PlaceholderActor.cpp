@@ -30,6 +30,7 @@ APlaceholderActor::APlaceholderActor()
 	bReplicates = true;
 
 	mPlaceholderComponent = CreateDefaultSubobject<UPlaceholder>(TEXT("Placeholder"));
+	mPlaceholderComponent->SetIsReplicated(true);
 }
 
 void APlaceholderActor::BeginPlay()
@@ -44,7 +45,7 @@ void APlaceholderActor::Tick(float DeltaTime)
 
 void APlaceholderActor::ServerAddAllItems_Implementation(const TArray<int32>& Items)
 {
-	mPlaceholderComponent->ServerAddAllItems(Items);
+	mPlaceholderComponent->ServerAddAllItems(Items);;
 }
 
 void APlaceholderActor::ServerAddItem_Implementation(int32 ItemID)

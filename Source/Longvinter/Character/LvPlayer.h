@@ -66,7 +66,6 @@ public:
 	void Fishing();
 	void InventoryOnOff();
 	void AddWood();
-	void Test(float Scale);
 	void ThrowItem(float Scale);
 
 	void SetState(EPlayerState State);
@@ -105,6 +104,9 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerUseWeapon();
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddPlaceholderItems(APlaceholderActor* PlaceholderActor, int32 ItemID);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetFishingSpot(AFishingSpot* Spot);
@@ -201,6 +203,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	TSubclassOf<ANonPlayerActorBase> mItemClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
+	TSubclassOf<ANonPlayerActorBase> mBundleClass;
 
 	bool mOnceCheck;
 

@@ -26,6 +26,8 @@ ACampFire::ACampFire()
 	mCapsuleComponent->SetNotifyRigidBodyCollision(true);
 	mCapsuleComponent->SetCapsuleHalfHeight(100.f);
 	mCapsuleComponent->SetCapsuleRadius(100.f);
+
+	
 }
 
 void ACampFire::BeginPlay()
@@ -43,11 +45,11 @@ void ACampFire::Tick(float DeltaTime)
 	{
 		mElapsedTime = 0.f;
 
-		CheckDistanceFromActor();
+		ServerCheckDistanceFromActor();
 	}
 }
 
-void ACampFire::CheckDistanceFromActor_Implementation()
+void ACampFire::ServerCheckDistanceFromActor_Implementation()
 {
 	FCollisionQueryParams	param(NAME_None, false, this);
 

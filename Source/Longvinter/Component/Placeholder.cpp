@@ -45,6 +45,14 @@ void UPlaceholder::ServerAddAllItems_Implementation(const TArray<int32>& Items)
 	}
 }
 
+void UPlaceholder::ClientAddAllItems_Implementation(const TArray<int32>& Items)
+{
+	for (auto Item : Items)
+	{
+		mItems.Add(Item);
+	}
+}
+
 void UPlaceholder::OnRep_Items()
 {
 	OnItemsChangedEvent.Broadcast(mItems);

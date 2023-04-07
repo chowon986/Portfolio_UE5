@@ -258,7 +258,7 @@ void ALvPlayer::Tick(float DeltaTime)
 	{
 		if (CollisionEnable)
 		{
-			for (auto Result : ResultArray)
+			for (const auto& Result : ResultArray)
 			{
 				if (ABeach* Beach = Cast<ABeach>(Result.GetActor()))
 					SetState(EPlayerState::SwimmingIdle);
@@ -287,7 +287,7 @@ void ALvPlayer::Tick(float DeltaTime)
 		{
 			int Count = 0;
 
-			for (auto Result : ResultArray)
+			for (const auto& Result : ResultArray)
 			{
 				ABeach* Beach = Cast<ABeach>(Result.GetActor());
 				if (!IsValid(Beach))
@@ -329,7 +329,6 @@ void ALvPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 마우스
 	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Aim"), this, &ALvPlayer::Aim);
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Click"), EInputEvent::IE_Pressed, this, &ALvPlayer::Click);
-	PlayerInputComponent->BindAxis<ALvPlayer>(TEXT("Test"), this, &ALvPlayer::Test);
 
 	// 키
 	PlayerInputComponent->BindAction<ALvPlayer>(TEXT("Sit"), EInputEvent::IE_Pressed, this, &ALvPlayer::Sit);
@@ -537,9 +536,15 @@ void ALvPlayer::Click()
 			ANonPlayerActorBase* NPA = Cast<ANonPlayerActorBase>(Result.GetActor());
 			if (IsValid(NPA))
 			{
+
 				ABundle* BundleItem = Cast<ABundle>(NPA);
 				if (IsValid(BundleItem))
 				{
+					if (BundleItem->GetItemID() == -1)
+					{
+						return;
+					}
+
 					mInventoryComponent->ServerAddItem(BundleItem->GetItemID());
 					ServerDestroy(BundleItem);
 				}
@@ -629,12 +634,6 @@ void ALvPlayer::AddWood()
 	}
 }
 
-void ALvPlayer::Test(float Scale)
-{
-	float A = Scale;
-
-}
-
 void ALvPlayer::ThrowItem(float Scale)
 {
 	if (Scale == 1)
@@ -659,11 +658,11 @@ void ALvPlayer::ServerSpawnPlaceholder_Implementation()
 	FActorSpawnParameters Param;
 	Param.Owner = this;
 
-	APlaceholderActor* Items = GetWorld()->SpawnActor<APlaceholderActor>(mItemClass, GetTransform(), Param);
-	Items->ServerAddAllItems(AllItems);
+	APlaceholderActor* SpawnedActor = GetWorld()->SpawnActor<APlaceholderActor>(APlaceholderActor::StaticClass(), GetTransform(), Param);
+	SpawnedActor->ServerAddAllItems(AllItems);
 
 	AllItems = mEquipmentComponent->GetItems();
-	Items->ServerAddAllItems(AllItems);
+	SpawnedActor->ServerAddAllItems(AllItems);
 }
 
 void ALvPlayer::OnRep_HP()
@@ -689,6 +688,13 @@ void ALvPlayer::Fire()
 					SpawnParams);
 		}
 	}
+}
+
+void ALvPlayer::ServerAddPlaceholderItems_Implementation(APlaceholderActor* PlaceholderActor, int32 ItemID)
+{
+	GetInventoryComponent()->ServerAddItem(ItemID);
+	GetEncyclopediaComponent()->ServerAddItem(ItemID);
+	PlaceholderActor->GetPlaceholderComponent()->ServerRemoveItem(ItemID);
 }
 
 void ALvPlayer::ServerUseWeapon_Implementation()
@@ -743,8 +749,8 @@ void ALvPlayer::ServerThrowAwayItem_Implementation(int32 ItemID)
 	FActorSpawnParameters Param;
 	Param.Owner = this;
 
-	ABundle* Items = GetWorld()->SpawnActor<ABundle>(ABundle::StaticClass(), GetTransform(), Param);
-	Items->SetItemID(ItemID);
+	ABundle* SpawnedActor = GetWorld()->SpawnActor<ABundle>(ABundle::StaticClass(), GetTransform(), Param);
+	SpawnedActor->SetItemID(ItemID);
 }
 
 void ALvPlayer::OnEquipmentItemChanged()

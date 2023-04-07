@@ -67,9 +67,7 @@ void UPlaceholderBase::ItemClick(UObject* Object)
 			{
 				int ItemID = pData->GetItemID();
 
-				Character->GetInventoryComponent()->ServerAddItem(ItemID);
-				Character->GetEncyclopediaComponent()->ServerAddItem(ItemID);
-				mPlaceholder->ServerRemoveItem(ItemID);
+				Character->ServerAddPlaceholderItems(mPlaceholder, ItemID);
 			}
 		}
 	}

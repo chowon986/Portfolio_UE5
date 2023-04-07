@@ -26,7 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(Server, Reliable)
-	void CheckDistanceFromActor();
+	void ServerCheckDistanceFromActor();
 
 public:
 	UStaticMeshComponent* mStaticMeshComponent;

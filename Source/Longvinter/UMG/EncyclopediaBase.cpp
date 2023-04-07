@@ -40,6 +40,10 @@ void UEncyclopediaBase::OnItemsChanged(TArray<int32> Items)
 		return;
 
 	int LastItemID = Items[LastIndex];
+
+	if (LastItemID == -1)
+		return;
+
 	for (int32 CurItem : mItems)
 	{
 		if (CurItem == LastItemID)

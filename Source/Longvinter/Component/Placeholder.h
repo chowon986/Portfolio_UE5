@@ -28,6 +28,8 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddAllItems(const TArray<int32>& Items);
+	UFUNCTION(Server, Reliable)
+	void ClientAddAllItems(const TArray<int32>& Items);
 
 	UFUNCTION()
 	void OnRep_Items();
