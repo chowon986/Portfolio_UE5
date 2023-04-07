@@ -30,8 +30,10 @@ void AProjectile_Bullet::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if(GetLocalRole() == ROLE_Authority)
-	mProjectileMovementComponent->OnProjectileStop.AddDynamic(this, &AProjectile_Bullet::OnCollision);
+	if (GetLocalRole() == ROLE_Authority)
+		mProjectileMovementComponent->OnProjectileStop.AddDynamic(this, &AProjectile_Bullet::OnCollision);
+	else
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), mFireSound, GetActorLocation());
 }
 
 // Called every frame

@@ -43,12 +43,26 @@ void AChickenBase::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AChickenBase::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), mDeathSound, GetActorLocation());
+}
+
 float AChickenBase::TakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	float damageApplied = CurrentHealth - DamageTaken;
 	SetCurrentHealth(damageApplied);
 
 	return damageApplied;
+}
+
+void AChickenBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AChickenBase, mCurState);
 }
 
 void AChickenBase::SetCurrentHealth(float healthValue)
@@ -141,6 +155,15 @@ void AChickenBase::SetState(EChickenState State)
 	{
 		mCurState = State;
 		mChangeDirectionElapsedTime = 0.f;
+	}
+}
+
+void AChickenBase::OnRep_CurState()
+{
+	if (GetLocalRole() != ROLE_Authority)
+	{
+		if (mCurState == EChickenState::Walk)
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), mRunSound, GetActorLocation());
 	}
 }
 

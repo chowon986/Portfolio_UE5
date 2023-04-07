@@ -28,6 +28,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	void SpawnItem();
+
+private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* mStaticMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))

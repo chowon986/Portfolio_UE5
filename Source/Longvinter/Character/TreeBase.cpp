@@ -2,6 +2,7 @@
 
 
 #include "TreeBase.h"
+#include "DropItem.h"
 
 ATreeBase::ATreeBase()
 {
@@ -33,9 +34,10 @@ float ATreeBase::TakeDamage(float DamageTaken, FDamageEvent const& DamageEvent, 
 	if (Max == -1)
 		return damageApplied;
 
-	int RandomItemIndex = FMath::RandRange(0, Max);
-
-	GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClassArray[RandomItemIndex], GetTransform());
+	if (GetCurrentHealth() > 0)
+	{
+		SpawnItem();
+	}
 
 	return damageApplied;
 }
@@ -44,22 +46,37 @@ void ATreeBase::OnHealthUpdate()
 {
 	if (GetCurrentHealth() <= 0)
 	{
-		Destroy();
-
-		int Max = mItemClassArray.Num() - 1;
-		int RandomItemIndex = FMath::RandRange(0, Max);
-
-		FActorSpawnParameters Param;
-		Param.Owner = GetController();
-		Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-		GetWorld()->SpawnActor<ANonPlayerActorBase>(mItemClassArray[RandomItemIndex], GetActorLocation(), GetActorRotation(), Param);
+		if (GetLocalRole() == ROLE_Authority)
+		{
+			Destroy();
+			SpawnItem();
+		}
 	}
 }
 
 void ATreeBase::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATreeBase::SpawnItem()
+{
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		int Max = mItemClassArray.Num() - 1;
+		int RandomItemIndex = FMath::RandRange(0, Max);
+
+		FActorSpawnParameters Param;
+		Param.Owner = this;
+		Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		FTransform CurTransform = GetTransform();
+
+		float ZValue = CurTransform.GetLocation().Z - GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+		float XValue = CurTransform.GetLocation().X;
+		float YValue = CurTransform.GetLocation().Y + 50;
+		ADropItem* SpawnedActor = GetWorld()->SpawnActor<ADropItem>(mItemClassArray[RandomItemIndex], FVector(XValue, YValue, ZValue), CurTransform.GetRotation().Rotator(), Param);
+	}
 }
 
 void ATreeBase::Tick(float DeltaTime)

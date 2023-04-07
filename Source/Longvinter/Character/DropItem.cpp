@@ -10,15 +10,14 @@ ADropItem::ADropItem()
 
 	mItemID = -1;
 
-	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	mCapsuleComponent->SetCollisionProfileName(TEXT("NPA"));
 	mCapsuleComponent->SetGenerateOverlapEvents(true);
 	mCapsuleComponent->SetNotifyRigidBodyCollision(true);
+	SetRootComponent(mCapsuleComponent);
 
-	mCapsuleComponent->SetupAttachment(mStaticMeshComponent);
-	SetRootComponent(mStaticMeshComponent);
+	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	mStaticMeshComponent->SetupAttachment(mCapsuleComponent);
 }
 
 void ADropItem::BeginPlay()

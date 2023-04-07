@@ -41,4 +41,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float mDamage;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase* mFireSound;
 };

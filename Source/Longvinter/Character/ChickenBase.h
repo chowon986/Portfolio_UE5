@@ -16,7 +16,7 @@ enum class EChickenState : uint8
 {
 	Idle,
 	Walk,
-	RunAway
+	RunAway,
 };
 
 UCLASS()
@@ -30,9 +30,12 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 public:
 	float TakeDamage(float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -51,6 +54,9 @@ public:
 	EChickenState GetState() { return mCurState; }
 	void SetState(EChickenState State);
 
+	UFUNCTION()
+	void OnRep_CurState();
+
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
@@ -68,9 +74,15 @@ private:
 	float mElapsedTime;
 	int32 mPitch;
 
+	UPROPERTY(ReplicatedUsing = OnRep_CurState)
 	EChickenState mCurState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	float mChangeDirectionIntervalTime;
 	float mChangeDirectionElapsedTime;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* mRunSound;
+	UPROPERTY(EditAnywhere)
+	USoundBase* mDeathSound;
 };

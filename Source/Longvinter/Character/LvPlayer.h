@@ -190,11 +190,11 @@ public:
 
 	int32 mAmmoCount;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* mHat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* mWeapon;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* mRod;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* mBackpack;

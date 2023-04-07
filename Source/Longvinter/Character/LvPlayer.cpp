@@ -748,8 +748,16 @@ void ALvPlayer::ServerThrowAwayItem_Implementation(int32 ItemID)
 {
 	FActorSpawnParameters Param;
 	Param.Owner = this;
+	Param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-	ABundle* SpawnedActor = GetWorld()->SpawnActor<ABundle>(ABundle::StaticClass(), GetTransform(), Param);
+	FTransform CurTransform = GetTransform();
+	
+	float ZValue = CurTransform.GetLocation().Z - GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	float XValue = CurTransform.GetLocation().X + 30;
+	float YValue = CurTransform.GetLocation().Y;
+
+
+	ABundle* SpawnedActor = GetWorld()->SpawnActor<ABundle>(ABundle::StaticClass(), FVector(XValue, YValue, ZValue), CurTransform.GetRotation().Rotator(), Param);
 	SpawnedActor->SetItemID(ItemID);
 }
 
@@ -860,8 +868,8 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			//ItemID = 406; // 테스트 코드 : 총
-			ItemID = 411; // 테스트 코드 : 톱
+			ItemID = 406; // 테스트 코드 : 총
+			//ItemID = 411; // 테스트 코드 : 톱
 			//ItemID = 502; // 테스트 코드 : 텐트
 			//ItemID = 104; // 테스트 코드 : 나무
 			if (ItemID != -1)
