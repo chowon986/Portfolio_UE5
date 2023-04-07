@@ -26,8 +26,6 @@ ALvPlayerController::ALvPlayerController()
 
 	mAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
 	mAudio->bIsUISound = true;
-
-	mOnceCheck = false;
 }
 
 void ALvPlayerController::BeginPlay()
