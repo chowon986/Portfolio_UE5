@@ -38,4 +38,8 @@ public:
 
 private:
 	TSubclassOf<UUserWidget> m_MainHUDClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		USoundBase* mBGM;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		UAudioComponent* mAudio;
 };

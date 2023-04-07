@@ -4,6 +4,8 @@
 #include "LongvinterGameModeBase.h"
 #include "Character/LvPlayer.h"
 #include "Character/LvPlayerController.h"
+#include "Kismet/GameplayStatics.h"
+
 
 ALongvinterGameModeBase::ALongvinterGameModeBase()
 {
@@ -15,6 +17,7 @@ ALongvinterGameModeBase::ALongvinterGameModeBase()
 void ALongvinterGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 void ALongvinterGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
@@ -32,5 +35,4 @@ void ALongvinterGameModeBase::PostLogin(APlayerController* NewPlayer)
 void ALongvinterGameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }

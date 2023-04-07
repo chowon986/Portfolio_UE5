@@ -23,6 +23,11 @@ ALvPlayerController::ALvPlayerController()
 	{
 		m_MainHUDClass = finder.Class;
 	}
+
+	mAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
+	mAudio->bIsUISound = true;
+
+	mOnceCheck = false;
 }
 
 void ALvPlayerController::BeginPlay()
@@ -42,6 +47,9 @@ void ALvPlayerController::BeginPlay()
 			m_MainHUD->AddToViewport();
 		}
 	}
+
+	mAudio->SetSound(mBGM);
+	mAudio->Play();
 }
 
 void ALvPlayerController::Tick(float DeltaTime)
