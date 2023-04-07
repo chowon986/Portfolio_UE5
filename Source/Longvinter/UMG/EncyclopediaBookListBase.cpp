@@ -34,6 +34,7 @@ void UEncyclopediaBookListBase::InitFromData(UObject* _Data)
 		mRightCountTxt->SetText(FText::FromString(RCount));
 
 		TArray<int32> Items = pData->GetItemList();
+		mTileView->ClearListItems();
 
 		for (int32 Item : Items)
 		{

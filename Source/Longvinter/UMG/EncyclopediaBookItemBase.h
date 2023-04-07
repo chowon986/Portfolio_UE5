@@ -20,8 +20,13 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable)
-		void InitFromData(UObject* _Data);
+	void InitFromData(UObject* _Data);
+
+	UFUNCTION()
+	void OnItemsChanged(TArray<int32> Items);
 
 private:
 	UImage* mIconImg;
+	bool mOnceCheck;
+	class UItemDataBase* mData;
 };

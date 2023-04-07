@@ -40,10 +40,12 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateItem(int32 ItemID);
 
+	const TArray<int32>& GetItems() { return mItems; }
+
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Items)
 	TArray<int32> mItems;
 
+public:
 	ItemsChangedEvent OnItemsChangedEvent;
-	const TArray<int32>& GetItems() { return mItems; }
 };
