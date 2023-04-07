@@ -35,6 +35,10 @@ void AFishingSpot::BeginPlay()
 void AFishingSpot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	FRotator CurRotation = GetActorRotation();
+	float newYaw = CurRotation.Yaw + DeltaTime * mRotationSpeed;
+	SetActorRotation(FRotator(CurRotation.Pitch, newYaw, CurRotation.Roll));
 }
 
 int32 AFishingSpot::GetRandomFish()

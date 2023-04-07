@@ -8,6 +8,7 @@
 #include "../Character/LvPlayerController.h"
 #include "../Component/InventoryComponent.h"
 #include "../Component/CraftComponent.h"
+#include "../Component/DecoComponent.h"
 
 void UInventoryBase::NativeConstruct()
 {
@@ -102,7 +103,12 @@ void UInventoryBase::ItemClick(UObject* Object)
 				}
 
 				else
-					Character->GetInventoryComponent()->ServerUseItem(ItemID);
+				{
+					if (pData->GetItemType() == EItemType::Decorative)
+						Character->GetDecoComponent()->SpawnPreviewDecoItem(ItemID);
+					else
+						Character->GetInventoryComponent()->ServerUseItem(ItemID);
+				}
 			}
 
 		}

@@ -18,6 +18,7 @@
 #include "../Component/CraftComponent.h"
 #include "../Component/EquipmentComponent.h"
 #include "../Component/EncyclopediaComponent.h"
+#include "../Component/DecoComponent.h"
 #include "ChickenBase.h"
 #include "TreeBase.h"
 #include "FarmingBox.h"
@@ -70,6 +71,8 @@ ALvPlayer::ALvPlayer()
 	mPlaceholderComponent->SetIsReplicated(true);
 	mEncyclopediaComponent = CreateDefaultSubobject<UEncyclopediaComponent>(TEXT("EncyclopediaComponent"));
 	mEncyclopediaComponent->SetIsReplicated(true);
+	mDecoComponent = CreateDefaultSubobject<UDecoComponent>(TEXT("DecoComponent"));
+	mDecoComponent->SetIsReplicated(true);
 
 	mPrevTime = 0;
 	mCanEKeyPressed = false;
@@ -868,9 +871,9 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			ItemID = 406; // 테스트 코드 : 총
+			//ItemID = 406; // 테스트 코드 : 총
 			//ItemID = 411; // 테스트 코드 : 톱
-			//ItemID = 502; // 테스트 코드 : 텐트
+			ItemID = 502; // 테스트 코드 : 텐트
 			//ItemID = 104; // 테스트 코드 : 나무
 			if (ItemID != -1)
 			{
