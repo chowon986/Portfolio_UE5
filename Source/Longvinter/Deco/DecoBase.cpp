@@ -2,6 +2,7 @@
 
 
 #include "DecoBase.h"
+#include "Net/UnrealNetwork.h"
 #include <Components/CapsuleComponent.h>
 #include <Components/StaticMeshComponent.h>
 
@@ -13,32 +14,54 @@ ADecoBase::ADecoBase()
 	
 	bReplicates = true;
 
-	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	SetRootComponent(mCapsule);
+	mBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	SetRootComponent(mBox);
 
 	mStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	mStaticMesh->SetupAttachment(mCapsule);
+	mStaticMesh->SetupAttachment(mBox);
+
+	mOpacity = 0.f;
 }
 
 // Called when the game starts or when spawned
 void ADecoBase::BeginPlay()
 {
 	Super::BeginPlay();
+	for (int i = 0; i < mStaticMesh->GetMaterials().Num(); i++)
+	{
+		auto* Material = mStaticMesh->GetMaterial(i);
+		UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
+		mStaticMesh->SetMaterial(i, DynamicMaterial);
+	}
+}
+
+void ADecoBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADecoBase, mItemID);
 }
 
 void ADecoBase::SetOpacity(float Opacity)
 {
+	mOpacity = Opacity;
 	for (int i = 0; i < mStaticMesh->GetMaterials().Num(); i++)
 	{
-		auto* Material = mStaticMesh->GetMaterial(i);
-		// 새로운 Material Instance를 생성합니다Material
-		UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
+		if (auto* DynamicMaterial = Cast<UMaterialInstanceDynamic>(mStaticMesh->GetMaterial(i)))
+		{
+			DynamicMaterial->SetScalarParameterValue("Opacity", mOpacity);
+		}
+	}
+}
 
-		// 새로운 Material Instance의 투명도를 설정합니다.
-		DynamicMaterial->SetScalarParameterValue("Opacity", Opacity);
-
-		// StaticMeshComponent에 생성한 Material Instance를 적용합니다.
-		mStaticMesh->SetMaterial(i, DynamicMaterial);
+void ADecoBase::SetColor(FVector4 Color)
+{
+	for (int i = 0; i < mStaticMesh->GetMaterials().Num(); i++)
+	{
+		if (auto* DynamicMaterial = Cast<UMaterialInstanceDynamic>(mStaticMesh->GetMaterial(i)))
+		{
+			DynamicMaterial->SetVectorParameterValue("Color", Color);
+		}
 	}
 }
 
@@ -46,5 +69,21 @@ void ADecoBase::SetOpacity(float Opacity)
 void ADecoBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (mOpacity != 1.f)
+	{
+		TArray<AActor*> OverlappingActors;
+		mBox->GetOverlappingActors(OverlappingActors);
+		if (OverlappingActors.Num() > 0)
+		{
+			SetColor(DisableColor);
+			mIsSetupEnabled = false;
+		}
+		else
+		{
+			SetColor(EnableColor);
+			mIsSetupEnabled = true;
+		}
+	}
 }
 

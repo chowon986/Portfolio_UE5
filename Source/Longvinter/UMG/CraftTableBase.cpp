@@ -6,6 +6,7 @@
 #include "../Inventory/Inventory.h"
 #include "../Character/LvPlayer.h"
 #include "../Component/InventoryComponent.h"
+#include "../Component/DecoComponent.h"
 
 void UCraftTableBase::NativeConstruct()
 {
@@ -83,6 +84,14 @@ void UCraftTableBase::OnClickedDepositBtn()
 
 void UCraftTableBase::OnClickedUpgradeBtn()
 {
-	// 업그레이드 버튼이 눌리면
-	// 텐트를 가져와서 Texture를 집으로 바꿈
+	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+	if (IsValid(Controller))
+	{
+		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(Controller->GetCharacter());
+
+		if (IsValid(PlayerCharacter))
+		{
+			PlayerCharacter->GetDecoComponent()->GetTent()->ServerSetStaticMesh();
+		}
+	}
 }

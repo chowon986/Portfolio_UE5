@@ -28,10 +28,20 @@ public:
 
 	void SpawnPreviewDecoItem(int32 ItemID);
 
+	void OnClick();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpawnDecoItem(int32 ItemID, FVector Location, FRotator Rotation);
+
+	ADecoBase* GetTent() { return mTent; }
+
 private:
 	UPROPERTY(Replicated)
 	TArray<int32> mItems;
 
 	UPROPERTY()
 	class ADecoBase* mPreviewDecoItem;
+
+	UPROPERTY()
+	class ADecoBase* mTent;
 };

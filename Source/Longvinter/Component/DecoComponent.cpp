@@ -8,6 +8,7 @@
 #include <Longvinter/Inventory/Inventory.h>
 #include "../UMG/ItemDataBase.h"
 #include "../Deco/DecoBase.h"
+#include "../Component/InventoryComponent.h"
 
 // Sets default values for this component's properties
 UDecoComponent::UDecoComponent()
@@ -44,8 +45,41 @@ void UDecoComponent::SpawnPreviewDecoItem(int32 ItemID)
 		FActorSpawnParameters Param;
 		Param.Owner = GetOwner();
 
-		mPreviewDecoItem = GetWorld()->SpawnActor<ADecoBase>(Table->DecoClass, GetOwner()->GetTransform(), Param);
+		mPreviewDecoItem = GetWorld()->SpawnActor<ADecoBase>(Table->PreviewDecoClass, GetOwner()->GetTransform(), Param);
 		mPreviewDecoItem->SetOpacity(0.5f);
+		mPreviewDecoItem->SetItemID(ItemID);
+	}
+}
+
+void UDecoComponent::OnClick()
+{
+	if (IsValid(mPreviewDecoItem) && mPreviewDecoItem->IsSetupEnabled())
+	{
+		int32 ItemID = mPreviewDecoItem->GetItemID();
+		ServerSpawnDecoItem(ItemID, mPreviewDecoItem->GetActorLocation(), mPreviewDecoItem->GetActorRotation());
+		mPreviewDecoItem->Destroy();
+		if (auto* LvPlayer = GetOwner<ALvPlayer>())
+		{
+			LvPlayer->GetInventoryComponent()->ServerRemoveItem(ItemID);
+		}
+	}
+}
+
+void UDecoComponent::ServerSpawnDecoItem_Implementation(int32 ItemID, FVector Location, FRotator Rotation)
+{
+	FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+	if (Table->DecoClass != nullptr)
+	{
+		FActorSpawnParameters Param;
+		Param.Owner = GetOwner();
+
+		ADecoBase* Tent = GetWorld()->SpawnActor<ADecoBase>(Table->DecoClass, Location, Rotation, Param);
+
+		if (ItemID == 502)
+		{
+			if(IsValid(Tent))
+				mTent = Tent;
+		}
 	}
 }
 
@@ -69,7 +103,11 @@ void UDecoComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 					FVector WorldLocation, WorldDirection;
 					if (LvPlayerController->DeprojectMousePositionToWorld(WorldLocation, WorldDirection))
 					{
-						mPreviewDecoItem->SetActorLocation(WorldLocation + WorldDirection * 2500);
+						FHitResult Result;
+						if (GetWorld()->LineTraceSingleByChannel(Result, WorldLocation, WorldLocation + WorldDirection * 10000, ECollisionChannel::ECC_WorldStatic))
+						{
+							mPreviewDecoItem->SetActorLocation(Result.ImpactPoint + FVector(0,0,5));
+						}
 					}
 				}
 			}

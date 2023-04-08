@@ -107,6 +107,9 @@ public:
 	FString AimSocketName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	TSubclassOf<class ADecoBase> PreviewDecoClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	TSubclassOf<class ADecoBase> DecoClass;
 };
 

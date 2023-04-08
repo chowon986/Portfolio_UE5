@@ -281,6 +281,37 @@ void ALvPlayer::Tick(float DeltaTime)
 						TakeDamage(Ground->GetDamage(), FDamageEvent(), GetController(), Ground);
 					}
 				}
+
+				if (Result.GetComponent()->GetName() == TEXT("Exit"))
+				{
+					TArray<AActor*> FoundActors;
+					UGameplayStatics::GetAllActorsWithTag(GetWorld(), TEXT("Tent"), FoundActors);
+
+					if (FoundActors.Num() > 0)
+					{
+						for (AActor* Actor : FoundActors)
+						{
+							FVector CurTentPosition = Actor->GetActorLocation();
+
+							SetActorLocation(CurTentPosition + FVector(-400, 0, 0));
+						}
+					}
+				}
+				else if (Result.GetComponent()->GetName() == TEXT("Entrance"))
+				{
+					TArray<AActor*> FoundActors;
+					UGameplayStatics::GetAllActorsWithTag(GetWorld(), TEXT("Tent"), FoundActors);
+
+					if (FoundActors.Num() > 0)
+					{
+						for (AActor* Actor : FoundActors)
+						{
+							FVector CurTentPosition = Actor->GetActorLocation();
+
+							SetActorLocation(FVector(39800, 2060, 4522));
+						}
+					}
+				}
 			}
 		}
 	}
@@ -310,12 +341,6 @@ void ALvPlayer::Tick(float DeltaTime)
 		}
 		else
 				SetState(EPlayerState::Idle);
-	}
-
-
-	if (mIsSetting)
-	{
-		
 	}
 }
 
@@ -587,6 +612,8 @@ void ALvPlayer::Click()
 
 		OnActorClickedEvent.Broadcast(Result.GetActor());
 	}
+
+	mDecoComponent->OnClick();
 }
 
 void ALvPlayer::Fishing()
