@@ -28,6 +28,7 @@ void UCraftTableBase::NativeConstruct()
 	mReadyBtn->SetVisibility(ESlateVisibility::Collapsed);
 	mUpgradeBtn = Cast<UButton>(GetWidgetFromName(TEXT("UpgradeBtn")));
 	mUpgradeBtn->SetVisibility(ESlateVisibility::Collapsed);
+	mUpgradeBtn->OnClicked.AddDynamic(this, &UCraftTableBase::OnClickedUpgradeBtn);
 	mUpgradeTxt = Cast<UTextBlock>(GetWidgetFromName(TEXT("UpgradeTxt")));
 	mUpgradeTxt->SetVisibility(ESlateVisibility::Collapsed);
 
@@ -68,7 +69,7 @@ void UCraftTableBase::OnClickedDepositBtn()
 		}
 	}
 
-	if(mCurWoodCount == 100)
+	if(mCurWoodCount >= 1)
 	{
 		mReadyTxt->SetVisibility(ESlateVisibility::Visible);
 		mUpgradeTxt->SetVisibility(ESlateVisibility::Visible);
@@ -77,8 +78,6 @@ void UCraftTableBase::OnClickedDepositBtn()
 
 		mDepositBtn->SetVisibility(ESlateVisibility::Collapsed);
 		mInputTxt->SetVisibility(ESlateVisibility::Collapsed);
-
-		mDepositBtn->OnClicked.AddDynamic(this, &UCraftTableBase::OnClickedUpgradeBtn);
 	}
 }
 
@@ -91,7 +90,7 @@ void UCraftTableBase::OnClickedUpgradeBtn()
 
 		if (IsValid(PlayerCharacter))
 		{
-			PlayerCharacter->GetDecoComponent()->GetTent()->ServerSetStaticMesh();
+			PlayerCharacter->GetDecoComponent()->ServerCraft();
 		}
 	}
 }

@@ -171,6 +171,7 @@ public:
 	bool mFinishFishing;
 
 	class UInventoryBase* InventoryBase;
+	UPROPERTY(EditAnywhere)
 	class UInventoryComponent* mInventoryComponent;
 	class UCraftComponent* mCraftComponent;
 	class UEquipmentComponent* mEquipmentComponent;

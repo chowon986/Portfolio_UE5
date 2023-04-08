@@ -308,7 +308,7 @@ void ALvPlayer::Tick(float DeltaTime)
 						{
 							FVector CurTentPosition = Actor->GetActorLocation();
 
-							SetActorLocation(FVector(39800, 2060, 4522));
+							SetActorLocation(FVector(39850, 2060, 4522));
 						}
 					}
 				}
@@ -898,10 +898,15 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			//ItemID = 406; // 테스트 코드 : 총
-			//ItemID = 411; // 테스트 코드 : 톱
+			int32 CurItem = FMath::RandRange(0, 1);
+
+			if(CurItem == 0)
 			ItemID = 502; // 테스트 코드 : 텐트
-			//ItemID = 104; // 테스트 코드 : 나무
+			else
+			ItemID = 104; // 테스트 코드 : 나무
+
+			//ItemID = 411; // 테스트 코드 : 톱
+			//ItemID = 406; // 테스트 코드 : 총
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();

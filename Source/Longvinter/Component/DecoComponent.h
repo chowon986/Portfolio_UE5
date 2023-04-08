@@ -32,8 +32,10 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnDecoItem(int32 ItemID, FVector Location, FRotator Rotation);
+	UFUNCTION(Server, Reliable)
+	void ServerCraft();
 
-	ADecoBase* GetTent() { return mTent; }
+	class ATent* GetTent() { return mTent; }
 
 private:
 	UPROPERTY(Replicated)
@@ -43,5 +45,5 @@ private:
 	class ADecoBase* mPreviewDecoItem;
 
 	UPROPERTY()
-	class ADecoBase* mTent;
+	class ATent* mTent;
 };

@@ -60,7 +60,7 @@ private:
 	TArray<int32> mItems;
 
 	UPROPERTY(ReplicatedUsing = OnRep_MK)
-		int32 mMK;
+	int32 mMK;
 
 public:
 	ItemsChangedEvent OnItemsChangedEvent;

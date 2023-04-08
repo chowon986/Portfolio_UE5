@@ -8,6 +8,7 @@
 #include <Longvinter/Inventory/Inventory.h>
 #include "../UMG/ItemDataBase.h"
 #include "../Deco/DecoBase.h"
+#include "../Deco/Tent.h"
 #include "../Component/InventoryComponent.h"
 
 // Sets default values for this component's properties
@@ -65,6 +66,14 @@ void UDecoComponent::OnClick()
 	}
 }
 
+void UDecoComponent::ServerCraft_Implementation()
+{
+	if (IsValid(mTent))
+	{
+		mTent->SetIsUpgraded(true);
+	}
+}
+
 void UDecoComponent::ServerSpawnDecoItem_Implementation(int32 ItemID, FVector Location, FRotator Rotation)
 {
 	FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
@@ -73,12 +82,11 @@ void UDecoComponent::ServerSpawnDecoItem_Implementation(int32 ItemID, FVector Lo
 		FActorSpawnParameters Param;
 		Param.Owner = GetOwner();
 
-		ADecoBase* Tent = GetWorld()->SpawnActor<ADecoBase>(Table->DecoClass, Location, Rotation, Param);
+		ADecoBase* Deco = GetWorld()->SpawnActor<ADecoBase>(Table->DecoClass, Location, FRotator::ZeroRotator, Param);
 
-		if (ItemID == 502)
+		if (ATent* Tent = Cast<ATent>(Deco))
 		{
-			if(IsValid(Tent))
-				mTent = Tent;
+			mTent = Tent;
 		}
 	}
 }

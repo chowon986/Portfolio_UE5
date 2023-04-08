@@ -31,12 +31,13 @@ public:
 	int32 GetItemID() { return mItemID; }
 	bool IsSetupEnabled() { return mIsSetupEnabled; }
 
-private:
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* mBox;
-
+protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* mStaticMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* mBox;
+private:
 
 	UPROPERTY(EditAnywhere)
 	FVector4 DisableColor;
