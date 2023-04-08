@@ -16,7 +16,7 @@ AObjectSpawnPoint::AObjectSpawnPoint()
 
 	mRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(mRoot);
-	mRoot->bVisualizeComponent = true;
+	//mRoot->bVisualizeComponent = true;
 	mOnceCheck = false;
 }
 
