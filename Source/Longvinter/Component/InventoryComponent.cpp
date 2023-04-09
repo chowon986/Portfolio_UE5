@@ -22,7 +22,7 @@ UInventoryComponent::UInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	// ...
 
-	mMK = 100;
+	mMK = 2000;
 }
 
 // Called when the game starts
@@ -123,6 +123,12 @@ void UInventoryComponent::ServerUseItem_Implementation(int32 ItemID)
 	if (ItemInfo->ItemType == EItemType::Equipment)
 	{
 		// 장비 칸으로 옮기기
+		if (ItemInfo->EquipmentType == EEquipmentType::None)
+		{
+			LvPlayerCharacter->SetAmmoCount(LvPlayerCharacter->GetAmmoCount() + 50);
+			mItems.RemoveSingle(ItemID);
+			return;
+		}
 		LvPlayerCharacter->GetEquipmentComponent()->ServerAddItem(ItemID);
 	}
 	else if (ItemInfo->ItemType == EItemType::MK)

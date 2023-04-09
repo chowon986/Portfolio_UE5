@@ -101,6 +101,9 @@ public:
 	UFUNCTION()
 	void OnRep_HP();
 
+	UFUNCTION()
+	void OnRep_State();
+
 	void Fire();
 
 	UFUNCTION(Server, Reliable)
@@ -118,6 +121,7 @@ public:
 	void OnEquipmentItemChanged();
 
 	int32 GetAmmoCount() { return mAmmoCount; }
+	void SetAmmoCount(int32 Count) { mAmmoCount = Count; }
 
 	UStaticMeshComponent* GetHat() { return mHat; }
 
@@ -156,7 +160,7 @@ public:
 
 	float mVerticalDir;
 
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	UPROPERTY(ReplicatedUsing = OnRep_State, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	EPlayerState mPlayerState;
 	
 	float mFishingTime;

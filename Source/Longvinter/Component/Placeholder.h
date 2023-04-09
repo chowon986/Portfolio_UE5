@@ -42,9 +42,16 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerRemoveItem(int32 ItemID);
 
+	UFUNCTION(Server, Reliable)
+	void ServerSetDestroyTimer();
+
+	UFUNCTION(Server, Reliable)
+	void ServerOnDestroyTimerExpired();
+
 public:
 	UPROPERTY(ReplicatedUsing = OnRep_Items)
 	TArray<int32> mItems;
 
 	ItemsChangedEvent OnItemsChangedEvent;
+	FTimerHandle DestroyTimerHandle;
 };

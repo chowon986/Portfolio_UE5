@@ -4,6 +4,7 @@
 #include "Placeholder.h"
 #include "../Character/PlaceholderActor.h"
 #include "Net/UnrealNetwork.h"
+#include "../Character/LvPlayer.h"
 
 // Sets default values for this component's properties
 UPlaceholder::UPlaceholder()
@@ -66,5 +67,23 @@ void UPlaceholder::ServerAddItem_Implementation(int32 ItemID)
 void UPlaceholder::ServerRemoveItem_Implementation(int32 ItemID)
 {
 	mItems.RemoveSingle(ItemID);
+
+	if (GetItems().Num() == 0)
+		ServerSetDestroyTimer();
 }
 
+void UPlaceholder::ServerSetDestroyTimer_Implementation()
+{
+	if (DestroyTimerHandle.IsValid() == false)
+	{
+		int32 Time = 2;
+		GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, FTimerDelegate::CreateUObject(this, &UPlaceholder::ServerOnDestroyTimerExpired), Time, false);
+	}
+}
+
+void UPlaceholder::ServerOnDestroyTimerExpired_Implementation()
+{
+	GetOwner()->Destroy();
+	GetWorld()->GetTimerManager().ClearTimer(DestroyTimerHandle);
+	DestroyTimerHandle.Invalidate();
+}

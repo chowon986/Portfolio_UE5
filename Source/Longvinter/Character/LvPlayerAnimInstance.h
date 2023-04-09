@@ -39,6 +39,8 @@ public:
 		void AnimNotify_SitWaveEnd();
 	UFUNCTION()
 		void AnimNotify_GetItemEnd();
+	UFUNCTION()
+		void AnimNotify_PlaySawSound();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
@@ -67,4 +69,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	bool mFinishFishing;
 	FName mWeaponName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	UAudioComponent* mAudio;
+	UPROPERTY(EditAnywhere, Category = "Sound")
+	USoundBase* mSound;
+
+	bool IsPlayingSound;
 };

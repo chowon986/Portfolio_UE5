@@ -9,13 +9,14 @@ APlaceholderActor::APlaceholderActor()
 
 	mStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Flower_SM_Flower_Poppy_mo.Flower_SM_Flower_Poppy_mo'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> finder(TEXT("StaticMesh'/Game/Mesh/Backpack/Backpack_SM_Backpack01_mo.Backpack_SM_Backpack01_mo'"));
 
 	if (finder.Succeeded())
 	{
 		mStaticMeshComponent->SetStaticMesh(finder.Object);
+		mStaticMeshComponent->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
+		mStaticMeshComponent->SetRelativeLocation(FVector(0.0, 0.0, -80.0));
 	}
-
 
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	mCapsuleComponent->SetCollisionProfileName(TEXT("NPA"));
@@ -57,4 +58,3 @@ void APlaceholderActor::ServerRemoveItem_Implementation(int32 ItemID)
 {
 	mPlaceholderComponent->ServerRemoveItem(ItemID);
 }
-

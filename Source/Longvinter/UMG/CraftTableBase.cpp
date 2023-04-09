@@ -17,7 +17,7 @@ void UCraftTableBase::NativeConstruct()
 	mCurCount = Cast<UTextBlock>(GetWidgetFromName(TEXT("CurCount")));
 	mCurCount->SetText(FText::FromString("0"));
 	mTotalCount = Cast<UTextBlock>(GetWidgetFromName(TEXT("TotalCount")));
-	mTotalCount->SetText(FText::FromString("100"));
+	mTotalCount->SetText(FText::FromString("10"));
 	mDepositBtn = Cast<UButton>(GetWidgetFromName(TEXT("DepositBtn")));
 	mDepositBtn->OnClicked.AddDynamic(this, &UCraftTableBase::OnClickedDepositBtn);
 	mInputTxt = Cast<UTextBlock>(GetWidgetFromName(TEXT("InputTxt")));	
@@ -42,7 +42,7 @@ void UCraftTableBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 void UCraftTableBase::OnClickedDepositBtn()
 {
-	if (mCurWoodCount == 100)
+	if (mCurWoodCount >= 10)
 		return;
 
 	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
@@ -62,14 +62,14 @@ void UCraftTableBase::OnClickedDepositBtn()
 					++mCurWoodCount;
 					mCurCount->SetText(FText::FromString(FString::FromInt(mCurWoodCount)));
 
-					if (mCurWoodCount == 100)
+					if (mCurWoodCount == 10)
 						break;
 				}
 			}
 		}
 	}
 
-	if(mCurWoodCount >= 1)
+	if(mCurWoodCount == 10)
 	{
 		mReadyTxt->SetVisibility(ESlateVisibility::Visible);
 		mUpgradeTxt->SetVisibility(ESlateVisibility::Visible);

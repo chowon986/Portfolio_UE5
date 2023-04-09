@@ -13,6 +13,11 @@ ULvPlayerAnimInstance::ULvPlayerAnimInstance()
 	mCanFishing = true;
 	mCanFishingIntervalTime = 5.f;
 	mCanFishingElaspedTime = 0.f;
+
+	mAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));        
+	mAudio->bAutoActivate = false;
+
+	IsPlayingSound = false;
 }
 
 void ULvPlayerAnimInstance::NativeInitializeAnimation()
@@ -26,6 +31,11 @@ void ULvPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
 
+	if (!mAudio->IsPlaying())
+		IsPlayingSound = false;
+	else
+		IsPlayingSound = true;
+
 	if (IsValid(PlayerCharacter))
 	{
 		UCharacterMovementComponent* Movement = PlayerCharacter->GetCharacterMovement();
@@ -35,19 +45,14 @@ void ULvPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		mMove = mSpeedRatio != 0;
 		mFinishFishing = PlayerCharacter->GetFinishFishing();
 
-		/*if (IsMoving != mMove)
+		if (PlayerCharacter->GetState() == EPlayerState::Idle)
 		{
-			mMove = IsMoving;
-			if (mMove == true)
-			{
-				if (mPlayerState == EPlayerState::Fishing)
-				{
-					CanFishing = false;
-				}
-				mPlayerState = EPlayerState::Idle;
-			}
-		}*/
+			if (IsPlayingSound)
+				mAudio->Stop();
+		}
 	}
+
+
 
 	//if (mCanFishing == false)
 	//{
@@ -161,4 +166,17 @@ void ULvPlayerAnimInstance::AnimNotify_GetItemEnd()
 	ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
 
 	PlayerCharacter->SetState(EPlayerState::Idle);
+}
+
+void ULvPlayerAnimInstance::AnimNotify_PlaySawSound()
+{
+	if (IsValid(mSound) && IsPlayingSound == false)
+	{
+		IsPlayingSound = true;
+
+		mAudio->SetSound(mSound);
+		mAudio->Play();
+	}
+
+	//SoundWave'/Game/Sound/Chainsaw/WAV_ChainsawLoop.WAV_ChainsawLoop'
 }

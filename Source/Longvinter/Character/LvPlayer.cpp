@@ -85,7 +85,7 @@ ALvPlayer::ALvPlayer()
 
 	mOnceCheck = false;
 
-	mAmmoCount = 10;
+	mAmmoCount = 0;
 
 	mFishingSpeedRatio = 1;
 
@@ -700,6 +700,31 @@ void ALvPlayer::OnRep_HP()
 	OnPlayerHPChangedEvent.Broadcast(mPlayerHP);
 }
 
+void ALvPlayer::OnRep_State()
+{
+	TArray<int32> Items = GetEquipmentComponent()->GetItems();
+
+	for (int32 Item : Items)
+	{
+		FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+
+		if (GetState() == EPlayerState::Idle)
+		{
+			if(IsValid(mWeapon))
+				mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+			else if (IsValid(mRod))
+				mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+		}
+		else if (GetState() == EPlayerState::Aim)
+		{
+			if (IsValid(mWeapon))
+				mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+			else if (IsValid(mRod))
+				mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+		}
+	}
+}
+
 void ALvPlayer::Fire()
 {
 	if (ProjectileClass)
@@ -857,7 +882,7 @@ void ALvPlayer::OnHealthUpdate()
 
 		DeleteAllItems();
 
-		//Destroy();
+		Destroy();
 		
 		// 사라지는 애니메이션 보여주고
 		// 레벨 전환
@@ -898,15 +923,6 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 			int32 ItemID = mFishingSpot->GetRandomFish();
 			mFishingSpot = nullptr;
 
-			int32 CurItem = FMath::RandRange(0, 1);
-
-			if(CurItem == 0)
-			ItemID = 502; // 테스트 코드 : 텐트
-			else
-			ItemID = 104; // 테스트 코드 : 나무
-
-			//ItemID = 411; // 테스트 코드 : 톱
-			//ItemID = 406; // 테스트 코드 : 총
 			if (ItemID != -1)
 			{
 				ClientOnFishingFinished();

@@ -34,6 +34,38 @@ void USgtLakeVenderBase::NativeConstruct()
 	}
 
 	{
+		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(502);
+		UItemDataBase* pNewData = NewObject<UItemDataBase>();
+
+		pNewData->SetItemIconPath(Table->TexturePath);
+		pNewData->SetItemIconPathRight(Table->TexturePath);
+		pNewData->SetItemDescription("0");
+		pNewData->SetItemDescriptionLeft(Table->Description);
+		pNewData->SetItemID(502);
+		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
+
+		m_ListView->AddItem(pNewData);
+	}
+
+	{
+		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(416);
+		UItemDataBase* pNewData = NewObject<UItemDataBase>();
+
+		pNewData->SetItemIconPath(Table->TexturePath);
+		pNewData->SetItemIconPathRight(Table->TexturePath);
+		pNewData->SetItemDescription("0");
+		pNewData->SetItemDescriptionLeft(Table->Description);
+		pNewData->SetItemID(416);
+		pNewData->SetItemType(Table->ItemType);
+		pNewData->SetItemName(Table->ItemName.ToString());
+		pNewData->SetItemDesc(Table->TextDescription);
+
+		m_ListView->AddItem(pNewData);
+	}
+
+	{
 		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(1);
 		UItemDataBase* pNewData = NewObject<UItemDataBase>();
 
