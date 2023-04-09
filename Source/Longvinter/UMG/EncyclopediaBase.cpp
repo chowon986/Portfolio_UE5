@@ -25,10 +25,13 @@ void UEncyclopediaBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 	{
 		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
-		UInventoryComponent* Component = Character->GetInventoryComponent();
-		Component->OnItemsChangedEvent.AddUObject(this, &UEncyclopediaBase::OnItemsChanged);
-		OnItemsChanged(Component->GetItems());
-		mOnceCheck = true;
+		if (IsValid(Character))
+		{
+			UInventoryComponent* Component = Character->GetInventoryComponent();
+			Component->OnItemsChangedEvent.AddUObject(this, &UEncyclopediaBase::OnItemsChanged);
+			OnItemsChanged(Component->GetItems());
+			mOnceCheck = true;
+		}
 	}
 }
 

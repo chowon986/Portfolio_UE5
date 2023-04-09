@@ -58,8 +58,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		EPlayerState mPlayerState;
 	
-
-
 public:
 	float mElapsedTime;
 	float mFishingTime;

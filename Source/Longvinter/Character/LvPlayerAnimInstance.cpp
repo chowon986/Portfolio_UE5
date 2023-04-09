@@ -172,10 +172,16 @@ void ULvPlayerAnimInstance::AnimNotify_PlaySawSound()
 {
 	if (IsValid(mSound) && IsPlayingSound == false)
 	{
-		IsPlayingSound = true;
+		ALvPlayer* PlayerCharacter = Cast<ALvPlayer>(TryGetPawnOwner());
 
-		mAudio->SetSound(mSound);
-		mAudio->Play();
+		if (PlayerCharacter->IsEquippedSaw == true)
+		{
+
+			IsPlayingSound = true;
+
+			mAudio->SetSound(mSound);
+			mAudio->Play();
+		}
 	}
 
 	//SoundWave'/Game/Sound/Chainsaw/WAV_ChainsawLoop.WAV_ChainsawLoop'

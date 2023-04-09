@@ -56,7 +56,7 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 	APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
 	ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
-	if (mOnceCheck == false)
+	if (mOnceCheck == false && IsValid(Character))
 	{
 		Character->OnActorClickedEvent.AddUObject(this, &UMainHUDBase::OnActorClicked);
 		Character->OnInventoryOnOffEvent.AddUObject(this, &UMainHUDBase::OnInventoryOnOff);

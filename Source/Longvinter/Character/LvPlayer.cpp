@@ -94,6 +94,8 @@ ALvPlayer::ALvPlayer()
 
 	mCanTakeDamageElapsedTime = 0.f;
 	mCanTakeDamageIntervalTime = 3.f;
+
+	IsEquippedSaw = false;
 }
 
 void ALvPlayer::BeginPlay()
@@ -533,14 +535,20 @@ void ALvPlayer::Click()
 		AChickenBase* Chicken = Cast<AChickenBase>(Result.GetActor());
 		if (IsValid(Chicken))
 		{
-			ServerAttack(Chicken, 3.f);
+			if(IsEquippedSaw)
+				ServerAttack(Chicken, 2.f);
+			else
+				ServerAttack(Chicken, 4.f);
 		}
 		else
 		{
 			ATreeBase* Tree = Cast<ATreeBase>(Result.GetActor());
 			if (IsValid(Tree))
 			{
-				ServerAttack(Tree, 3.f);
+				if (IsEquippedSaw)
+					ServerAttack(Tree, 2.f);
+				else
+					ServerAttack(Tree, 3.f);
 			}
 		}
 	}
@@ -820,8 +828,11 @@ void ALvPlayer::OnEquipmentItemChanged()
 {
 	TArray<int32> Items = GetEquipmentComponent()->GetItems();
 
+	IsEquippedSaw = false;
+
 	if (IsValid(mHat))
 		mHat->SetStaticMesh(nullptr);
+
 	if (IsValid(mWeapon))
 		mWeapon->SetStaticMesh(nullptr);
 
@@ -853,6 +864,7 @@ void ALvPlayer::OnEquipmentItemChanged()
 		{
 			mWeapon->SetStaticMesh(LoadObject<UStaticMesh>(nullptr, *(ItemTable->EquipmentTexturePath)));
 			mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+			IsEquippedSaw = true;
 		}
 	}
 }
@@ -874,23 +886,18 @@ void ALvPlayer::DeleteAllItems()
 
 void ALvPlayer::OnHealthUpdate()
 {
+	if (GetCurrentHealth() != mPlayerHP)
+	{
+		mPlayerHP = GetCurrentHealth();
+	}
+
 	if (GetCurrentHealth() <= 0 && !mOnceCheck)
-	{	
+	{
 		mOnceCheck = true;
 
 		ServerSpawnPlaceholder();
 
 		DeleteAllItems();
-
-		Destroy();
-		
-		// 사라지는 애니메이션 보여주고
-		// 레벨 전환
-	}
-
-	if (GetCurrentHealth() != mPlayerHP)
-	{
-		mPlayerHP = GetCurrentHealth();
 	}
 }
 

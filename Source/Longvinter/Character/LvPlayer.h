@@ -175,7 +175,6 @@ public:
 	bool mFinishFishing;
 
 	class UInventoryBase* InventoryBase;
-	UPROPERTY(EditAnywhere)
 	class UInventoryComponent* mInventoryComponent;
 	class UCraftComponent* mCraftComponent;
 	class UEquipmentComponent* mEquipmentComponent;
@@ -232,6 +231,7 @@ public:
 
 	bool mIsSetting;
 	bool mCanThrow;
+	bool IsEquippedSaw;
 
 	float mCanTakeDamageElapsedTime;
 	float mCanTakeDamageIntervalTime;

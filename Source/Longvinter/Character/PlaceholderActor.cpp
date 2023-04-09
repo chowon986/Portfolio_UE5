@@ -15,7 +15,7 @@ APlaceholderActor::APlaceholderActor()
 	{
 		mStaticMeshComponent->SetStaticMesh(finder.Object);
 		mStaticMeshComponent->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
-		mStaticMeshComponent->SetRelativeLocation(FVector(0.0, 0.0, -80.0));
+		mStaticMeshComponent->SetRelativeLocation(FVector(0.0, 0.0, -40.0));
 	}
 
 	mCapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));

@@ -96,7 +96,6 @@ void UEncyclopediaBookBase::NativeConstruct()
 		pNewData->AddItem(421);
 		pNewData->AddItem(422);
 		pNewData->AddItem(423);
-		pNewData->AddItem(424);
 
 		mListView->AddItem(pNewData);
 	}

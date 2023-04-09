@@ -32,5 +32,16 @@ void UPlayerInfoBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 void UPlayerInfoBase::OnHPProgressBarChanged(float Value)
 {
-	mHPBar->SetPercent(Value/mMaxHP);
+	mHPBar->SetPercent(Value / mMaxHP);
+
+	if (Value <= 0)
+	{
+		APlayerController* Controller = GetOwningLocalPlayer()->GetPlayerController(GetWorld());
+		ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+
+		if (IsValid(Character))
+		{
+			Character->ServerDestroy(Character);
+		}
+	}
 }
