@@ -28,7 +28,6 @@ ULvPlayerStateViewModel::ULvPlayerStateViewModel()
 		}
 		
 	}
-	
 }
 
 void ULvPlayerStateViewModel::SetCurrentHealth(float NewCurrentHealth)

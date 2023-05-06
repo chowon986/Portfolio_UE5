@@ -30,6 +30,7 @@ private:
 public:
 	UPROPERTY(BlueprintReadWrite, FieldNotify, Setter="SetCurrentHealth", Getter="GetCurrentHealth")
 	float mCurrentHealth;
+
 	UPROPERTY()
-		float mMaxHealth = 10;
+	float mMaxHealth = 10;
 };

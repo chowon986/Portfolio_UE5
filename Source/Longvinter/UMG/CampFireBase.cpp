@@ -25,8 +25,6 @@ void UCampFireBase::NativeConstruct()
 
 	mCampFireTileView->OnItemClicked().AddUObject(this, &UCampFireBase::OnCancelCraftItem);
 
-	mProgressBar = Cast<UProgressBar>(GetWidgetFromName(FName(TEXT("ProgressBar"))));
-
 	mCanGetCraftedItem = false;
 	mItemID = 0;
 }
@@ -45,9 +43,7 @@ void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			UCraftComponent* Component = Character->GetCraftComponent();
 			Component->OnItemsChangedEvent.AddUObject(this, &UCampFireBase::OnItemsChanged);
 			Component->OnCraftFinishedEvent.AddUObject(this, &UCampFireBase::OnCraftFinished);
-			Component->OnProgressBarChangedEvent.AddUObject(this, &UCampFireBase::OnProgressBarChanged);
 			OnItemsChanged(Component->GetCraftItems());
-			OnProgressBarChanged(0);
 			OnceCheck = true;
 		}
 	}
@@ -91,11 +87,6 @@ void UCampFireBase::OnCraftFinished(int32 ItemID)
 		if(ItemTable->ItemType == EItemType::Food)
 			mEatImg->SetVisibility(ESlateVisibility::Visible);
 	}
-}
-
-void UCampFireBase::OnProgressBarChanged(float Ratio)
-{
-	mProgressBar->SetPercent(Ratio);
 }
 
 void UCampFireBase::OnClickedCraftItem()

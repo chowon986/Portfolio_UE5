@@ -11,7 +11,6 @@
 #include "Projectile_Bullet.h"
 #include "../LongvinterGameModeBase.h"
 #include "../UMG/ItemDataBase.h"
-#include "../UMG/CampFireBase.h"
 #include "../UMG/InventoryBase.h"
 #include "../Inventory/Inventory.h"
 #include "../Component/InventoryComponent.h"

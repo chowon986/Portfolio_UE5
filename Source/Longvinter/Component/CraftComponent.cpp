@@ -156,7 +156,9 @@ void UCraftComponent::OnRep_CraftID()
 
 void UCraftComponent::OnRep_ProgressRatio()
 {
+	// 여기서 바인딩을 해준 상태
 	OnProgressBarChangedEvent.Broadcast(mProgressRatio);
+	
 }
 
 void UCraftComponent::ServerClear_Implementation()
