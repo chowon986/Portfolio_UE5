@@ -18,7 +18,6 @@ void UMainHUDBase::NativeConstruct()
 	Super::NativeConstruct();
 
 	mOnceCheck = false;
-	mPlayerInfo = Cast<UPlayerInfoBase>(GetWidgetFromName(FName(TEXT("UIPlayerInfo"))));
 
 	mInventory = Cast<UInventoryBase>(GetWidgetFromName(FName(TEXT("UIInventory"))));
 	mInventory->SetVisibility(ESlateVisibility::Collapsed);

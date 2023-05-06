@@ -8,10 +8,13 @@ ATitlePlayerController::ATitlePlayerController()
 	PrimaryActorTick.bCanEverTick = true;
 	bEnableClickEvents = true;
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> Finder(TEXT("WidgetBlueprint'/Game/UMG/UITitleHUD.UITitleHUD_C'"));
-	if (Finder.Succeeded())
+	if (IsLocalController())
 	{
-		mTitleHUDClass = Finder.Class;
+		static ConstructorHelpers::FClassFinder<UUserWidget> Finder(TEXT("WidgetBlueprint'/Game/UMG/UITitleHUD.UITitleHUD_C'"));
+		if (Finder.Succeeded())
+		{
+			mTitleHUDClass = Finder.Class;
+		}
 	}
 }
 

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "../GameInfo.h"
-#include "PlayerInfoBase.h"
 #include "../UMG/InventoryBase.h"
 #include "../UMG/SgtLakeVenderBase.h"
 #include "../UMG/InventoryItemBase.h"
@@ -44,7 +43,6 @@ private:
 	void OnInventoryOnOff();
 
 private:
-	UPlayerInfoBase* mPlayerInfo;
 	UInventoryBase* mInventory;
 	USgtLakeVenderBase* mSgtLakeVendor;
 	UInventoryItemBase* mItemIcon;

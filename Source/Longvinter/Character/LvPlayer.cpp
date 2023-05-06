@@ -222,8 +222,16 @@ void ALvPlayer::Tick(float DeltaTime)
 						FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
 
 						if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
-							mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
-
+						{
+							if (GetState() != EPlayerState::Fishing)
+							{
+								mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
+							}
+							else
+							{
+								mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+							}
+						}
 						else if(ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Gun ||
 							ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Saw)
 							mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->IdleSocketName));
@@ -655,6 +663,7 @@ void ALvPlayer::Fishing()
 
 			if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
 			mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+			ServerSetAimSocket(Item);
 		}
 	}
 }
@@ -686,6 +695,16 @@ void ALvPlayer::SetState(EPlayerState State)
 	{
 		mPlayerState = State;
 		ServerSetState(mPlayerState);
+	}
+}
+
+void ALvPlayer::ServerSetAimSocket_Implementation(int32 ItemID)
+{
+	FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(ItemID);
+
+	if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+	{
+		mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
 	}
 }
 
@@ -729,6 +748,11 @@ void ALvPlayer::OnRep_State()
 				mWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
 			else if (IsValid(mRod))
 				mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+		}
+		else if (GetState() == EPlayerState::Fishing)
+		{
+			if (IsValid(mRod))
+			mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
 		}
 	}
 }
@@ -952,7 +976,10 @@ void ALvPlayer::ServerEKeyPressed_Implementation()
 								FItemTable* ItemTable = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
 
 								if (ItemTable->EquipmentType == EEquipmentType::Equipment_Weapon_Rod)
+								{
 									mRod->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, *(ItemTable->AimSocketName));
+									ServerSetAimSocket(Item);
+								}
 							}
 						}
 					}), 1, false);

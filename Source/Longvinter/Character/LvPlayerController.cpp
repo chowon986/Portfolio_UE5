@@ -17,12 +17,15 @@ ALvPlayerController::ALvPlayerController()
 	PrimaryActorTick.bCanEverTick = true;
 	bEnableClickEvents = true;
 
-	static ConstructorHelpers::FClassFinder<UUserWidget>
-		finder(TEXT("WidgetBlueprint'/Game/UMG/UIMainHUD.UIMainHUD_C'"));
-	if (finder.Succeeded())
-	{
-		m_MainHUDClass = finder.Class;
-	}
+	//if (IsLocalController())
+	//{
+	//	static ConstructorHelpers::FClassFinder<UUserWidget>
+	//		finder(TEXT("WidgetBlueprint'/Game/UMG/UIMainHUD.UIMainHUD_C'"));
+	//	if (finder.Succeeded())
+	//	{
+	//		m_MainHUDClass = finder.Class;
+	//	}
+	//}
 
 	mAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
 	mAudio->bIsUISound = true;

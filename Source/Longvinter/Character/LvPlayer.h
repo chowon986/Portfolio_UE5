@@ -80,6 +80,9 @@ public:
 	class UEncyclopediaComponent* GetEncyclopediaComponent() { return mEncyclopediaComponent; }
 	class UDecoComponent* GetDecoComponent() { return mDecoComponent; }
 
+	UFUNCTION(Server, Reliable)
+	void ServerSetAimSocket(int32 ItemID);
+
 	UFUNCTION(Client, Reliable)
 	void ClientOnFishingFinished();
 

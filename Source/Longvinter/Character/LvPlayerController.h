@@ -37,6 +37,7 @@ public:
 	UMainHUDBase* m_MainHUD;
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	TSubclassOf<UUserWidget> m_MainHUDClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		USoundBase* mBGM;
