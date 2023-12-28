@@ -95,7 +95,7 @@ void UInventoryBase::ItemClick(UObject* Object)
 				}
 
 				ALvPlayerController* LvPlayerController = Cast<ALvPlayerController>(Controller);
-				UCampFireBase* CampFireWidget = LvPlayerController->GetMainHUD()->GetCampFireWidget();
+				UUserWidget* CampFireWidget = LvPlayerController->GetMainHUD()->GetCampFireWidget();
 				if (true == CampFireWidget->IsVisible())
 				{
 					Character->GetInventoryComponent()->ServerRemoveItem(ItemID);

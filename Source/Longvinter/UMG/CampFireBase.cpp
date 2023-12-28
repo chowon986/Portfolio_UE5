@@ -8,6 +8,7 @@
 #include "../Component/EncyclopediaComponent.h"
 #include "ItemDataBase.h"
 #include "../Character/LvPlayer.h"
+#include "../MVVM/CampFireItemViewModel.h"
 
 void UCampFireBase::NativeConstruct()
 {
@@ -43,7 +44,6 @@ void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 			UCraftComponent* Component = Character->GetCraftComponent();
 			Component->OnItemsChangedEvent.AddUObject(this, &UCampFireBase::OnItemsChanged);
 			Component->OnCraftFinishedEvent.AddUObject(this, &UCampFireBase::OnCraftFinished);
-			OnItemsChanged(Component->GetCraftItems());
 			OnceCheck = true;
 		}
 	}
@@ -51,20 +51,16 @@ void UCampFireBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 
 void UCampFireBase::OnItemsChanged(TArray<int32> Items)
 {
-	mCampFireTileView->ClearListItems();
+	//mCampFireTileView->ClearListItems();
 
-	for (int32 Item : Items)
-	{
-		FItemTable* Table = UInventory::GetInst(GetGameInstance())->GetInfoItem(Item);
-		UItemDataBase* pNewData = NewObject<UItemDataBase>();
-		pNewData->SetItemIconPath(Table->TexturePath);
-		pNewData->SetItemID(Item);
-		pNewData->SetItemType(Table->ItemType);		
-		pNewData->SetItemName(Table->ItemName.ToString());
-		pNewData->SetItemDesc(Table->TextDescription);
+	//for (int32 Item : Items)
+	//{
+	//	FItemTable* Table = UInventory::GetInst(GetWorld())->GetInfoItem(Item);
+	//	UCampFireItemViewModel* CampFireViewModel = NewObject<UCampFireItemViewModel>();
+	//	CampFireViewModel->SetItemTable(Table);
 
-		mCampFireTileView->AddItem(pNewData);
-	}
+	//	mCampFireTileView->AddItem(CampFireViewModel);
+	//}
 }
 
 void UCampFireBase::OnCraftFinished(int32 ItemID)

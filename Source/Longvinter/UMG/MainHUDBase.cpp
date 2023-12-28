@@ -27,7 +27,7 @@ void UMainHUDBase::NativeConstruct()
 	mSgtLakeVendor = Cast<USgtLakeVenderBase>(GetWidgetFromName(FName(TEXT("SgtLakesKitchenVendor"))));
 	mSgtLakeVendor->SetVisibility(ESlateVisibility::Collapsed);
 
-	mCampFire = Cast<UCampFireBase>(GetWidgetFromName(FName(TEXT("UICampFire"))));
+	mCampFire = Cast<UUserWidget>(GetWidgetFromName(FName(TEXT("UICampFire"))));
 	mCampFire->SetVisibility(ESlateVisibility::Collapsed);
 
 	mEquipment = Cast<UEquipmentBase>(GetWidgetFromName(FName(TEXT("UIEquipment"))));
@@ -77,7 +77,7 @@ void UMainHUDBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 				}
 				Character->GetCraftComponent()->ServerClear();
 				mCampFire->SetVisibility(ESlateVisibility::Collapsed);
-				mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
+				//mCampFire->GetEatImg()->SetVisibility(ESlateVisibility::Collapsed);
 			}
 
 			if (mSgtLakeVendor->IsVisible())

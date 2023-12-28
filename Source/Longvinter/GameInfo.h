@@ -11,7 +11,16 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
+
+#include "Networking.h"
+#include "Sockets.h"
+#include "SocketSubsystem.h"
+#include "HAL/Runnable.h"
+#include "HAL/RunnableThread.h"
 #include "GameInfo.generated.h"
+
+#define	PACKET_SIZE	2048
+
 
 DECLARE_LOG_CATEGORY_EXTERN(LONGVINTER, Log, All);
 
@@ -169,4 +178,9 @@ UCLASS()
 class LONGVINTER_API UGameInfo : public UObject
 {
 	GENERATED_BODY()
+};
+
+enum EChat_Packet_Header
+{
+	CPH_MSG
 };

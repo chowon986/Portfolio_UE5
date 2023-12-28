@@ -4,42 +4,87 @@
 #include "CampFireItemViewModel.h"
 #include "../Character/LvPlayer.h"
 #include "../Component/CraftComponent.h"
+#include "../UMG/ItemDataBase.h"
+#include "../Inventory/Inventory.h"
+#include <Blueprint/WidgetBlueprintLibrary.h>
 
 UCampFireItemViewModel::UCampFireItemViewModel()
 {
-	UWorld* World = GetWorld();
-	if (World)
+	EatIconCanVisible = false;
+}
+
+void UCampFireItemViewModel::SetItemIconBrush(FSlateBrush NewBrush)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(mItemIconBrush, NewBrush);
+	UE_MVVM_BROADCAST_FIELD_VALUE_CHANGED(GetItemIconBrush);
+}
+
+void UCampFireItemViewModel::SetItemIconPathRight(FString NewString)
+{
+}
+
+void UCampFireItemViewModel::SetItemDescription(FString NewString)
+{
+}
+
+void UCampFireItemViewModel::SetItemDescriptionLeft(FString NewString)
+{
+}
+
+void UCampFireItemViewModel::SetItemName(FString NewString)
+{
+}
+
+void UCampFireItemViewModel::SetItemTextDescription(FString NewString)
+{
+}
+
+void UCampFireItemViewModel::SetEatIconVisibility(bool Visible)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(EatIconCanVisible, Visible);
+	UE_MVVM_BROADCAST_FIELD_VALUE_CHANGED(GetEatIconVisibility);
+}
+
+
+
+void UCampFireItemViewModel::SetItemTable(FItemTable* Table)
+{
+	if (mTable != Table)
 	{
-		ULocalPlayer* LocalPlayer = World->GetFirstLocalPlayerFromController();
-		if (LocalPlayer)
-		{
-			APlayerController* Controller = LocalPlayer->GetPlayerController(GetWorld());
-			if (IsValid(Controller))
-			{
-				ALvPlayer* Character = Cast<ALvPlayer>(Controller->GetCharacter());
+		mTable = Table;
+		FSlateBrush CurBrush;
+		CurBrush.SetUVRegion(FBox2D({0,0}, {1,1}));
+		CurBrush.DrawAs = ESlateBrushDrawType::Image;
+		CurBrush.SetResourceObject(mTable->Texture);
+		CurBrush.SetImageSize(FVector2D(32, 32));
+		CurBrush.TintColor = FSlateColor(FColor(1.f, 1.f, 1.f, 1.f));
 
-				if (IsValid(Character))
-				{
-					UCraftComponent* Component = Character->GetCraftComponent();
-					Component->OnProgressBarChangedEvent.AddUObject(this, &UCampFireItemViewModel::OnProgressBarChanged);
-					OnProgressBarChanged(0);
-				}
-			}
-		}
-
+		if (mTable->ItemType == EItemType::Food)
+			EatIconCanVisible = true;
+		else
+			EatIconCanVisible = false;
+		//mItemType = Table->ItemType;
+		//SetItemName(Table->ItemName.ToString());
+		//SetItemTextDescription(Table->TextDescription);
 	}
 }
 
-void UCampFireItemViewModel::SetCurrentProgressRatio(float NewCurrentRatio)
+void UCampFireItemViewModel::InitFromData(UObject* _Data)
 {
-	if (mCurrentRatio != NewCurrentRatio)
+	UCampFireItemViewModel* pData = Cast<UCampFireItemViewModel>(_Data);
+
+	if (IsValid(pData))
 	{
-		UE_MVVM_SET_PROPERTY_VALUE(mCurrentRatio, NewCurrentRatio);
-		UE_MVVM_BROADCAST_FIELD_VALUE_CHANGED(GetCurrentProgressRatio);
+		FSlateBrush CurBrush;
+		CurBrush.SetUVRegion(FBox2D({ 0,0 }, { 1,1 }));
+		CurBrush.DrawAs = ESlateBrushDrawType::Image;
+		CurBrush.SetResourceObject(pData->mTable->Texture);
+		CurBrush.SetImageSize(FVector2D(32, 32));
+		CurBrush.TintColor = FSlateColor(FColor(1.f, 1.f, 1.f, 1.f));
+
+		SetItemIconBrush(CurBrush);
+		SetEatIconVisibility(pData->EatIconCanVisible);
+		
 	}
 }
 
-void UCampFireItemViewModel::OnProgressBarChanged(float Ratio)
-{
-	SetCurrentProgressRatio(Ratio);
-}

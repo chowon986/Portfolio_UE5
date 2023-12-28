@@ -30,7 +30,7 @@ public:
 
 	UInventoryBase* GetInventoryWidget() { return mInventory; }
 	USgtLakeVenderBase* GetVendorWidget() { return mSgtLakeVendor; }
-	UCampFireBase* GetCampFireWidget() { return mCampFire; }
+	UUserWidget* GetCampFireWidget() { return mCampFire; }
 	UEquipmentBase* GetEquipmentWidget() { return mEquipment; }
 	UPlaceholderBase* GetPlaceholderWidget() { return mPlaceholder; }
 	URandomBoxBase* GetRandomBoxWidget() { return mRandomBox; }
@@ -46,7 +46,7 @@ private:
 	UInventoryBase* mInventory;
 	USgtLakeVenderBase* mSgtLakeVendor;
 	UInventoryItemBase* mItemIcon;
-	UCampFireBase* mCampFire;
+	UUserWidget* mCampFire;
 	UEquipmentBase* mEquipment;
 	UPlaceholderBase* mPlaceholder;
 	URandomBoxBase* mRandomBox;
