@@ -14,7 +14,7 @@ CPacketQueue::~CPacketQueue()
 {
 }
 
-void CPacketQueue::Push(int32 PacketHeader, int32 Length, uint8* Packet)
+void CPacketQueue::Push(int32 PacketHeader, int32 PlayerId, int32 Length, uint8* Packet)
 {
 	// 생성하면 동기화 한다.
 	// 지역변수이기 때문에 함수가 종료하면 메모리에서 해제되고 이때
@@ -27,6 +27,7 @@ void CPacketQueue::Push(int32 PacketHeader, int32 Length, uint8* Packet)
 	mTail = (mTail + 1) % 201;
 
 	mQueue[mTail].Header = PacketHeader;
+	mQueue[mTail].Id = PlayerId;
 	mQueue[mTail].Length = Length;
 
 	FMemory::Memcpy(mQueue[mTail].Packet, Packet, Length);
@@ -34,7 +35,7 @@ void CPacketQueue::Push(int32 PacketHeader, int32 Length, uint8* Packet)
 	++mSize;
 }
 
-void CPacketQueue::Pop(int32& PacketHeader, int32& Length, uint8* Packet)
+void CPacketQueue::Pop(int32& PacketHeader, int32& PlayerId, int32& Length, uint8* Packet)
 {
 	// 생성하면 동기화 한다.
 	// 지역변수이기 때문에 함수가 종료하면 메모리에서 해제되고 이때
@@ -48,6 +49,7 @@ void CPacketQueue::Pop(int32& PacketHeader, int32& Length, uint8* Packet)
 
 	PacketHeader = mQueue[mHead].Header;
 	Length = mQueue[mHead].Length;
+	PlayerId = mQueue[mHead].Id;
 
 	FMemory::Memcpy(Packet, mQueue[mHead].Packet, Length);
 

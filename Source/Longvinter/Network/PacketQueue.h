@@ -7,6 +7,7 @@
 struct FPacketQueueData
 {
 	int32	Header;
+	int32	Id;
 	int32	Length;
 	uint8	Packet[PACKET_SIZE];
 };
@@ -25,8 +26,8 @@ private:
 	int32				mSize;
 
 public:
-	void Push(int32 PacketHeader, int32 Length, uint8* Packet);
-	void Pop(int32& PacketHeader, int32& Length, uint8* Packet);
+	void Push(int32 PacketHeader, int32 PlayerId, int32 Length, uint8* Packet);
+	void Pop(int32& PacketHeader, int32& PlayerId, int32& Length, uint8* Packet);
 	bool Empty();
 	int32 Size();
 	void Clear();

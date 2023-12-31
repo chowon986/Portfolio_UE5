@@ -20,6 +20,11 @@ public:
 		mName = Name;
 	}
 
+	const FString& GetName() 
+	{
+		return mName;
+	}
+
 	void SetLoop(bool Loop)
 	{
 		mLoop = Loop;

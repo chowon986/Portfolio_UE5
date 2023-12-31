@@ -5,8 +5,6 @@
 #include "NetworkSession.h"
 #include "PacketQueue.h"
 
-CNetworkManager* CNetworkManager::mInst = nullptr;
-
 CNetworkManager::CNetworkManager()
 {
 }
@@ -65,7 +63,7 @@ bool CNetworkManager::CheckSession(const FString& Name)
 bool CNetworkManager::Connect(const FString& Name, const FString& IPAddr,
 	int32 Port)
 {
-	CNetworkSession* Session = nullptr;
+ 	CNetworkSession* Session = nullptr;
 
 	// 세션이 없을경우 새로 생성한다.
 	if (!CheckSession(Name))
@@ -105,8 +103,7 @@ bool CNetworkManager::Close(const FString& Name)
 	return true;
 }
 
-bool CNetworkManager::Receive(const FString& Name, int32& PacketHeader,
-	int32& Length, uint8* Packet)
+bool CNetworkManager::Receive(const FString& Name, int32& PacketHeader, int32& PlayerId, int32& Length, uint8* Packet)
 {
 	// Session이 없으면 실패다.
 	if (!CheckSession(Name))
@@ -117,11 +114,10 @@ bool CNetworkManager::Receive(const FString& Name, int32& PacketHeader,
 	if (!Session->IsConnect())
 		return false;
 
-	return Session->Receive(PacketHeader, Length, Packet);
+	return Session->Receive(PacketHeader, PlayerId, Length, Packet);
 }
 
-bool CNetworkManager::Send(const FString& Name, int32 PacketHeader,
-	int32 Length, uint8* Packet)
+bool CNetworkManager::Send(const FString& Name, int32 PacketHeader, int32 PlayerId, int32 Length, uint8* Packet)
 {
 	// Session이 없으면 실패다.
 	if (!CheckSession(Name))
@@ -132,7 +128,7 @@ bool CNetworkManager::Send(const FString& Name, int32 PacketHeader,
 	if (!Session->IsConnect())
 		return false;
 
-	return Session->Send(PacketHeader, Length, Packet);
+	return Session->Send(PacketHeader, PlayerId, Length, Packet);
 }
 
 CNetworkSession* CNetworkManager::FindSession(const FString& Name)

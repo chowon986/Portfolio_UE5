@@ -5,6 +5,7 @@
 #include "../GameInfo.h"
 #include "../UMG/MainHUDBase.h"
 #include "GameFramework/PlayerController.h"
+#include "../Component/NetworkComponent.h"
 #include "LvPlayerController.generated.h"
 
 /**
@@ -27,6 +28,7 @@ public:
 	virtual void PostInitializeComponents() override;
 
 	UMainHUDBase* GetMainHUD() const { return m_MainHUD; }
+	UNetworkComponent* GetNetworkComponent() const { return mNetworkComponent; }
 
 protected:
 	virtual void OnPossess(APawn* aPawn) override;
@@ -43,4 +45,6 @@ private:
 		USoundBase* mBGM;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 		UAudioComponent* mAudio;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+		UNetworkComponent* mNetworkComponent;
 };

@@ -48,8 +48,7 @@ void CNetworkSession::Close()
 	}
 }
 
-bool CNetworkSession::Receive(int32& PacketHeader, int32& Length,
-	uint8* Packet)
+bool CNetworkSession::Receive(int32& PacketHeader, int32& PlayerId, int32& Length, uint8* Packet)
 {
 	if (!mConnect)
 		return false;
@@ -64,14 +63,14 @@ bool CNetworkSession::Receive(int32& PacketHeader, int32& Length,
 	stream.SetBuffer(mReceivePacket);
 
 	stream.GetData(&PacketHeader, 4);
+	stream.GetData(&PlayerId, 4);
 	stream.GetData(&Length, 4);
 	stream.GetData(Packet, Length);
 
 	return true;
 }
 
-bool CNetworkSession::Send(int32 PacketHeader, int32 Length,
-	uint8* Packet)
+bool CNetworkSession::Send(int32 PacketHeader, int32 PlayerId, int32 Length, uint8* Packet)
 {
 	if (!mConnect)
 		return false;
@@ -81,6 +80,7 @@ bool CNetworkSession::Send(int32 PacketHeader, int32 Length,
 	stream.SetBuffer(mSendPacket);
 
 	stream.AddData(&PacketHeader, 4);
+	stream.AddData(&PlayerId, 4);
 	stream.AddData(&Length, 4);
 	stream.AddData(Packet, Length);
 

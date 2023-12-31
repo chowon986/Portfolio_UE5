@@ -95,6 +95,10 @@ ALvPlayer::ALvPlayer()
 	mCanTakeDamageIntervalTime = 3.f;
 
 	IsEquippedSaw = false;
+
+	// 몬스터의 HP UI 를 표현해 줄 WidgetComponent 를 추가한다.
+	mWidgetComopnent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Chat"));
+	mWidgetComopnent->SetupAttachment(GetMesh());
 }
 
 void ALvPlayer::BeginPlay()

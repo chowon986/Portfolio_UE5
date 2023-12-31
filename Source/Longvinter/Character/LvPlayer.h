@@ -5,6 +5,7 @@
 #include "PlayerCharacterBase.h"
 #include "FishingSpot.h"
 #include "EquipmentActor.h"
+#include <Components\WidgetComponent.h>
 #include "LvPlayer.generated.h"
 
 UENUM(BlueprintType)
@@ -215,6 +216,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StaticMesh, meta = (AllowPrivateAccess = true))
 	TSubclassOf<ANonPlayerActorBase> mBundleClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	UWidgetComponent* mWidgetComopnent;
 
 	bool mOnceCheck;
 

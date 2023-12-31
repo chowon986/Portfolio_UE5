@@ -29,6 +29,7 @@ ALvPlayerController::ALvPlayerController()
 
 	mAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio"));
 	mAudio->bIsUISound = true;
+	mNetworkComponent = CreateDefaultSubobject<UNetworkComponent>(TEXT("Network"));
 }
 
 void ALvPlayerController::BeginPlay()
@@ -38,6 +39,9 @@ void ALvPlayerController::BeginPlay()
 	FInputModeGameAndUI	Mode;
 	SetInputMode(Mode);
 	bShowMouseCursor = true;
+
+	ENetMode NetMode = GetNetMode();
+	ENetRole _RemoteRole = GetRemoteRole();
 
 	if (IsLocalController() == true && IsValid(m_MainHUDClass))
 	{

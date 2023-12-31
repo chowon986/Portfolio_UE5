@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ //Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "ReceiveThread.h"
@@ -21,12 +21,6 @@ bool CReceiveThread::Init()
 {
 	CThreadBase::Init();
 
-	FString	QueueName = mName + TEXT("_Queue");
-
-	CNetworkManager::GetInst()->CreatePacketQueue(QueueName);
-
-	mQueue = CNetworkManager::GetInst()->FindPacketQueue(QueueName);
-
 	return true;
 }
 
@@ -38,12 +32,13 @@ uint32 CReceiveThread::Run()
 		{
 			uint8	Packet[PACKET_SIZE] = {};
 			int32	Header, Length;
+			int32	PlayerId;
 
-			if (!mSession->Receive(Header, Length, Packet))
+			if (!mSession->Receive(Header, PlayerId, Length, Packet))
 				return 0;
 
 			// Queue에 패킷을 넣어준다.
-			mQueue->Push(Header, Length, Packet);
+			mQueue->Push(Header, PlayerId, Length, Packet);
 		}
 	} while (mLoop);
 

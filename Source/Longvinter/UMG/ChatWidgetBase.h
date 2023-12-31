@@ -28,5 +28,4 @@ public:
 private:
 	UButton* mSendBtn;
 	UEditableTextBox* mInputText;
-	class CPacketQueue* mQueue;
 };

@@ -39,6 +39,6 @@ public:
 public:
 	bool Connect(const FString& IPAddr, int32 Port);
 	void Close();
-	bool Receive(int32& PacketHeader, int32& Length, uint8* Packet);
-	bool Send(int32 PacketHeader, int32 Length, uint8* Packet);
+	bool Receive(int32& PacketHeader, int32& PlayerId, int32& Length, uint8* Packet);
+	bool Send(int32 PacketHeader, int32 PlayerId, int32 Length, uint8* Packet);
 };

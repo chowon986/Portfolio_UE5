@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Portfolio_UE5\ChatServer\x64\Debug\ChatServer.exe</FullPath>
+      <FullPath>C:\Portfolio_UE5\ChatServer\ChatServer\x64\Debug\ChatServer.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
