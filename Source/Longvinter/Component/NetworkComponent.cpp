@@ -132,6 +132,7 @@ void UNetworkComponent::Send(const FString& Text, int32 Id)
 
 
 			mInst->Send(TEXT("ChatSession"), CPH_MSG, Id, stream.GetLength(), Packet);
+			OnChatMessageSentEvent.Broadcast(Text, Id);
 
 			//LOGSTRING(Text);
 		}

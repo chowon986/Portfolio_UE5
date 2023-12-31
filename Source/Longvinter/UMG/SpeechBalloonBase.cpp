@@ -24,12 +24,28 @@ void USpeechBalloonBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 		{
 			UNetworkComponent* Component = Controller->GetNetworkComponent();
 			Component->OnChatMessageReceivedEvent.AddUObject(this, &USpeechBalloonBase::OnChatMessageReceived);
+			Component->OnChatMessageSentEvent.AddUObject(this, &USpeechBalloonBase::OnChatMessageSent);
 			mOnceCheck = true;
 		}
 	}
 }
 
 void USpeechBalloonBase::OnChatMessageReceived(const FString& Text, int32 PlayerId)
+{
+	ShowSpeechBalloon(Text, PlayerId);
+}
+
+void USpeechBalloonBase::OnChatMessageSent(const FString& Text, int32 PlayerId)
+{
+	ShowSpeechBalloon(Text, PlayerId);
+}
+
+void USpeechBalloonBase::OnSpeechBalloonTimerExpired()
+{
+	mSpeechBalloon->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void USpeechBalloonBase::ShowSpeechBalloon(const FString& Text, int32 PlayerId)
 {
 	for (AActor* Actor : GetWorld()->GetCurrentLevel()->Actors)
 	{
@@ -42,14 +58,14 @@ void USpeechBalloonBase::OnChatMessageReceived(const FString& Text, int32 Player
 				{
 					mSpeechBalloon->SetText(FText::FromString(Text));
 					mSpeechBalloon->SetVisibility(ESlateVisibility::Visible);
+					if (mTimerHandle.IsValid())
+					{
+						GetWorld()->GetTimerManager().ClearTimer(mTimerHandle);
+						mTimerHandle.Invalidate();
+					}
 					GetWorld()->GetTimerManager().SetTimer(mTimerHandle, FTimerDelegate::CreateUObject(this, &USpeechBalloonBase::OnSpeechBalloonTimerExpired), 5.f, false);
 				}
 			}
 		}
 	}
-}
-
-void USpeechBalloonBase::OnSpeechBalloonTimerExpired()
-{
-	mSpeechBalloon->SetVisibility(ESlateVisibility::Collapsed);
 }

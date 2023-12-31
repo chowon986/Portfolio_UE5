@@ -12,6 +12,7 @@ class LONGVINTER_API UNetworkComponent : public UActorComponent
 {
 	GENERATED_BODY()
 	DECLARE_EVENT_TwoParams(UNetworkComponent, ChatMessageReceivedEvent, const FString&, int32)
+	DECLARE_EVENT_TwoParams(UNetworkComponent, ChatMessageSentEvent, const FString&, int32)
 
 
 public:	
@@ -34,5 +35,5 @@ private:
 
 public:
 	ChatMessageReceivedEvent OnChatMessageReceivedEvent;
-
+	ChatMessageSentEvent OnChatMessageSentEvent;
 };
