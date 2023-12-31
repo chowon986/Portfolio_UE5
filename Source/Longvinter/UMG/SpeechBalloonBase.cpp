@@ -39,8 +39,17 @@ void USpeechBalloonBase::OnChatMessageReceived(const FString& Text, int32 Player
 			{
 				int32 Id = LvPlayer->GetPlayerState()->PlayerId;
 				if (PlayerId == Id)
+				{
 					mSpeechBalloon->SetText(FText::FromString(Text));
+					mSpeechBalloon->SetVisibility(ESlateVisibility::Visible);
+					GetWorld()->GetTimerManager().SetTimer(mTimerHandle, FTimerDelegate::CreateUObject(this, &USpeechBalloonBase::OnSpeechBalloonTimerExpired), 5.f, false);
+				}
 			}
 		}
 	}
+}
+
+void USpeechBalloonBase::OnSpeechBalloonTimerExpired()
+{
+	mSpeechBalloon->SetVisibility(ESlateVisibility::Collapsed);
 }

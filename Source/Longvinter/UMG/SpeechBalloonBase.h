@@ -22,8 +22,10 @@ public:
 
 private:
 	void OnChatMessageReceived(const FString& Text, int32 PlayerId);
+	void OnSpeechBalloonTimerExpired();
 
 private:
 	UTextBlock* mSpeechBalloon;
 	bool mOnceCheck;
+	FTimerHandle mTimerHandle;
 };
