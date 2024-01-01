@@ -51,13 +51,17 @@ void USpeechBalloonBase::ShowSpeechBalloon(const FString& Text, int32 PlayerId)
 	{
 		if (ALvPlayer* LvPlayer = Cast<ALvPlayer>(Actor))
 		{
+			// 내 위젯을 찾아서
 			if (LvPlayer->mWidgetComopnent->GetWidget() == this)
 			{
+				// 전송될 때 보낸 PlayerId와 일치하는 id를 가진 플레이어를 찾아서 화면에 표출
 				int32 Id = LvPlayer->GetPlayerState()->PlayerId;
 				if (PlayerId == Id)
 				{
 					mSpeechBalloon->SetText(FText::FromString(Text));
 					mSpeechBalloon->SetVisibility(ESlateVisibility::Visible);
+
+					// 타이머를 통해 해당 메시지가 삭제될 수 있게 설정
 					if (mTimerHandle.IsValid())
 					{
 						GetWorld()->GetTimerManager().ClearTimer(mTimerHandle);

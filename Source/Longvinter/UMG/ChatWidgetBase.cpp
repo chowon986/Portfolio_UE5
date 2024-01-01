@@ -14,7 +14,6 @@ void UChatWidgetBase::NativeConstruct()
 
 	// StartBtn 에 클릭, 호버, 언호버 상황이 발생할 때 호출 시킬 델리게이트 등록
 	mSendBtn->OnClicked.AddDynamic(this, &UChatWidgetBase::OnSendBtnClicked);
-
 }
 
 void UChatWidgetBase::NativeDestruct()
@@ -25,7 +24,6 @@ void UChatWidgetBase::NativeDestruct()
 void UChatWidgetBase::NativeTick(const FGeometry& _geo, float _DeltaTime)
 {
 	Super::NativeTick(_geo, _DeltaTime);
-
 }
 
 void UChatWidgetBase::OnSendBtnClicked()
@@ -38,6 +36,7 @@ void UChatWidgetBase::OnSendBtnClicked()
 		UNetworkComponent* NetworkComponent = PlayerController->GetNetworkComponent();
 		APlayerState* PlayerState = PlayerController->PlayerState;
 
+		// PlayerController에서 NetworkComponent를 가져와서 Send 함수 호출(Text와 플레이어 고유 ID)
 		NetworkComponent->Send(Text, PlayerState->GetPlayerId());
 	}
 }

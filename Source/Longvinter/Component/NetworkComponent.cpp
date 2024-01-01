@@ -121,6 +121,7 @@ void UNetworkComponent::Send(const FString& Text, int32 Id)
 {
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetOwner()))
 	{
+		// 클라이언트만 들어올 수 있게 체크
 		if (PlayerController->IsLocalController())
 		{
 			uint8	Packet[PACKET_SIZE] = {};
@@ -130,8 +131,10 @@ void UNetworkComponent::Send(const FString& Text, int32 Id)
 
 			stream.AddData((void*)*Text, Text.Len() * 2);
 
-
+			// NetworkManager의 send 함수 호출
 			mInst->Send(TEXT("ChatSession"), CPH_MSG, Id, stream.GetLength(), Packet);
+			
+			// 채팅이 일어났음을 event로 알림
 			OnChatMessageSentEvent.Broadcast(Text, Id);
 
 			//LOGSTRING(Text);

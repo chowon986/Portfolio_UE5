@@ -3,6 +3,7 @@
 #include <process.h>
 #include <list>
 #include <iostream>
+#include <string>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -22,13 +23,22 @@ unsigned int __stdcall ThreadFunc(void* Arg)
 	while (true)
 	{
 		char	Packet[2048] = {};
+		std::string  SpeechBalloon = "";
 
 		int Length = recv(Socket, Packet, 2048, 0);
 
 		if (Length <= 0)
 			break;
 
-		std::cout << Socket << " Client : " << Packet << "\n";
+		std::cout << Socket << " Client : ";
+
+		for (int i = 12; i < Length - 1; i++)
+		{
+			if (Packet[i] != '\0')
+				SpeechBalloon += Packet[i];
+		}
+
+		std::cout << SpeechBalloon << "\n";
 
 		auto	iter = g_User.begin();
 		auto	iterEnd = g_User.end();
